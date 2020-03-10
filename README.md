@@ -1,10 +1,15 @@
 # project-11
 Название: Портал для корпоративного обучения
 
-Ссылка на miro: https://miro.com/app/board/o9J_kvVnRfM=/
+Ссылка на miro: 
+        
+                https://miro.com/app/board/o9J_kvVnRfM=/
+                
                 https://miro.com/app/board/o9J_kva9_SQ=/
                 
-Ссылка на trello: https://trello.com/b/QWKIKswf/project-11
+Ссылка на trello: 
+        
+                 https://trello.com/b/QWKIKswf/project-11
 
 Участники команды:
 
