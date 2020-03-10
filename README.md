@@ -7,6 +7,7 @@
 Ссылка на trello: https://trello.com/b/QWKIKswf/project-11
 
 Участники команды:
+
     Кубленко Павел, группа 4.1, email: kublenko_p_v@sc.vsu.ru; project manager, frontend, документация
     
     Толстов Максим, группа 4.1; backend, аналитика
