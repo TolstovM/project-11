@@ -3,6 +3,7 @@
 
 Ссылка на miro: 
          https://miro.com/app/board/o9J_kvVnRfM=/
+         <br>
          https://miro.com/app/board/o9J_kva9_SQ=/
                 
 Ссылка на trello: 
@@ -12,8 +13,8 @@
 
     Кубленко Павел, группа 4.1, email: kublenko_p_v@sc.vsu.ru; project manager, frontend, документация
     
-    Толстов Максим, группа 4.1; backend, аналитика
+    Толстов Максим, группа 4.1; full-stack, аналитика
     
-    Григорьев Владимир, группа 4.1; тестирование, backend
+    Григорьев Владимир, группа 4.1; тестирование, backend, frontend
     
   
