@@ -1,7 +1,8 @@
 # project-11
-Название: Корпоративный обучающий портал
+Название: <b>Корпоративный обучающий портал</b>
 
 Ссылка на miro: 
+         <br>
          https://miro.com/app/board/o9J_kvVnRfM=/
          <br>
          https://miro.com/app/board/o9J_kva9_SQ=/
