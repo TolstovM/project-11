@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './_components/login/login.component';
 import { MeComponent } from './_components/me/me.component';
 import { Role } from './_models/role';
+import { SignupComponent } from './_components/signup/signup.component';
 
 
 const routes: Routes = [
+  { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/login', component: LoginComponent },
   {
     path: 'user/me',

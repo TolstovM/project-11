@@ -41,6 +41,15 @@ export class AuthService {
     )
   }
 
+  signup(inviteCode, email, name, password) {
+    return this.http.post(_url + AuthService.SIGNUP_URL, {
+      'inviteCode': inviteCode,
+      'email': email,
+      'name': name,
+      'password': password
+    })
+  }
+
   logout() {
     localStorage.removeItem(AuthService.CURRENT_USER_KEY)
     localStorage.removeItem(AuthService.TOKEN_KEY);
