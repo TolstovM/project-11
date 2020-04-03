@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.User;
-import ru.vsu.csf.corporatelearningsite.repository.UserRepository;
+import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 
 import java.util.Optional;

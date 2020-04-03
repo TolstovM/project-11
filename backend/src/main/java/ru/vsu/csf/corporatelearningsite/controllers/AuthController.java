@@ -38,6 +38,7 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
+    @RequestMapping(SIGNUP_PATH)
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         User user = authService.register(signUpRequest);
 

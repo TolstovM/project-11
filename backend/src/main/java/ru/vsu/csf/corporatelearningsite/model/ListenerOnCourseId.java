@@ -1,6 +1,7 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -16,6 +17,7 @@ public class ListenerOnCourseId implements Serializable {
     private Long courseId;
 
     @Column(name = "listener_Id")
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID listenerId;
 
     @Override

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.UUIDBinaryType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,6 +20,7 @@ import java.util.UUID;
 public class User {
 
     @Id
+    @Type(type = "org.hibernate.type.UUIDCharType")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 

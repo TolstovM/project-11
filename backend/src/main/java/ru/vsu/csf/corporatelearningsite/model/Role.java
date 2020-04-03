@@ -1,5 +1,7 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,10 +23,12 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private AppRole name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
-    public Role(AppRole name) {
+    public Role(Long id, AppRole name) {
+        this.id = id;
         this.name = name;
     }
 }

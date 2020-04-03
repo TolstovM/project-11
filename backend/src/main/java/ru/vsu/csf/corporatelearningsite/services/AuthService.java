@@ -13,7 +13,8 @@ import ru.vsu.csf.corporatelearningsite.model.Role;
 import ru.vsu.csf.corporatelearningsite.model.User;
 import ru.vsu.csf.corporatelearningsite.payload.LoginRequest;
 import ru.vsu.csf.corporatelearningsite.payload.SignUpRequest;
-import ru.vsu.csf.corporatelearningsite.repository.UserRepository;
+import ru.vsu.csf.corporatelearningsite.repositories.RoleRepository;
+import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
 import ru.vsu.csf.corporatelearningsite.security.TokenProvider;
 
 import java.util.*;
@@ -32,15 +33,19 @@ public class AuthService {
 
     private UserRepository userRepository;
 
+    private RoleRepository roleRepository;
+
     @Autowired
     public AuthService(AuthenticationManager authenticationManager,
                        TokenProvider tokenProvider,
                        PasswordEncoder passwordEncoder,
-                       UserRepository userRepository) {
+                       UserRepository userRepository,
+                       RoleRepository roleRepository) {
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public String authenticate(LoginRequest loginRequest) {
@@ -50,25 +55,24 @@ public class AuthService {
     }
 
     public User register(SignUpRequest signUpRequest) {
-        checkUser(signUpRequest);
-        User user = new User(
-                UUID.fromString(signUpRequest.getInviteCode()),
-                signUpRequest.getEmail(),
-                signUpRequest.getName(),
-                passwordEncoder.encode(signUpRequest.getPassword()),
-                Collections.singletonList(new Role(AppRole.ROLE_USER))
-        );
+        User user = checkUser(signUpRequest);
+        user.setEmail(signUpRequest.getEmail());
+        user.setName(signUpRequest.getName());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        List<Role> roles = roleRepository.getByName(AppRole.ROLE_USER);
+        user.setRoles(roles);
         return userRepository.save(user);
     }
 
-    private void checkUser(SignUpRequest signUpRequest) {
+    private User checkUser(SignUpRequest signUpRequest) {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new BadRequestException(EMAIL_ADDRESS_ALREADY_IN_USE_EXCEPTION_MESSAGE);
         }
         Optional<User> userOptional = userRepository.findById(UUID.fromString(signUpRequest.getInviteCode()));
-        if (userOptional.isEmpty() || !userOptional.get().getEmail().isEmpty()) {
+        if (userOptional.isEmpty() || userOptional.get().getEmail() != null) {
             throw new BadRequestException(CODE_DOES_NOT_EXIST_EXCEPTION_MESSAGE);
         }
+        return userOptional.get();
     }
 
 }
