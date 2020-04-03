@@ -24,14 +24,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String AUTHENTICATION_EXCEPTION_MESSAGE = "Could not set user authentication in security context";
 
+    @Autowired
     private TokenProvider tokenProvider;
-    private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    public TokenAuthenticationFilter(TokenProvider tokenProvider, CustomUserDetailsService userDetailsService) {
-        this.tokenProvider = tokenProvider;
-        this.userDetailsService = userDetailsService;
-    }
+    private CustomUserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
