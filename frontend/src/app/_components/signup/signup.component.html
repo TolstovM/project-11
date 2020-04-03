@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+    <fieldset>
+        <legend>Sign up</legend>
+        <div class="form-field">
+            <label>Invite code:</label>
+            <input name="inviteCode" formControlName="inviteCode">
+        </div>
+        <div class="form-field">
+            <label>Email:</label>
+            <input name="email" formControlName="email">
+        </div>
+        <div class="form-field">
+            <label>Name:</label>
+            <input name="name" formControlName="name">
+        </div>
+        <div class="form-field">
+            <label>Password:</label>
+            <input name="password" formControlName="password" type="password">
+        </div>
+        <div class="form-field">
+            <label>Confirm password:</label>
+            <input name="confirmPassword" formControlName="confirmPassword" type="password">
+        </div>
+    </fieldset>
+    <div class="form-buttons">
+        <button class="btn btn-primary" (click)="signup()">Login</button>
+    </div>
+</form>

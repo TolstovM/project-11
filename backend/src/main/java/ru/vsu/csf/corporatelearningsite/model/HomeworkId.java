@@ -1,6 +1,7 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class HomeworkId implements Serializable {
 
     @Column(name = "user_id")
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID userId;
 
     @Column(name = "homework_id")
