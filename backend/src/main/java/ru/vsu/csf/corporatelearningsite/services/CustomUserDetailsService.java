@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.User;
@@ -12,14 +13,19 @@ import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 
 import java.util.UUID;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     public static final String USER_NOT_FOUND_WITH_EMAIL_EXCEPTION_MESSAGE = "User not found with email: %s";
     public static final String RESOURCE_NAME = "User";
     public static final String FIELD_NAME_ID = "id";
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Transactional

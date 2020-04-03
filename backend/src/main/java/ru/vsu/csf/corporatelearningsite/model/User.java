@@ -1,14 +1,18 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.UUID;
 
+
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
@@ -47,4 +51,12 @@ public class User {
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Comment> comments;
+
+    public User(UUID id, String email, String name, String password, List<Role> roles) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.roles = roles;
+    }
 }
