@@ -15,13 +15,17 @@ import { AuthGuard } from './_helpers/auth.guard';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsersComponent } from './_components/users/users.component';
+import { UserComponent } from './_components/user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    MeComponent
+    MeComponent,
+    UsersComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
