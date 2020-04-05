@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Role } from 'src/app/_models/role';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'user',
@@ -15,7 +16,7 @@ export class UserComponent implements OnInit {
   @Input() user: any;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
     this.isAdmin = this.user.roles && this.user.roles.map(role => role.name).indexOf(Role.ROLE_ADMIN) !== -1;
@@ -23,7 +24,8 @@ export class UserComponent implements OnInit {
   }
 
   onClick() {
-    console.log(this.isAdmin);
+    this.userService.updateRoles(this.user.id, this.isAdmin, this.isInstructor)
+    .subscribe(res => console.log(res));
   }
 
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/login', component: LoginComponent },
   {
-    path: 'users',
+    path: 'user',
     component: UsersComponent,
     data: { roles: [Role.ROLE_ADMIN] }
   },
