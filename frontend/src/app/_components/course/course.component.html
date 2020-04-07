@@ -2,11 +2,14 @@
   <div class="form-course">
     <h1 class="h2 mb-3 font-weight-normal">{{ course.name }}</h1>
     <h1 class="h4 mb-3 font-weight-normal">{{ course.description }}</h1>
+    <div *ngFor="let lesson of lessons">
+      <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }}
+        <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info">Перейти</a></h1>
+    </div>
+    <div class="row" style="padding-top: 250px">
+      <a routerLink="/courses" class="btn btn-primary col-md-2 mr-auto">Назад</a>
+      <a [routerLink]="['/add/lesson', course.name]" class="btn btn-primary col-md-2">Добавить урок</a>
+    </div>
   </div>
-  <div *ngFor="let lesson of lessons">
-    <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }}
-      <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info">Перейти</a></h1>
-  </div>
-  <a [routerLink]="['/add/lesson', course.name]" class="btn btn-primary">Добавить урок</a>
 </body>
 
