@@ -15,25 +15,37 @@ import { AuthGuard } from './_helpers/auth.guard';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CourseListComponent } from './_components/course-list/course-list.component';
+import { CourseAddFormComponent } from './_components/course-add-form/course-add-form.component';
+import { CourseComponent } from './_components/course/course.component';
+import { LessonAddFormComponent } from './_components/lesson-add-form/lesson-add-form.component';
+import {CourseService} from "./_services/course.service";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    MeComponent
+    MeComponent,
+    CourseListComponent,
+    CourseAddFormComponent,
+    CourseComponent,
+    LessonAddFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, 
+    HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     AuthService,
     UserService,
     AuthGuard,
+    CourseService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

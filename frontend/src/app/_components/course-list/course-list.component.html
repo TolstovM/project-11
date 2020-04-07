@@ -1,0 +1,9 @@
+<body>
+  <div class="form-list-course">
+    <div *ngFor="let course of courses">
+      <h1 class="h4 mb-3 font-weight-normal">{{ course.name }}
+      <a [routerLink]="['/course', course.name]" class="btn btn-info">Перейти</a></h1>
+    </div>
+    <a routerLink="/add/course" class="btn btn-primary">Добавить курс</a>
+  </div>
+</body>

@@ -1,6 +1,8 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +22,7 @@ public class Lesson {
     @Column(nullable = false)
     private String description;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;

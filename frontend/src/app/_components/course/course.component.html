@@ -1,0 +1,12 @@
+<body class="text-center">
+  <div class="form-course">
+    <h1 class="h2 mb-3 font-weight-normal">{{ course.name }}</h1>
+    <h1 class="h4 mb-3 font-weight-normal">{{ course.description }}</h1>
+  </div>
+  <div *ngFor="let lesson of lessons">
+    <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }}
+      <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info">Перейти</a></h1>
+  </div>
+  <a [routerLink]="['/add/lesson', course.name]" class="btn btn-primary">Добавить урок</a>
+</body>
+
