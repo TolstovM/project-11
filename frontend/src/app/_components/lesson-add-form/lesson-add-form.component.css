@@ -1,0 +1,11 @@
+.form-add-lesson {
+  width: 100%;
+  max-width: 330px;
+  padding: 10px;
+  margin: auto;
+}
+
+body {
+  height: 100vh;
+  background-color: #f5f5f5;
+}
