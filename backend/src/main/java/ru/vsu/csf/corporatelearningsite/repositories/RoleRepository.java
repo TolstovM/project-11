@@ -7,9 +7,10 @@ import ru.vsu.csf.corporatelearningsite.model.Role;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    public List<Role> getByName(AppRole name);
+    Set<Role> getByName(AppRole name);
 }

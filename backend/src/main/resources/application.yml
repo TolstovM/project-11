@@ -13,6 +13,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
+  data:
+    rest:
+      basePath: /api
 
 app:
   auth:

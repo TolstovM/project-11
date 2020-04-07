@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authService.currentUserValue;
-        
         if (!route.data.roles) {
             return true;
         }
@@ -26,11 +25,11 @@ export class AuthGuard implements CanActivate {
 
     private hasAuthorities(user, route: ActivatedRouteSnapshot): boolean {
         var result = false;
-        user.roles.forEach(role => {
-            if (route.data.roles.indexOf(role) !== -1) {
+        route.data.roles.forEach(role =>{
+            if (user.roles.indexOf(role) !== -1) {
                 result = true;
             }
-        });
+        })
         return result;
     }
     
