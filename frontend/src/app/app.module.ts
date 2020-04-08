@@ -23,6 +23,7 @@ import {CourseService} from "./_services/course.service";
 import {ToastrModule} from "ngx-toastr";
 import { UsersComponent } from './_components/users/users.component';
 import { UserComponent } from './_components/user/user.component';
+import { InviteComponent } from './_components/invite/invite.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UserComponent } from './_components/user/user.component';
     CourseComponent,
     LessonAddFormComponent
     UsersComponent,
-    UserComponent
+    UserComponent,
+    InviteComponent
   ],
   imports: [
     BrowserModule,

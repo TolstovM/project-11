@@ -92,7 +92,8 @@ export class AuthService {
     const decoded:any = jwt_decode(token);
     var authoritiesString:string = decoded.Authorities;
     var roles:Array<Role> = authoritiesString.split(",").map(str => Role[str]);
-    var user = new User();
+    var user = new User()
+    user.uuid = decoded.sub;
     user.roles = roles;
     return user;
   }

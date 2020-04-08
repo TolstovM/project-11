@@ -12,7 +12,8 @@ export class UserService {
   public static ME_URL = '/user/me';
   public static USERS_URL = '/user';
   public static UPDATE_ROLES_URL = '/user/update/authorities';
-  public static INLINE = 'projection=inlineUserWithRoles'
+  public static INLINE = 'projection=inlineUserWithRoles';
+  public static INVITE_PATH = '/user/invite';
 
   constructor(private http: HttpClient) { }
 
@@ -30,5 +31,9 @@ export class UserService {
       "isAdmin": isAdmin,
       "isInstructor": isInstructor
     })
+  }
+
+  getInviteCode() {
+    return this.http.get(_url + UserService.INVITE_PATH);
   }
 }

@@ -2,7 +2,6 @@ package ru.vsu.csf.corporatelearningsite.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.User;
@@ -13,6 +12,7 @@ import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 import ru.vsu.csf.corporatelearningsite.services.CustomUserDetailsService;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(UserController.URL)
@@ -22,6 +22,7 @@ public class UserController {
     public static final String URL = "/api/user";
     public static final String UPDATE_AUTHORITIES_PATH = "/update/authorities";
     public static final String UPDATE_AUTHORITIES_RESPONSE_MESSAGE = "User's authorities updated.";
+    public static final String INVITE_CODE_PATH = "invite";
 
     private CustomUserDetailsService userDetailsService;
 
@@ -41,9 +42,14 @@ public class UserController {
     }
 
     @PatchMapping(UPDATE_AUTHORITIES_PATH)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> updateAuthorities(@Valid @RequestBody UpdateAuthoritiesRequest updateAuthoritiesRequest) {
         userDetailsService.updateAuthorities(updateAuthoritiesRequest);
         return ResponseEntity.ok(new ApiResponse(true, UPDATE_AUTHORITIES_RESPONSE_MESSAGE));
+    }
+
+    @GetMapping(INVITE_CODE_PATH)
+    public ResponseEntity<?> generateInviteCode() {
+        UUID code = this.userDetailsService.generateInviteCode();
+        return ResponseEntity.ok(code);
     }
 }

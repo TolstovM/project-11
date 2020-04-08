@@ -66,6 +66,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public UUID generateInviteCode() {
+        User user = this.userRepository.save(new User());
+        return user.getId();
+    }
+
     private void updateAuthority(Boolean isInRole, AppRole appRole, User user) {
         if (isInRole == null) {
             return;
@@ -78,4 +83,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             roles.forEach(user::removeRole);
         }
     }
+
+
 }
