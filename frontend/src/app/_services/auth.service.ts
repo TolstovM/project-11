@@ -18,11 +18,11 @@ export class AuthService {
   public static CURRENT_USER_KEY = 'currentUser';
   public static LOGIN_URL = '/auth/login';
   public static SIGNUP_URL = '/auth/signup';
-  
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(AuthService.CURRENT_USER_KEY)));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -51,14 +51,14 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem(AuthService.CURRENT_USER_KEY)
+    localStorage.removeItem(AuthService.CURRENT_USER_KEY);
     localStorage.removeItem(AuthService.TOKEN_KEY);
   }
-  
+
   public isLoggedIn() {
     return !this.isTokenExpired();
   }
-  
+
   public isLoggedOut() {
     return this.isTokenExpired();
   }
