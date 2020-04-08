@@ -17,6 +17,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersComponent } from './_components/users/users.component';
 import { UserComponent } from './_components/user/user.component';
+import { InviteComponent } from './_components/invite/invite.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UserComponent } from './_components/user/user.component';
     SignupComponent,
     MeComponent,
     UsersComponent,
-    UserComponent
+    UserComponent,
+    InviteComponent
   ],
   imports: [
     BrowserModule,
