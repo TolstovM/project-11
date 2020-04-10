@@ -15,6 +15,7 @@ import { AuthGuard } from './_helpers/auth.guard';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChangeProfileComponent } from './_components/change-profile/change-profile.component';
 import { CourseListComponent } from './_components/course-list/course-list.component';
 import { CourseAddFormComponent } from './_components/course-add-form/course-add-form.component';
 import { CourseComponent } from './_components/course/course.component';
@@ -37,6 +38,7 @@ import { ListenersListComponent } from './_components/listeners-list/listeners-l
     LoginComponent,
     SignupComponent,
     MeComponent,
+    ChangeProfileComponent,
     CourseListComponent,
     CourseAddFormComponent,
     CourseComponent,

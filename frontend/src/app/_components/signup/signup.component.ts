@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
     this.form = this.fb.group({
       inviteCode: ['', Validators.required],
       name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required,Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     });
@@ -36,5 +36,5 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  
+
 }

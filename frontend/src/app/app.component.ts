@@ -10,7 +10,7 @@ import { Role } from './_models/role';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'project11';
+  title = 'Сайт корпоративного обучения';
   currentUser: User;
 
   constructor(private router: Router, private authSevice: AuthService) {
