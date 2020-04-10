@@ -34,7 +34,7 @@ import { InviteComponent } from './_components/invite/invite.component';
     CourseListComponent,
     CourseAddFormComponent,
     CourseComponent,
-    LessonAddFormComponent
+    LessonAddFormComponent,
     UsersComponent,
     UserComponent,
     InviteComponent

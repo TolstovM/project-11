@@ -28,4 +28,8 @@ export class CourseService {
   public getCourseLessons(name): any {
     return this.http.get(_url + `/lessons/${name}`);
   }
+
+  addListener(email: any, id: string) {
+    return this.http.post(_url+'/addListener',{"email":email,"id":id});
+  }
 }

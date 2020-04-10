@@ -6,6 +6,8 @@ import {Subscription} from "rxjs";
 import {first} from "rxjs/operators";
 import {Course} from "../../_models/course";
 import {Lesson} from "../../_models/lesson";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-course',
@@ -14,23 +16,34 @@ import {Lesson} from "../../_models/lesson";
 })
 export class CourseComponent implements OnInit {
 
+  addListenerForm: FormGroup;
+
   name: string;
   course: Course = {} as Course;
   lessons: Lesson[];
   private sub: Subscription;
 
   constructor(
+    private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
+
     this.sub = this.route.params.subscribe(params => {
       this.name = params['name'];
       this.loadCourse(this.name);
     });
+    this.addListenerForm = this.formBuilder.group({
+        email:['', Validators.required]
+    }
+    );
   }
+
+  get aControls() { return this.addListenerForm.controls; }
 
   loadCourse(name: string) {
     this.courseService.getCourse(name)
@@ -50,5 +63,21 @@ export class CourseComponent implements OnInit {
         error => {
           console.log(error);
         });
+  }
+
+  addListener() {
+    if(this.addListenerForm.invalid){
+      return;
+    }
+    else{
+      this.courseService.addListener(this.aControls.email.value, this.course.id).pipe(first())
+        .subscribe(
+          () => {
+            this.toastr.success("Вы успешно добавили слушателя на курс");
+          });
+
+
+    }
+
   }
 }

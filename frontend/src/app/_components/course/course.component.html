@@ -6,10 +6,25 @@
       <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }}
         <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info">Перейти</a></h1>
     </div>
+    <form class="form-add-course" [formGroup]="addListenerForm" (ngSubmit)="addListener()">
+      <h1 class="h2 mb-3 font-weight-normal">Добавление курса</h1>
+      <div class="form-group">
+      <div class="form-group">
+        <label for="email">Добавить слушателя на курс по email</label>
+        <input type="text" formControlName="email" id="email" class="form-control" required
+               [ngClass]="{ 'is-invalid': aControls.email.touched && aControls.email.errors }" />
+        <div *ngIf="aControls.email.touched && aControls.email.errors" class="invalid-feedback">
+          <div *ngIf="aControls.email.errors.required">Пожалуйста введите email!</div>
+        </div>
+      </div>
+      </div>
+      <button class="btn btn-primary btn-block">Добавить</button><br />
+    </form>
     <div class="row" style="padding-top: 250px">
       <a routerLink="/courses" class="btn btn-primary col-md-2 mr-auto">Назад</a>
       <a [routerLink]="['/add/lesson', course.name]" class="btn btn-primary col-md-2">Добавить урок</a>
     </div>
+
   </div>
 </body>
 
