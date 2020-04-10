@@ -14,6 +14,6 @@ public interface CourseWithListenersAndInstructors {
     Long getId();
     String getName();
     String getDescription();
-    List<User> getInstructors();
+    List<UserWithRolesProjection> getInstructors();
     List<User> getListeners();
 }

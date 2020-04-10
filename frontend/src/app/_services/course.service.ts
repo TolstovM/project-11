@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Course} from "../_models/course";
 
@@ -39,4 +39,15 @@ export class CourseService {
   public getWithInstructorsAndListenersById(id: number) {
     return this.http.get(_url_api + `/${id}?projection=${CourseService.PROJECTION}`)
   }
+
+  public patchInstructor(courseId, userId) {
+    const headers = new HttpHeaders({'Content-Type': 'text/uri-list'});
+    return this.http.patch(_url_api + `/${courseId}/instructors`,
+    _url_api + `/user/${userId}`, { headers });
+  }
+
+  public deleteInstructor(courseId, userId) {
+    return this.http.delete(_url_api + `/${courseId}/instructors/${userId}`);
+  }
+
 }

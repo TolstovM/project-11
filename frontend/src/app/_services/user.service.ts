@@ -14,6 +14,7 @@ export class UserService {
   public static UPDATE_ROLES_URL = '/user/update/authorities';
   public static INLINE = 'projection=inlineUserWithRoles';
   public static INVITE_PATH = '/user/invite';
+  public static FIND_BY_EMAIL_STARTING_WITH = `/user/search/findAllByEmailStartingWith?email=`;
 
   constructor(private http: HttpClient) { }
 
@@ -35,5 +36,9 @@ export class UserService {
 
   getInviteCode() {
     return this.http.get(_url + UserService.INVITE_PATH);
+  }
+
+  findUsersByEmailStartingWith(email: string) {
+    return this.http.get(_url + `/user/search/findAllByEmailStartingWith?email=${email}&${UserService.INLINE}`);
   }
 }
