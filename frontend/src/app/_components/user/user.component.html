@@ -1,0 +1,22 @@
+<div class="mdl-card stock-card mdl-shadow--2dp" style="width:100%;">
+    <span>
+        <div class="mdl-card__title">
+            <div>
+                <h4 style="margin: 0;">
+                    {{user?.email}}<br />
+                    {{user?.name}}<br />
+                </h4>
+                <br />
+                <div>
+                    <label>
+                        <input [(ngModel)]="isAdmin" type="checkbox"> - Admin
+                    </label> <br />
+                    <label>
+                        <input [(ngModel)]="isInstructor" type="checkbox"> - Instructor
+                    </label><br />
+                    <button (click)="onClick()">submit</button>
+                </div>
+            </div>
+        </div>
+    </span>
+</div>

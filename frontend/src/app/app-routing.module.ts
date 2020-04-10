@@ -7,11 +7,23 @@ import { SignupComponent } from './_components/signup/signup.component';
 import {ChangeProfileComponent} from "./_components/change-profile/change-profile.component";
 import {AppComponent} from "./app.component";
 
+import {CourseListComponent} from "./_components/course-list/course-list.component";
+import {CourseComponent} from "./_components/course/course.component";
+import {CourseAddFormComponent} from "./_components/course-add-form/course-add-form.component";
+import {LessonAddFormComponent} from "./_components/lesson-add-form/lesson-add-form.component";
+import { UsersComponent } from './_components/users/users.component';
+
+
 
 const routes: Routes = [
 
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/login', component: LoginComponent },
+  {
+    path: 'user',
+    component: UsersComponent,
+    data: { roles: [Role.ROLE_ADMIN] }
+  },
   {
     path: 'user/me',
     component: MeComponent,
@@ -20,7 +32,11 @@ const routes: Routes = [
   {
     path: 'user/me/changeProfile',
     component: ChangeProfileComponent
-  }
+  },
+  { path: 'courses', component: CourseListComponent },
+  { path: 'course/:name', component: CourseComponent },
+  { path: 'add/course', component: CourseAddFormComponent },
+  { path: 'add/lesson/:courseName', component: LessonAddFormComponent }
 ];
 
 @NgModule({

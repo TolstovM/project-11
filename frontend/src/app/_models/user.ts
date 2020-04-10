@@ -2,7 +2,6 @@ import { Role } from "./role";
 
 
 export class User {
-    email:string;
-    name:string;
+    uuid:string;
     roles: Array<Role>;
 }

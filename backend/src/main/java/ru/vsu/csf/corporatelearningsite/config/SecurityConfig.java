@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.vsu.csf.corporatelearningsite.model.AppRole;
 import ru.vsu.csf.corporatelearningsite.security.RestAuthenticationEntryPoint;
 import ru.vsu.csf.corporatelearningsite.security.TokenAuthenticationFilter;
 import ru.vsu.csf.corporatelearningsite.security.TokenProvider;
@@ -84,6 +85,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()
+                .antMatchers("/api/user/me")
+                .hasRole("USER")
+                .antMatchers("/api/user/**")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated();
 
