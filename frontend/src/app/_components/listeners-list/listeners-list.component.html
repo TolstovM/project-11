@@ -1,0 +1,15 @@
+<div>
+    <h3>Список слушателей курса</h3>
+    <table>
+        <thead>
+            <th>Email</th>
+            <th>Имя</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let listener of listeners">
+                <td>{{ listener.email }}</td>
+                <td>{{ listener.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
