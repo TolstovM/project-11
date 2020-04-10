@@ -4,11 +4,14 @@ import { Observable } from 'rxjs';
 import {Course} from "../_models/course";
 
 let _url: string = "http://localhost:8081/course";
+let _url_api: string = "http://localhost:8081/api/course";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
+
+  public static PROJECTION:string = "inlineCourseEagerProjection";
 
   constructor(private http: HttpClient) {
   }
@@ -27,5 +30,13 @@ export class CourseService {
 
   public getCourseLessons(name): any {
     return this.http.get(_url + `/lessons/${name}`);
+  }
+
+  public getAll() {
+    return this.http.get(_url_api);
+  }
+
+  public getWithInstructorsAndListenersById(id: number) {
+    return this.http.get(_url_api + `/${id}?projection=${CourseService.PROJECTION}`)
   }
 }

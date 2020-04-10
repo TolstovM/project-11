@@ -9,9 +9,7 @@ import org.hibernate.type.UUIDBinaryType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 @Data
@@ -44,9 +42,11 @@ public class User {
             )
     private Set<Role> roles;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "instructors")
-    private Set<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "listener", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ListenerOnCourse> onCourses;
 
