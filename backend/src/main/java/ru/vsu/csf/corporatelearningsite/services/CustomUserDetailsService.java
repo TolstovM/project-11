@@ -40,6 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
+    //method name??
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_WITH_EMAIL_EXCEPTION_MESSAGE, email)));
@@ -55,6 +56,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public Optional<User> findById(UUID id) {
         return userRepository.findById(id);
+    }
+
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NAME, FIELD_NAME_ID, email));
     }
 
     public void updateAuthorities(UpdateAuthoritiesRequest request) {
@@ -83,6 +90,4 @@ public class CustomUserDetailsService implements UserDetailsService {
             roles.forEach(user::removeRole);
         }
     }
-
-
 }
