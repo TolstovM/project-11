@@ -1,1 +1,31 @@
-{{user | json}}
+<div class="container" *ngIf="user; else loggedOut">
+  <header class="jumbotron">
+    <h3>
+      Личный кабинет
+    </h3>
+  </header>
+  <p>
+  </p>
+  <p>
+    <strong>Email:</strong>
+    {{ user.email }}
+<!--    <span *ngIf="emailConfirmed">Адрес почты подтвержден</span>-->
+<!--    <span *ngIf="!emailConfirmed">Адрес почты не подтвержден. Перейдите по ссылке, отправленной Вам в письме,-->
+<!--    чтобы иметь возможность совершать покупки на сайте</span>-->
+  </p>
+
+<!--  <ul>-->
+<!--    <li *ngFor="let role of user.roles">-->
+<!--      <span *ngIf="role === 'ROLE_USER'">Вы вошли как пользователь</span>-->
+<!--      <span *ngIf="role === 'ROLE_ADMIN'">Вы вошли как администратор</span>-->
+<!--      <span *ngIf="role === 'ROLE_INSTRUCTOR'">Вы вошли как администратор</span>-->
+<!--    </li>-->
+<!--  </ul>-->
+</div>
+
+<ng-template #loggedOut>
+  Please login.
+</ng-template>
+
+<button routerLink="/user/me/changeProfile" [queryParams]="{'name':user?.name,'email':user?.email}" class="btn-primary float-left">Редактировать профиль</button>
+<button routerLink="/user/me/changeProfile" [queryParams]="{'password':'true'}" class="btn-primary float-right">Сменить пароль</button>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,25 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
 
+  message: string;
+  querySubscription: Subscription;
+
   constructor(private fb: FormBuilder,
-    private authService: AuthService, 
-    private router: Router) { }
+    private authService: AuthService,
+    private router: Router, private route: ActivatedRoute) {
+    this.querySubscription = route.queryParams.subscribe(
+      (queryParam: any) => {
+
+        this.message = queryParam['message'];
+
+
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required,Validators.email]],
       password: ['', Validators.required],
     });
   }

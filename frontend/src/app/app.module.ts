@@ -15,18 +15,20 @@ import { AuthGuard } from './_helpers/auth.guard';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChangeProfileComponent } from './_components/change-profile/change-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    MeComponent
+    MeComponent,
+    ChangeProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, 
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
