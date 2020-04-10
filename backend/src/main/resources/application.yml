@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/project_11?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: pass
+    password: root
 
   jpa:
     show-sql: true

@@ -13,6 +13,7 @@ import ru.vsu.csf.corporatelearningsite.model.Role;
 import ru.vsu.csf.corporatelearningsite.model.User;
 import ru.vsu.csf.corporatelearningsite.payload.LoginRequest;
 import ru.vsu.csf.corporatelearningsite.payload.SignUpRequest;
+import ru.vsu.csf.corporatelearningsite.payload.UpdateUserRequest;
 import ru.vsu.csf.corporatelearningsite.repositories.RoleRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
 import ru.vsu.csf.corporatelearningsite.security.TokenProvider;
@@ -73,6 +74,20 @@ public class AuthService {
             throw new BadRequestException(CODE_DOES_NOT_EXIST_EXCEPTION_MESSAGE);
         }
         return userOptional.get();
+    }
+
+    public Boolean updateUser(UpdateUserRequest request, UUID id){
+        if(request.getName()!=null && request.getEmail()!=null){
+            System.out.println(request.getName());
+            System.out.println(request.getEmail());
+            userRepository.updateUser(request.getName(),request.getEmail(),id);
+            return true;
+        }
+        else if(request.getPassword()!=null){
+            userRepository.changePassword(passwordEncoder.encode(request.getPassword()),id);
+            return true;
+        }
+        return false;
     }
 
 }
