@@ -20,6 +20,11 @@ public class ListenerOnCourseId implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID listenerId;
 
+    public ListenerOnCourseId(Long courseId, UUID listenerId){
+        this.courseId = courseId;
+        this.listenerId = listenerId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -32,6 +32,10 @@ export class CourseService {
     return this.http.get(_url + `/lessons/${name}`);
   }
 
+  public addListener(email: any, id: string) {
+    return this.http.post(_url+'/addListener',{"email":email,"id":id});
+  }
+
   public getAll() {
     return this.http.get(_url_api);
   }

@@ -43,6 +43,7 @@ import { ListenersListComponent } from './_components/listeners-list/listeners-l
     CourseAddFormComponent,
     CourseComponent,
     LessonAddFormComponent,
+    UsersComponent,
     UserComponent,
     InviteComponent,
     UsersComponent,

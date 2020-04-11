@@ -19,4 +19,6 @@ import java.util.Optional;
 @RepositoryRestResource(collectionResourceRel = "courses", path = "course", excerptProjection = CourseWithListenersAndInstructors.class)
 public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByName(String name);
+
+
 }

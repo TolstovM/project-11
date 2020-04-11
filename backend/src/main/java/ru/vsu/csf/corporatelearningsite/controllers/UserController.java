@@ -28,6 +28,7 @@ import java.util.UUID;
 public class UserController {
 
     public static final String CURRENT_USER_PATH = "/me";
+    public static final String CURRENT_USER_CHANGE_PROFILE_PATH = "/me/change";
     public static final String URL = "/api/user";
     public static final String UPDATE_AUTHORITIES_PATH = "/update/authorities";
     public static final String UPDATE_AUTHORITIES_RESPONSE_MESSAGE = "User's authorities updated.";
@@ -54,17 +55,17 @@ public class UserController {
     }
 
     @PostMapping(CURRENT_USER_CHANGE_PROFILE_PATH)
-    public Map<String,String> update(@RequestBody UpdateUserRequest request)
-    {
-        Map<String,String> res = new HashMap<>();
+    public Map<String,String> update(@RequestBody UpdateUserRequest request) {
+        Map<String, String> res = new HashMap<>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name=auth.getName();
-        User user= userDetailsService.findByEmail(name);
-        if(userService.updateUser(request,user.getId()))
-            res.put("message","Успешное изменение данных");
+        String name = auth.getName();
+        User user = userDetailsService.findByEmail(name);
+        if (userService.updateUser(request, user.getId()))
+            res.put("message", "Успешное изменение данных");
         else
-            res.put("message","Ошибка");
+            res.put("message", "Ошибка при попытке изменить данные");
         return res;
+    }
 
     @PatchMapping(UPDATE_AUTHORITIES_PATH)
     public ResponseEntity<?> updateAuthorities(@Valid @RequestBody UpdateAuthoritiesRequest updateAuthoritiesRequest) {
