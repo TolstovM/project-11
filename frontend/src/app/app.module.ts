@@ -25,6 +25,12 @@ import {ToastrModule} from "ngx-toastr";
 import { UsersComponent } from './_components/users/users.component';
 import { UserComponent } from './_components/user/user.component';
 import { InviteComponent } from './_components/invite/invite.component';
+import { AdminCoursesComponent } from './_components/admin-courses/admin-courses.component';
+import { AdminCourseComponent } from './_components/admin-course/admin-course.component';
+import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
+import { InstructorsListComponent } from './_components/instructors-list/instructors-list.component';
+import { InstructorsSearchComponent } from './_components/instructors-search/instructors-search.component';
+import { ListenersListComponent } from './_components/listeners-list/listeners-list.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +45,14 @@ import { InviteComponent } from './_components/invite/invite.component';
     LessonAddFormComponent,
     UsersComponent,
     UserComponent,
-    InviteComponent
+    InviteComponent,
+    UsersComponent,
+    AdminCoursesComponent,
+    AdminCourseComponent,
+    AdminCourseDetailsComponent,
+    InstructorsListComponent,
+    InstructorsSearchComponent,
+    ListenersListComponent
   ],
   imports: [
     BrowserModule,
