@@ -49,7 +49,7 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping
+    @PostMapping("/addListener")
     public ResponseEntity<?> addListener(@RequestBody AddListenerRequest request){
         courseService.addListener(request.getEmail(),request.getId());
         return ResponseEntity.ok(new ApiResponse(true, "User successfully added"));
