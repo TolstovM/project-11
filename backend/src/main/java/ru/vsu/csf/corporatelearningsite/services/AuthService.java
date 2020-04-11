@@ -78,8 +78,6 @@ public class AuthService {
 
     public Boolean updateUser(UpdateUserRequest request, UUID id){
         if(request.getName()!=null && request.getEmail()!=null){
-            System.out.println(request.getName());
-            System.out.println(request.getEmail());
             userRepository.updateUser(request.getName(),request.getEmail(),id);
             return true;
         }
