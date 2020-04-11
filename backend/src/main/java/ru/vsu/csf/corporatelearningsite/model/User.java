@@ -11,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.*;
 
-
 @Data
 @NoArgsConstructor
 @Entity
@@ -47,7 +46,7 @@ public class User {
     private List<Course> courses = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "listener", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "listener", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<ListenerOnCourse> onCourses;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Homework {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("homeworkId")
-    private HomeTask homeTask;
+    private Lesson lesson;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")

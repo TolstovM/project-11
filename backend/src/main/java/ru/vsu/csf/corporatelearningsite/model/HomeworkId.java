@@ -17,8 +17,8 @@ public class HomeworkId implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID userId;
 
-    @Column(name = "homework_id")
-    private Long homeworkId;
+    @Column(name = "lesson_id")
+    private Long lessonId;
 
     @Override
     public boolean equals(Object o) {
@@ -26,11 +26,11 @@ public class HomeworkId implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         HomeworkId that = (HomeworkId) o;
         return Objects.equals(userId, that.userId) &&
-                Objects.equals(homeworkId, that.homeworkId);
+                Objects.equals(lessonId, that.lessonId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, homeworkId);
+        return Objects.hash(userId, lessonId);
     }
 }

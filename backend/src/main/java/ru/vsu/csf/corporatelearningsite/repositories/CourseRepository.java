@@ -14,11 +14,14 @@ import ru.vsu.csf.corporatelearningsite.model.projections.UserWithRolesProjectio
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RepositoryRestResource(collectionResourceRel = "courses", path = "course", excerptProjection = CourseWithListenersAndInstructors.class)
 public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByName(String name);
 
-
+    @RestResource()
+    @Query("select c from Course c inner join ListenerOnCourse lc on lc.id.courseId = c.id where lc.id.listenerId=:uuid")
+    List<Course> findAllByUserId(@Param("uuid") UUID uuid);
 }

@@ -2,7 +2,7 @@ package ru.vsu.csf.corporatelearningsite.model.projections;
 
 import org.springframework.data.rest.core.config.Projection;
 import ru.vsu.csf.corporatelearningsite.model.Course;
-import ru.vsu.csf.corporatelearningsite.model.User;
+import ru.vsu.csf.corporatelearningsite.model.ListenerOnCourse;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public interface CourseWithListenersAndInstructors {
     String getName();
     String getDescription();
     List<UserWithRolesProjection> getInstructors();
-    List<User> getListeners();
+    List<ListenerProjection> getListeners();
 }

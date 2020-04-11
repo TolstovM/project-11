@@ -31,6 +31,8 @@ import { AdminCourseDetailsComponent } from './_components/admin-course-details/
 import { InstructorsListComponent } from './_components/instructors-list/instructors-list.component';
 import { InstructorsSearchComponent } from './_components/instructors-search/instructors-search.component';
 import { ListenersListComponent } from './_components/listeners-list/listeners-list.component';
+import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
+import { MyCourseComponent } from './_components/my-course/my-course.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ListenersListComponent } from './_components/listeners-list/listeners-l
     AdminCourseDetailsComponent,
     InstructorsListComponent,
     InstructorsSearchComponent,
-    ListenersListComponent
+    ListenersListComponent,
+    MyCoursesComponent,
+    MyCourseComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
 @Embeddable
 public class ListenerOnCourseId implements Serializable {
 
