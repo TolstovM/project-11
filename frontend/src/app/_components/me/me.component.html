@@ -31,6 +31,10 @@
 <a routerLink="/courses" class="btn btn-primary">Просмотреть</a></h1>
 
 <h4>Кнопки админа</h4>
-    <a class="btn btn-primary" href="/user">Пользователи</a>
+<div>
+  <a class="btn btn-primary" href="/user">Пользователи</a>
+  <a class="btn btn-primary" href="/admin/course">Курсы</a>
+</div>
 <button routerLink="/user/me/changeProfile" [queryParams]="{'name':user?.name,'email':user?.email}" class="btn-primary float-left">Редактировать профиль</button>
 <button routerLink="/user/me/changeProfile" [queryParams]="{'password':'true'}" class="btn-primary float-right">Сменить пароль</button>
+
