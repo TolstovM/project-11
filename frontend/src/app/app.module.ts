@@ -12,6 +12,7 @@ import { UserService } from './_services/user.service';
 import { AuthInterceptor } from './_helpers/auth.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AuthGuard } from './_helpers/auth.guard';
+import { HomeworkService } from './_services/homework.service';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +34,11 @@ import { AdminCourseDetailsComponent } from './_components/admin-course-details/
 import { InstructorsListComponent } from './_components/instructors-list/instructors-list.component';
 import { InstructorsSearchComponent } from './_components/instructors-search/instructors-search.component';
 import { ListenersListComponent } from './_components/listeners-list/listeners-list.component';
+import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
+import { MyCourseComponent } from './_components/my-course/my-course.component';
+import { CommentService } from './_services/comment.service';
+import { from } from 'rxjs';
+import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +61,11 @@ import { ListenersListComponent } from './_components/listeners-list/listeners-l
     AdminCourseDetailsComponent,
     InstructorsListComponent,
     InstructorsSearchComponent,
-    ListenersListComponent
+    ListenersListComponent,
+    MyCoursesComponent,
+    MyCourseComponent,
+    LessonComponent,
+    MyLessonComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +81,8 @@ import { ListenersListComponent } from './_components/listeners-list/listeners-l
     UserService,
     AuthGuard,
     CourseService,
+    HomeworkService,
+    CommentService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

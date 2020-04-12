@@ -9,8 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "roles", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class Role {
@@ -26,6 +24,33 @@ public class Role {
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public AppRole getName() {
+        return name;
+    }
+
+    public void setName(AppRole name) {
+        this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public Role() {
+    }
 
     public Role(Long id, AppRole name) {
         this.id = id;

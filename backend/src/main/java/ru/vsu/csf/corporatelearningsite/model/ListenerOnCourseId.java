@@ -1,6 +1,5 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
-import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -9,7 +8,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@Data
 @Embeddable
 public class ListenerOnCourseId implements Serializable {
 
@@ -19,6 +17,25 @@ public class ListenerOnCourseId implements Serializable {
     @Column(name = "listener_Id")
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID listenerId;
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public UUID getListenerId() {
+        return listenerId;
+    }
+
+    public void setListenerId(UUID listenerId) {
+        this.listenerId = listenerId;
+    }
+
+    public ListenerOnCourseId() {
+    }
 
     public ListenerOnCourseId(Long courseId, UUID listenerId){
         this.courseId = courseId;

@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vsu.csf.corporatelearningsite.model.Course;
 import ru.vsu.csf.corporatelearningsite.model.User;
+import ru.vsu.csf.corporatelearningsite.model.projections.UserProjection;
 import ru.vsu.csf.corporatelearningsite.payload.UpdateUserRequest;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -24,7 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
-@RepositoryRestResource(collectionResourceRel = UserRepository.COLLECTION_REL, path = UserRepository.PATH, excerptProjection = UserWithRolesProjection.class)
+@RepositoryRestResource(collectionResourceRel = UserRepository.COLLECTION_REL, path = UserRepository.PATH, excerptProjection = UserProjection.class)
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     String COLLECTION_REL = "users";
@@ -38,6 +40,10 @@ public interface UserRepository extends JpaRepository<User, UUID> {
   
     @RestResource()
     List<User> findAllByEmailStartingWith(@Param("email") String courseId);
+
+    @RestResource()
+    @Query("select u from User u inner join u.courses c where c.id=:courseId")
+    List<User> findInstructorsByCourseId(@Param("courseId") Long courseId);
 
     Optional<User> findByName(String name);
 

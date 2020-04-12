@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.Material;
 import ru.vsu.csf.corporatelearningsite.services.LessonService;
-
 import java.util.List;
 import java.util.Optional;
 
+//TODO delete controller
 @RestController
 @RequestMapping("/lesson")
 public class LessonController {

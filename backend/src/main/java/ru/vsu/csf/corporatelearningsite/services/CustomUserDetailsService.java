@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.AppRole;
+import ru.vsu.csf.corporatelearningsite.model.Course;
 import ru.vsu.csf.corporatelearningsite.model.Role;
 import ru.vsu.csf.corporatelearningsite.model.User;
 import ru.vsu.csf.corporatelearningsite.payload.UpdateAuthoritiesRequest;
+import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.RoleRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
@@ -31,11 +33,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository, RoleRepository roleRepository) {
+    public CustomUserDetailsService(
+            UserRepository userRepository,
+            RoleRepository roleRepository,
+            CourseRepository courseRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -64,6 +71,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NAME, FIELD_NAME_ID, email));
     }
 
+    @Transactional
     public void updateAuthorities(UpdateAuthoritiesRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NAME, FIELD_NAME_ID, request.getUserId()));

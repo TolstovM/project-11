@@ -15,6 +15,10 @@ import { UsersComponent } from './_components/users/users.component';
 import {LessonComponent} from "./_components/lesson/lesson.component";
 import { AdminCoursesComponent } from './_components/admin-courses/admin-courses.component';
 import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
+import { MyCourseComponent } from './_components/my-course/my-course.component';
+import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
+import { LessonComponent } from './_components/lesson/lesson.component';
+import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 
 
 
@@ -50,6 +54,21 @@ const routes: Routes = [
   { path: 'course/:name', component: CourseComponent },
   { path: 'add/course', component: CourseAddFormComponent },
   { path: 'add/lesson/:courseName', component: LessonAddFormComponent },
+  {
+      path: 'user/me/course',
+      component: MyCoursesComponent,
+      data: { roles: [Role.ROLE_USER] }
+  },
+  {
+    path: 'user/me/course/:id',
+    component: MyCourseComponent,
+    data: { roles: [Role.ROLE_USER] }
+  },
+  {
+    path: 'user/me/course/:id/lessons/:lessonId',
+    component: MyLessonComponent,
+    data: { roles: [Role.ROLE_USER] }
+  },
   { path: 'lesson/:name', component: LessonComponent }
 ];
 

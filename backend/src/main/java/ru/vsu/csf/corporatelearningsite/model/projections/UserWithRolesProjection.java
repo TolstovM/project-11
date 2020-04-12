@@ -5,6 +5,7 @@ import ru.vsu.csf.corporatelearningsite.model.Role;
 import ru.vsu.csf.corporatelearningsite.model.User;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Projection(name = UserWithRolesProjection.INLINE_USER_WITH_ROLES, types = User.class)
@@ -14,5 +15,5 @@ public interface UserWithRolesProjection {
     UUID getId();
     String getName();
     String getEmail();
-    List<Role> getRoles();
+    Set<Role> getRoles();
 }

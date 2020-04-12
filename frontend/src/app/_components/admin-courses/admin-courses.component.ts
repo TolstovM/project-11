@@ -13,7 +13,7 @@ export class AdminCoursesComponent implements OnInit {
   constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
-    this.courseService.getAll()
+    this.courseService.getAll(CourseService.COURSE_PROJECTION)
       .subscribe(data => this.coursesWrapped = data);
   }
 

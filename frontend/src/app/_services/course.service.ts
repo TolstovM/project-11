@@ -11,8 +11,10 @@ let _url_api: string = "http://localhost:8081/api/course";
 })
 export class CourseService {
 
-  public static PROJECTION:string = "inlineCourseEagerProjection";
-
+  public static COURSE_PROJECTION = "courseProjection";
+  public static COURSE_WITH_LESSONS_PROJECTION = "courseWithLessonsProjection";
+  public static COURSE_WITH_LISTENERS_PROJECTION = "courseWithListenersProjection";
+  
   constructor(private http: HttpClient) {
   }
 
@@ -36,12 +38,8 @@ export class CourseService {
     return this.http.post(_url+'/addListener',{"email":email,"id":id});
   }
 
-  public getAll() {
-    return this.http.get(_url_api);
-  }
-
-  public getWithInstructorsAndListenersById(id: number) {
-    return this.http.get(_url_api + `/${id}?projection=${CourseService.PROJECTION}`)
+  public getAll(projection: string) {
+    return this.http.get(_url_api + `?projection=${projection}`);
   }
 
   public patchInstructor(courseId, userId) {
@@ -52,6 +50,14 @@ export class CourseService {
 
   public deleteInstructor(courseId, userId) {
     return this.http.delete(_url_api + `/${courseId}/instructors/${userId}`);
+  }
+
+  public findAllForUser(userId, projection) {
+    return this.http.get(_url_api + `/search/findAllByUserId?uuid=${userId}&projection=${projection}`);
+  }
+
+  public findById(courseId, projection: string) {
+    return this.http.get(_url_api + `/${courseId}?projection=${projection}`);
   }
 
 }
