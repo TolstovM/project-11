@@ -56,6 +56,8 @@ public class CourseService {
         return courseRepository.findByName(name);
     }
 
+
+    //to-delete
     public List<Lesson> getLessons(String name) {
         log.info("IN get - course with name: {} successfully get", name);
         if(courseRepository.findByName(name).isPresent()) {

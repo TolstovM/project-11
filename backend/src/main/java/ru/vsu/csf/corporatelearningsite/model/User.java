@@ -49,11 +49,11 @@ public class User {
     @OneToMany(mappedBy = "listener", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<ListenerOnCourse> onCourses;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Homework> homeworkList;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private Set<Homework> homeworkList;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private Set<Comment> comments;
+//    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+//    private Set<Comment> comments;
 
     public User(UUID id, String email, String name, String password, Set<Role> roles) {
         this.id = id;
@@ -61,6 +61,10 @@ public class User {
         this.name = name;
         this.password = password;
         this.roles = roles;
+    }
+
+    public User(UUID id) {
+        this.id = id;
     }
 
     public void addRole(Role role) {

@@ -24,4 +24,9 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @RestResource()
     @Query("select c from Course c inner join ListenerOnCourse lc on lc.id.courseId = c.id where lc.id.listenerId=:uuid")
     List<Course> findAllByUserId(@Param("uuid") UUID uuid);
+
+    @Query("select case when count(c)>0 then true else false end from Course c " +
+            "inner join Lesson l on c.id = l.course.id inner join ListenerOnCourse lc on c.id = lc.course.id " +
+            "where lc.listener.id=:userId and l.id=:lessonId")
+    Boolean isUserOnCourse(Long lessonId, UUID userId);
 }

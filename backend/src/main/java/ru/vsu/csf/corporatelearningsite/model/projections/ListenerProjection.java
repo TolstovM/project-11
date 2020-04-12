@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface ListenerProjection {
     Boolean getUserMark();
-    User getListener();
+    UserWithRolesProjection getListener();
     //User getListener();
 }
