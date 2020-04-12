@@ -34,7 +34,7 @@ public class CourseController {
     }
 
     @GetMapping("/{name}")
-    public Optional<Course> getCourses(@PathVariable("name") String name){
+    public Optional<Course> getCourse(@PathVariable("name") String name){
         return courseService.get(name);
     }
 
