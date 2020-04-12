@@ -10,6 +10,7 @@ import {CourseComponent} from "./_components/course/course.component";
 import {CourseAddFormComponent} from "./_components/course-add-form/course-add-form.component";
 import {LessonAddFormComponent} from "./_components/lesson-add-form/lesson-add-form.component";
 import { UsersComponent } from './_components/users/users.component';
+import {LessonComponent} from "./_components/lesson/lesson.component";
 
 
 
@@ -29,11 +30,12 @@ const routes: Routes = [
   { path: 'courses', component: CourseListComponent },
   { path: 'course/:name', component: CourseComponent },
   { path: 'add/course', component: CourseAddFormComponent },
-  { path: 'add/lesson/:courseName', component: LessonAddFormComponent }
+  { path: 'add/lesson/:courseName', component: LessonAddFormComponent },
+  { path: 'lesson/:name', component: LessonComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

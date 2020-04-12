@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
+import ru.vsu.csf.corporatelearningsite.model.Material;
 import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.LessonRepository;
 
@@ -33,5 +34,18 @@ public class LessonService {
             lesson.setCourse(courseRepository.findByName(courseName).get());
         lessonRepository.save(lesson);
         log.info("IN add - lesson with id: {} successfully add", lesson.getId());
+    }
+
+    public Optional<Lesson> get(String name) {
+        log.info("IN get - lesson with name: {} successfully get", name);
+        return lessonRepository.findByName(name);
+    }
+
+    public List<Material> getMaterials(String name) {
+        if(lessonRepository.findByName(name).isPresent()) {
+            return lessonRepository.findByName(name).get().getMaterials();
+        }
+        else
+            return new ArrayList<>();
     }
 }

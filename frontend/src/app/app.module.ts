@@ -20,10 +20,12 @@ import { CourseAddFormComponent } from './_components/course-add-form/course-add
 import { CourseComponent } from './_components/course/course.component';
 import { LessonAddFormComponent } from './_components/lesson-add-form/lesson-add-form.component';
 import {CourseService} from "./_services/course.service";
-import {ToastrModule} from "ngx-toastr";
 import { UsersComponent } from './_components/users/users.component';
 import { UserComponent } from './_components/user/user.component';
 import { InviteComponent } from './_components/invite/invite.component';
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { LessonComponent } from './_components/lesson/lesson.component';
 
 @NgModule({
   declarations: [
@@ -34,10 +36,11 @@ import { InviteComponent } from './_components/invite/invite.component';
     CourseListComponent,
     CourseAddFormComponent,
     CourseComponent,
-    LessonAddFormComponent
+    LessonAddFormComponent,
     UsersComponent,
     UserComponent,
-    InviteComponent
+    InviteComponent,
+    LessonComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { InviteComponent } from './_components/invite/invite.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
   providers: [
