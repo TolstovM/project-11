@@ -18,6 +18,8 @@ export class MeComponent implements OnInit {
     this.userService.getMe()
       .subscribe(data => this.user = data);
       this.currentUser = this.authService.currentUserValue;
+      console.log(this.currentUser);
+      console.log(this.currentUser["roles"]);
   }
 
 

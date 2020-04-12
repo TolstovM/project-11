@@ -8,6 +8,8 @@ import {Course} from "../../_models/course";
 import {Lesson} from "../../_models/lesson";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
+import {UserService} from "../../_services/user.service";
+import {User} from "../../_models/user";
 
 @Component({
   selector: 'app-course',
@@ -16,8 +18,9 @@ import {ToastrService} from "ngx-toastr";
 })
 export class CourseComponent implements OnInit {
 
-  addListenerForm: FormGroup;
+  form: FormGroup;
 
+  users: Object = {} as User[];
   name: string;
   course: Course = {} as Course;
   lessons: Lesson[];
@@ -28,7 +31,8 @@ export class CourseComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -37,13 +41,12 @@ export class CourseComponent implements OnInit {
       this.name = params['name'];
       this.loadCourse(this.name);
     });
-    this.addListenerForm = this.formBuilder.group({
-        email:['', Validators.required]
-    }
-    );
+    this.form = this.formBuilder.group({
+      email: ['', Validators.required]
+    })
   }
 
-  get aControls() { return this.addListenerForm.controls; }
+  get aControls() { return this.form.controls; }
 
   loadCourse(name: string) {
     this.courseService.getCourse(name)
@@ -65,19 +68,23 @@ export class CourseComponent implements OnInit {
         });
   }
 
-  addListener() {
-    if(this.addListenerForm.invalid){
-      return;
-    }
-    else{
-      this.courseService.addListener(this.aControls.email.value, this.course.id).pipe(first())
+  addListener(email: string) {
+      this.courseService.addListener(email, this.course.id).pipe(first())
         .subscribe(
           () => {
             this.toastr.success("Вы успешно добавили слушателя на курс");
           });
 
 
-    }
+    // }
 
+  }
+
+  onClick() {
+    const value = this.form.value;
+    this.userService.findUsersByEmailStartingWith(value.email)
+      .subscribe(data =>{
+        this.users = data;
+      } )
   }
 }

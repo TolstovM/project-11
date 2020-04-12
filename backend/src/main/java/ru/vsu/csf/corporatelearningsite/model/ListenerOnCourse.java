@@ -1,3 +1,4 @@
+
 package ru.vsu.csf.corporatelearningsite.model;
 
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 
 @NoArgsConstructor
+
 @Entity
 @Table(name = "listener_on_course")
 public class ListenerOnCourse {
@@ -27,11 +29,13 @@ public class ListenerOnCourse {
     @MapsId("listenerId")
     private User listener;
 
-    public ListenerOnCourse(Long courseId, UUID listenerId){
-        this.userMark = false;
-        this.id = new ListenerOnCourseId(courseId,listenerId);
-    }
 
+    public ListenerOnCourse(ListenerOnCourseId listenerOnCourseId, Course course, User user){
+        this.userMark = false;
+        this.id = listenerOnCourseId;
+        this.course = course;
+        this.listener = user;
+    }
 
 
 }

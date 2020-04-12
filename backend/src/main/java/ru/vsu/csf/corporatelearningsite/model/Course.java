@@ -1,6 +1,7 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "courses")
 public class Course {
 
@@ -21,6 +23,12 @@ public class Course {
 
     @Column(nullable = false)
     private String description;
+
+    public Course(Long id){
+        this.id = id;
+    }
+
+
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(

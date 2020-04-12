@@ -1,5 +1,6 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class ListenerOnCourseId implements Serializable {
 
@@ -22,10 +24,7 @@ public class ListenerOnCourseId implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID listenerId;
 
-    public ListenerOnCourseId(Long courseId, UUID listenerId){
-        this.courseId = courseId;
-        this.listenerId = listenerId;
-    }
+
 
     @Override
     public boolean equals(Object o) {
