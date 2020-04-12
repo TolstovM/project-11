@@ -1,6 +1,8 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -21,6 +23,7 @@ public class Material {
     @Column(nullable = true)
     private String url;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id", nullable = false)
     private Lesson lesson;
@@ -63,5 +66,14 @@ public class Material {
 
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
+    }
+
+    public Material() {
+    }
+
+    public Material(String name, String description, String url) {
+        this.name = name;
+        this.description = description;
+        this.url = url;
     }
 }

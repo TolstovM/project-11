@@ -22,10 +22,12 @@ import { CourseAddFormComponent } from './_components/course-add-form/course-add
 import { CourseComponent } from './_components/course/course.component';
 import { LessonAddFormComponent } from './_components/lesson-add-form/lesson-add-form.component';
 import {CourseService} from "./_services/course.service";
-import {ToastrModule} from "ngx-toastr";
 import { UsersComponent } from './_components/users/users.component';
 import { UserComponent } from './_components/user/user.component';
 import { InviteComponent } from './_components/invite/invite.component';
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { LessonComponent } from './_components/lesson/lesson.component';
 import { AdminCoursesComponent } from './_components/admin-courses/admin-courses.component';
 import { AdminCourseComponent } from './_components/admin-course/admin-course.component';
 import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
@@ -34,9 +36,9 @@ import { InstructorsSearchComponent } from './_components/instructors-search/ins
 import { ListenersListComponent } from './_components/listeners-list/listeners-list.component';
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
 import { MyCourseComponent } from './_components/my-course/my-course.component';
-import { LessonComponent } from './_components/lesson/lesson.component';
 import { CommentService } from './_services/comment.service';
 import { from } from 'rxjs';
+import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { from } from 'rxjs';
     UsersComponent,
     UserComponent,
     InviteComponent,
+    LessonComponent,
     UsersComponent,
     AdminCoursesComponent,
     AdminCourseComponent,
@@ -61,7 +64,8 @@ import { from } from 'rxjs';
     ListenersListComponent,
     MyCoursesComponent,
     MyCourseComponent,
-    LessonComponent
+    LessonComponent,
+    MyLessonComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +73,7 @@ import { from } from 'rxjs';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
   providers: [

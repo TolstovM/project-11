@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { LessonService } from 'src/app/_services/lesson.service';
-import { HomeworkService } from 'src/app/_services/homework.service';
-import { forkJoin } from 'rxjs';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CommentService } from 'src/app/_services/comment.service';
+import {Course} from "../../_models/course";
+import {Lesson} from "../../_models/lesson";
+import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {first} from "rxjs/operators";
+import {LessonService} from "../../_services/lesson.service";
+import {MaterialService} from "../../_services/material.service";
+import {Material} from "../../_models/material";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-lesson',
@@ -12,37 +15,78 @@ import { CommentService } from 'src/app/_services/comment.service';
   styleUrls: ['./lesson.component.css']
 })
 export class LessonComponent implements OnInit {
-  
-  id;
-  lesson;
-  homework;
-  form;
+
+  name: string;
+  lesson: Lesson = {} as Lesson;
+  private sub: Subscription;
+  fileToUpload: File = null;
+  materials: Material[];
+  downloadUrl: string;
+
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private lessonService: LessonService,
-    private homeworkService: HomeworkService,
-    private fb: FormBuilder,
-    private commentService: CommentService
+    private toastr: ToastrService,
+    private materialService: MaterialService
   ) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      text: ['', Validators.required]
+    this.sub = this.route.params.subscribe(params => {
+      this.name = params['name'];
+      this.loadLesson(this.name);
     });
-    this.id = this.route.snapshot.paramMap.get('lessonId');
-    let llesson = this.lessonService.findById(this.id, LessonService.LESSON_WITH_MATERIALS_PROJECTION);
-    let lhomework = this.homeworkService.findByByLessonId(this.id);
-    forkJoin([llesson, lhomework])
-    .subscribe(res => {
-      this.lesson = res[0];
-      this.homework = res[1];
+    this.downloadUrl = LessonService.DOWNLOAD_URL_MATERIAL;
+  }
+
+  loadLesson(name: string) {
+    this.lessonService.getLesson(name)
+      .pipe(first())
+      .subscribe( res => {
+          this.lesson = res;
+        },
+        error => {
+          console.log(error);
+        });
+    this.lessonService.getLessonMaterials(name)
+      .pipe(first())
+      .subscribe( res => {
+          this.materials = res;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  uploadFileToActivity() {
+    this.materialService.postFile(this.fileToUpload, this.name).subscribe(data => {
+      this.toastr.success("Thank you! You're successfully upload material.");
+      this.reloadComponent();
+    }, error => {
+      console.log(error);
     });
   }
 
-  send() {
-    var value = this.form.value;
-    this.commentService.send(this.id, this.homework.id.userId, value.text)
-      .subscribe(() => this.form.text.value = '');
+  onSubmit() {
+    this.uploadFileToActivity();
   }
 
+  reloadComponent() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/lesson', this.name]);
+  }
+
+  delete(id) {
+    this.materialService.delete(id).subscribe(data => {
+      this.toastr.success("You're successfully delete material.");
+      this.reloadComponent();
+    }, error => {
+      console.log(error);
+    });
+  }
 }
