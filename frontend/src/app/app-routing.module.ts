@@ -16,6 +16,7 @@ import { AdminCoursesComponent } from './_components/admin-courses/admin-courses
 import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
 import { MyCourseComponent } from './_components/my-course/my-course.component';
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
+import { LessonComponent } from './_components/lesson/lesson.component';
 
 
 
@@ -59,6 +60,11 @@ const routes: Routes = [
   {
     path: 'user/me/course/:id',
     component: MyCourseComponent,
+    data: { roles: [Role.ROLE_USER] }
+  },
+  {
+    path: 'user/me/course/:id/lessons/:lessonId',
+    component: LessonComponent,
     data: { roles: [Role.ROLE_USER] }
   }
 ];

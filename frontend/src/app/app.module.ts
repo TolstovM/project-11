@@ -12,6 +12,7 @@ import { UserService } from './_services/user.service';
 import { AuthInterceptor } from './_helpers/auth.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AuthGuard } from './_helpers/auth.guard';
+import { HomeworkService } from './_services/homework.service';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +34,9 @@ import { InstructorsSearchComponent } from './_components/instructors-search/ins
 import { ListenersListComponent } from './_components/listeners-list/listeners-list.component';
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
 import { MyCourseComponent } from './_components/my-course/my-course.component';
+import { LessonComponent } from './_components/lesson/lesson.component';
+import { CommentService } from './_services/comment.service';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -56,7 +60,8 @@ import { MyCourseComponent } from './_components/my-course/my-course.component';
     InstructorsSearchComponent,
     ListenersListComponent,
     MyCoursesComponent,
-    MyCourseComponent
+    MyCourseComponent,
+    LessonComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +76,8 @@ import { MyCourseComponent } from './_components/my-course/my-course.component';
     UserService,
     AuthGuard,
     CourseService,
+    HomeworkService,
+    CommentService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Data
 @Entity
-@NoArgsConstructor
 @Table(name = "homeworks")
 public class Homework {
 
@@ -38,6 +36,57 @@ public class Homework {
 
     @OneToMany(mappedBy = "homework", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
+
+    public HomeworkId getId() {
+        return id;
+    }
+
+    public void setId(HomeworkId id) {
+        this.id = id;
+    }
+
+    public Boolean getPassed() {
+        return isPassed;
+    }
+
+    public void setPassed(Boolean passed) {
+        isPassed = passed;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Homework() {
+    }
 
     public Homework(UUID userId, Long lessonId) {
         this.id = new HomeworkId(userId, lessonId);

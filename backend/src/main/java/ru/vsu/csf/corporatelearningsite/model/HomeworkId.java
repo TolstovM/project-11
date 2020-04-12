@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
@@ -27,6 +26,22 @@ public class HomeworkId implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "lesson_id")
     private Long lessonId;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public Long getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(Long lessonId) {
+        this.lessonId = lessonId;
+    }
 
     @Override
     public boolean equals(Object o) {

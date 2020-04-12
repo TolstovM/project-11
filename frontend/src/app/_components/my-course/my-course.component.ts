@@ -22,14 +22,8 @@ export class MyCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    let course = this.courseService.findById(this.id);
-    let lessons = this.getService.get(`/course/${this.id}/lessons`);
-
-    forkJoin([course, lessons]).subscribe( res => {
-      this.course = res[0];
-      this.lessonsWrapped = res[1];
-    })
-    
+    this.courseService.findById(this.id, CourseService.COURSE_WITH_LESSONS_PROJECTION)
+      .subscribe(data => this.course = data);
   }
 
 }

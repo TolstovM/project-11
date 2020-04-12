@@ -62,10 +62,4 @@ public class CourseController {
         courseService.delete(id);
         return ResponseEntity.ok().build();
     }
-
-
-
-
-
-
 }

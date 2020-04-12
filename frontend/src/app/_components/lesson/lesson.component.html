@@ -1,0 +1,23 @@
+<h3>{{lesson.name}}</h3>
+<div>{{lesson.description}}</div>
+
+<p>Matireals</p>
+
+<h6>Домашняя работа</h6>
+<p>file</p>
+<div *ngIf="homework.passed">Сдано</div>
+<div *ngElse>Не сдано</div>
+<div *ngFor="let comment of homework.comments">
+    {{comment.owner.name}} ({{comment.owner.email}}) оставил(-а) комментарий <br>
+    <p>{{comment.text}}</p>
+</div>
+
+<form [formGroup]="form">
+    <div class="form-group">
+        <label for="text">Ваш комментарий:</label>
+        <textarea name="text" class="form-control" formControlName="text" id="text"></textarea>
+    </div>
+    <div class="form-buttons">
+        <button class="btn btn-primary" (click)="send()">Отправить</button>
+    </div>
+</form>
