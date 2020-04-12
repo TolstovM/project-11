@@ -1,8 +1,11 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -22,5 +25,12 @@ public class ListenerOnCourse {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("listenerId")
     private User listener;
+
+    public ListenerOnCourse(Long courseId, UUID listenerId){
+        this.userMark = false;
+        this.id = new ListenerOnCourseId(courseId,listenerId);
+    }
+
+
 
 }

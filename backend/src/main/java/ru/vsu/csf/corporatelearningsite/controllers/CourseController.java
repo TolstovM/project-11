@@ -7,6 +7,8 @@ import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.Course;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.User;
+import ru.vsu.csf.corporatelearningsite.payload.AddListenerRequest;
+import ru.vsu.csf.corporatelearningsite.payload.ApiResponse;
 import ru.vsu.csf.corporatelearningsite.security.CurrentUser;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 import ru.vsu.csf.corporatelearningsite.services.CourseService;
@@ -47,9 +49,21 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/addListener")
+    public ResponseEntity<?> addListener(@RequestBody AddListenerRequest request){
+        courseService.addListener(request.getEmail(),request.getId());
+        return ResponseEntity.ok(new ApiResponse(true, "User successfully added"));
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Course> deleteCourse(@PathVariable("id") Long id) {
         courseService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+
+
+
+
+
 }

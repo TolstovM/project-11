@@ -1,0 +1,17 @@
+<div>
+    <h3>Список инструкторов курса</h3>
+    <table>
+        <thead>
+            <th>Email</th>
+            <th>Имя</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let instructor of instructors" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">
+                <td>{{ instructor.email }}</td>
+                <td>{{ instructor.name }}</td>
+                <td><button (click)="deleteInstructor(instructor.id, instructor.email)">Удалить</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

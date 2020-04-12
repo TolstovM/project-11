@@ -39,7 +39,7 @@ export class CourseAddFormComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
-          this.toastr.success("Thank you! You're successfully add course.");
+          this.toastr.success("Вы успешно добавили курс");
           this.router.navigate(['courses'])
         });
   }

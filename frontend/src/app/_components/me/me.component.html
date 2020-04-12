@@ -1,8 +1,40 @@
-{{user | json}} <br />
-{{currentUser.uuid}}
+<div class="container" *ngIf="user; else loggedOut">
+  <header class="jumbotron">
+    <h3>
+      Личный кабинет
+    </h3>
+  </header>
+  <p>
+  </p>
+  <p>
+    <strong>Email:</strong>
+    {{ user.email }}
+<!--    <span *ngIf="emailConfirmed">Адрес почты подтвержден</span>-->
+<!--    <span *ngIf="!emailConfirmed">Адрес почты не подтвержден. Перейдите по ссылке, отправленной Вам в письме,-->
+<!--    чтобы иметь возможность совершать покупки на сайте</span>-->
+  </p>
+
+<!--  <ul>-->
+<!--    <li *ngFor="let role of user.roles">-->
+<!--      <span *ngIf="role === 'ROLE_USER'">Вы вошли как пользователь</span>-->
+<!--      <span *ngIf="role === 'ROLE_ADMIN'">Вы вошли как администратор</span>-->
+<!--      <span *ngIf="role === 'ROLE_INSTRUCTOR'">Вы вошли как администратор</span>-->
+<!--    </li>-->
+<!--  </ul>-->
+</div>
+
+<ng-template #loggedOut>
+  Please login.
+</ng-template>
 
 <h1 class="h3 mb-3 font-weight-normal">Список мои курсов
 <a routerLink="/courses" class="btn btn-primary">Просмотреть</a></h1>
 
-<h4>Admin's buttons</h4>
-    <a class="btn btn-primary" href="/user">Users</a>
+<h4>Кнопки админа</h4>
+<div>
+  <a class="btn btn-primary" href="/user">Пользователи</a>
+  <a class="btn btn-primary" href="/admin/course">Курсы</a>
+</div>
+<button routerLink="/user/me/changeProfile" [queryParams]="{'name':user?.name,'email':user?.email}" class="btn-primary float-left">Редактировать профиль</button>
+<button routerLink="/user/me/changeProfile" [queryParams]="{'password':'true'}" class="btn-primary float-right">Сменить пароль</button>
+
