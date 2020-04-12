@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.type.UUIDBinaryType;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -33,6 +34,7 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(
             name="user_role",
@@ -41,19 +43,24 @@ public class User {
             )
     private Set<Role> roles;
 
-    @JsonIgnore
+
     @ManyToMany(mappedBy = "instructors")
-    private List<Course> courses = new ArrayList<>();
+    @JsonIgnore
+    private Set<Course> courses = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "listener", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<ListenerOnCourse> onCourses;
 
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    private Set<Homework> homeworkList;
+    @JsonIgnore
+    @RestResource(exported=false)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Set<Homework> homeworkList;
 
-//    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-//    private Set<Comment> comments;
+    @JsonIgnore
+    @RestResource(exported=false)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private Set<Comment> comments;
 
     public User(UUID id, String email, String name, String password, Set<Role> roles) {
         this.id = id;
@@ -75,5 +82,15 @@ public class User {
     public void removeRole(Role role) {
         this.roles.remove(role);
         role.getUsers().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

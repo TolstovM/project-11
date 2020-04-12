@@ -1,5 +1,6 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,12 @@ public class ListenerOnCourse {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private Boolean userMark;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("courseId")
     private Course course;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("listenerId")
     private User listener;

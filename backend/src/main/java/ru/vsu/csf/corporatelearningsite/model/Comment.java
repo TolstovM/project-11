@@ -1,5 +1,6 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,12 +17,21 @@ public class Comment {
     @Column(nullable = false)
     private String text;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id", nullable = false)
     @JoinColumn(name = "user_id", nullable = false)
-    @JoinColumn(name = "home_task_id", nullable = false)
     private Homework homework;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

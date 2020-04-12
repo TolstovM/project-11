@@ -6,11 +6,10 @@ import ru.vsu.csf.corporatelearningsite.model.Material;
 
 import java.util.List;
 
-@Projection(name = LessonProjection.INLINE_LESSON, types = Lesson.class)
-public interface LessonProjection {
-    String INLINE_LESSON = "lessonProjection";
-
+@Projection(name="lessonWithMaterialProjection", types = {Lesson.class})
+public interface LessonWithMaterialsProjection {
     Long getId();
     String getName();
     String getDescription();
+    List<Material> getMaterials();
 }

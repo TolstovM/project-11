@@ -1,6 +1,8 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -22,19 +24,23 @@ public class Course {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JsonIgnore
+    @RestResource(exported = false)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "course_instructor",
             joinColumns = { @JoinColumn(name = "course_id") },
             inverseJoinColumns = { @JoinColumn(name = "instructor_id") }
     )
-    private Set<User> instructors = new HashSet<>();
+    private Set<User> instructors;
 
+    @JsonIgnore
+    @RestResource(exported=true)
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ListenerOnCourse> listeners;
 
 
-    //to delete
+    @JsonIgnore
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Lesson> lessons;
 }

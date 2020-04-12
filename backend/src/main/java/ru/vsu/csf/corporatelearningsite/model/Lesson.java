@@ -32,9 +32,9 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson", fetch = FetchType.EAGER)
     private List<Material> materials;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY)
-//    private List<Homework> homeworks;
+    @JsonIgnore
+    @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY)
+    private List<Homework> homeworks;
 
     public Lesson(Long id) {
         this.id = id;

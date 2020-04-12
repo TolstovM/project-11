@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.projections.LessonProjection;
 
-@RepositoryRestResource(path="lesson", excerptProjection=LessonProjection.class)
+@RepositoryRestResource(path="lesson")
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
 }

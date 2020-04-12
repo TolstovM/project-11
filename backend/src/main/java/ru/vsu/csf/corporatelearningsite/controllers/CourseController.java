@@ -17,6 +17,8 @@ import ru.vsu.csf.corporatelearningsite.services.CustomUserDetailsService;
 import java.util.List;
 import java.util.Optional;
 
+
+//todo: delete getCourses, getCourses(String), getCourseLessons, addCourse, deleteCourse
 @RestController
 @RequestMapping("/course")
 public class CourseController {
