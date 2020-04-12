@@ -54,4 +54,12 @@ export class CourseService {
     return this.http.delete(_url_api + `/${courseId}/instructors/${userId}`);
   }
 
+  public findAllForUser(userId) {
+    return this.http.get(_url_api + `/search/findAllByUserId?uuid=${userId}`);
+  }
+
+  public findById(courseId) {
+    return this.http.get(_url_api + `/${courseId}`);
+  }
+
 }

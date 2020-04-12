@@ -2,12 +2,14 @@ package ru.vsu.csf.corporatelearningsite.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "lesson")
 public class Lesson {
@@ -30,7 +32,11 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson", fetch = FetchType.EAGER)
     private List<Material> materials;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "home_task_id", referencedColumnName = "id")
-    private HomeTask homeTask;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY)
+//    private List<Homework> homeworks;
+
+    public Lesson(Long id) {
+        this.id = id;
+    }
 }

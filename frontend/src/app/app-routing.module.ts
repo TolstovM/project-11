@@ -14,6 +14,8 @@ import {LessonAddFormComponent} from "./_components/lesson-add-form/lesson-add-f
 import { UsersComponent } from './_components/users/users.component';
 import { AdminCoursesComponent } from './_components/admin-courses/admin-courses.component';
 import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
+import { MyCourseComponent } from './_components/my-course/my-course.component';
+import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
 
 
 
@@ -48,7 +50,17 @@ const routes: Routes = [
   { path: 'courses', component: CourseListComponent },
   { path: 'course/:name', component: CourseComponent },
   { path: 'add/course', component: CourseAddFormComponent },
-  { path: 'add/lesson/:courseName', component: LessonAddFormComponent }
+  { path: 'add/lesson/:courseName', component: LessonAddFormComponent },
+  {
+      path: 'user/me/course',
+      component: MyCoursesComponent,
+      data: { roles: [Role.ROLE_USER] }
+  },
+  {
+    path: 'user/me/course/:id',
+    component: MyCourseComponent,
+    data: { roles: [Role.ROLE_USER] }
+  }
 ];
 
 @NgModule({

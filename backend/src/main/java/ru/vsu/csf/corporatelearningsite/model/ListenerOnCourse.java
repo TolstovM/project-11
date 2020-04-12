@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Data
+
+@NoArgsConstructor
 @Entity
 @Table(name = "listener_on_course")
 public class ListenerOnCourse {
@@ -22,7 +23,7 @@ public class ListenerOnCourse {
     @MapsId("courseId")
     private Course course;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("listenerId")
     private User listener;
 

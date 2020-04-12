@@ -1,0 +1,22 @@
+{{ course._links.lessons.href }}
+<div>
+    <h3>{{ course.name }}</h3>
+    <div>
+        {{ course.description }}
+    </div>
+    <h3>Список уроков курса</h3>
+    <table>
+        <thead>
+            <th></th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let lesson of lessonsWrapped._embedded.lessons">
+                <td>{{ lesson.name}}</td>
+                <td>{{ lesson.description }}</td>
+                <td><a href="/user/me/course/{{id}}/lessons/{{lesson.id}}" class="btn">Перейти</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
