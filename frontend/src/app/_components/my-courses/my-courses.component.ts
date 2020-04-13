@@ -18,7 +18,7 @@ export class MyCoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.courseService.findAllForUser(this.currentUser.uuid)
+    this.courseService.findAllForUser(this.currentUser.uuid, CourseService.COURSE_PROJECTION)
       .subscribe(data => this.coursesWrapped = data);
   }
 

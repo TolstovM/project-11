@@ -17,6 +17,8 @@ import ru.vsu.csf.corporatelearningsite.services.CustomUserDetailsService;
 import java.util.List;
 import java.util.Optional;
 
+
+//todo: delete getCourses, getCourses(String), getCourseLessons, addCourse, deleteCourse
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -34,7 +36,7 @@ public class CourseController {
     }
 
     @GetMapping("/{name}")
-    public Optional<Course> getCourses(@PathVariable("name") String name){
+    public Optional<Course> getCourse(@PathVariable("name") String name){
         return courseService.get(name);
     }
 
@@ -60,10 +62,4 @@ public class CourseController {
         courseService.delete(id);
         return ResponseEntity.ok().build();
     }
-
-
-
-
-
-
 }

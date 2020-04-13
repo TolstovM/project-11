@@ -17,6 +17,9 @@ export class UserService {
   public static INLINE = 'projection=inlineUserWithRoles';
   public static INVITE_PATH = '/user/invite';
   public static FIND_BY_EMAIL_STARTING_WITH = `/user/search/findAllByEmailStartingWith?email=`;
+  
+  public static USER_PROJECTION = "userProjection";
+  public static USER_WITH_ROLES_PROJECTION = "inlineUserWithRoles";
 
   constructor(private http: HttpClient) {
 
@@ -40,8 +43,8 @@ export class UserService {
     })
   }
 
-  getAll() {
-    return this.http.get(_url + UserService.USERS_URL + '?' + UserService.INLINE);
+  getAll(projection: string) {
+    return this.http.get(_url + UserService.USERS_URL + `?projection=${projection}`);
   }
 
   updateRoles(userId: string, isAdmin: boolean, isInstructor: boolean) {
@@ -56,7 +59,11 @@ export class UserService {
     return this.http.get(_url + UserService.INVITE_PATH);
   }
 
-  findUsersByEmailStartingWith(email: string) {
-    return this.http.get(_url + `/user/search/findAllByEmailStartingWith?email=${email}&${UserService.INLINE}`);
+  findUsersByEmailStartingWith(email: string, projection: string) {
+    return this.http.get(_url + `/user/search/findAllByEmailStartingWith?email=${email}&projection=${projection}`);
+  }
+
+  findInstructorsByCourseId(courseId) {
+    return this.http.get(_url + `/user/search/findInstructorsByCourseId?courseId=${courseId}&projection=${UserService.USER_WITH_ROLES_PROJECTION}`);
   }
 }

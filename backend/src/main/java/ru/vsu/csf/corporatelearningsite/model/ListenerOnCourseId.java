@@ -4,16 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Embeddable
 public class ListenerOnCourseId implements Serializable {
 
@@ -24,7 +20,29 @@ public class ListenerOnCourseId implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID listenerId;
 
+    public Long getCourseId() {
+        return courseId;
+    }
 
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public UUID getListenerId() {
+        return listenerId;
+    }
+
+    public void setListenerId(UUID listenerId) {
+        this.listenerId = listenerId;
+    }
+
+    public ListenerOnCourseId() {
+    }
+
+    public ListenerOnCourseId(Long courseId, UUID listenerId){
+        this.courseId = courseId;
+        this.listenerId = listenerId;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -12,8 +12,8 @@
             <th></th>
         </thead>
         <tbody>
-            <tr *ngFor="let lesson of lessonsWrapped._embedded.lessons">
-                <td>{{ lesson.name}}</td>
+            <tr *ngFor="let lesson of course.lessons">
+                <td>{{ lesson.name }}</td>
                 <td>{{ lesson.description }}</td>
                 <td><a href="/user/me/course/{{id}}/lessons/{{lesson.id}}" class="btn">Перейти</a></td>
             </tr>

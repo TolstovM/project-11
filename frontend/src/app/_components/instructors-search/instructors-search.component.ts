@@ -35,7 +35,7 @@ export class InstructorsSearchComponent implements OnInit {
 
   onClick() {
     const value = this.form.value;
-    this.userService.findUsersByEmailStartingWith(value.email)
+    this.userService.findUsersByEmailStartingWith(value.email, UserService.USER_WITH_ROLES_PROJECTION)
       .subscribe(data => this.instructors = data);
   }
 

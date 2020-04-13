@@ -8,10 +8,9 @@ import java.util.List;
 
 @Projection(name = LessonProjection.INLINE_LESSON, types = Lesson.class)
 public interface LessonProjection {
-    String INLINE_LESSON = "inlineLesson";
+    String INLINE_LESSON = "lessonProjection";
 
     Long getId();
     String getName();
     String getDescription();
-    List<Material> getMaterials();
 }

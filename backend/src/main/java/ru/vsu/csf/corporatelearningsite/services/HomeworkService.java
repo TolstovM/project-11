@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.csf.corporatelearningsite.exceptions.BadRequestException;
 import ru.vsu.csf.corporatelearningsite.model.Homework;
-import ru.vsu.csf.corporatelearningsite.model.HomeworkId;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.User;
 import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.HomeworkRepository;
-import ru.vsu.csf.corporatelearningsite.repositories.ListenerOnCourseRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,11 +25,16 @@ public class HomeworkService {
         this.courseRepository = courseRepository;
     }
 
-    public Homework findOrCreate(Long lessonId, UUID userId) {
+    public Optional<Homework> findOrCreate(Long lessonId, UUID userId) {
         if (!courseRepository.isUserOnCourse(lessonId, userId)) {
             throw new BadRequestException(USER_DOES_NOT_LISTENER_ON_THAT_COURSE);
         }
-        return this.homeworkRepository.findById(new HomeworkId(userId, lessonId))
-                .orElse(this.homeworkRepository.save(new Homework(userId, lessonId, new User(userId), new Lesson(lessonId))));
+        Homework homework = new Homework(userId, lessonId, new User(userId), new Lesson(lessonId));
+        Optional<Homework> homeworkOptional = this.homeworkRepository.findById(homework.getId());
+        if (homeworkOptional.isPresent()) {
+            return homeworkOptional;
+        } else {
+            return Optional.of(this.homeworkRepository.save(homework));
+        }
     }
 }

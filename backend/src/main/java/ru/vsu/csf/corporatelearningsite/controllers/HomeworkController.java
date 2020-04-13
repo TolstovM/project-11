@@ -13,6 +13,8 @@ import ru.vsu.csf.corporatelearningsite.model.Homework;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 import ru.vsu.csf.corporatelearningsite.services.HomeworkService;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(HomeworkController.API_HOMEWORK)
 public class HomeworkController {
@@ -29,7 +31,7 @@ public class HomeworkController {
     public ResponseEntity<?> findOrCreate(@PathVariable("lessonId") Long lessonId,
                                           @AuthenticationPrincipal Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        Homework homework = this.homeworkService.findOrCreate(lessonId, userPrincipal.getId());
+        Optional<Homework> homework = this.homeworkService.findOrCreate(lessonId, userPrincipal.getId());
         return ResponseEntity.ok(homework);
     }
 }

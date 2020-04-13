@@ -12,6 +12,7 @@ import { UserService } from './_services/user.service';
 import { AuthInterceptor } from './_helpers/auth.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AuthGuard } from './_helpers/auth.guard';
+import { HomeworkService } from './_services/homework.service';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,10 +22,12 @@ import { CourseAddFormComponent } from './_components/course-add-form/course-add
 import { CourseComponent } from './_components/course/course.component';
 import { LessonAddFormComponent } from './_components/lesson-add-form/lesson-add-form.component';
 import {CourseService} from "./_services/course.service";
-import {ToastrModule} from "ngx-toastr";
 import { UsersComponent } from './_components/users/users.component';
 import { UserComponent } from './_components/user/user.component';
 import { InviteComponent } from './_components/invite/invite.component';
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { LessonComponent } from './_components/lesson/lesson.component';
 import { AdminCoursesComponent } from './_components/admin-courses/admin-courses.component';
 import { AdminCourseComponent } from './_components/admin-course/admin-course.component';
 import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
@@ -33,6 +36,9 @@ import { InstructorsSearchComponent } from './_components/instructors-search/ins
 import { ListenersListComponent } from './_components/listeners-list/listeners-list.component';
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
 import { MyCourseComponent } from './_components/my-course/my-course.component';
+import { CommentService } from './_services/comment.service';
+import { from } from 'rxjs';
+import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +54,7 @@ import { MyCourseComponent } from './_components/my-course/my-course.component';
     UsersComponent,
     UserComponent,
     InviteComponent,
+    LessonComponent,
     UsersComponent,
     AdminCoursesComponent,
     AdminCourseComponent,
@@ -56,7 +63,9 @@ import { MyCourseComponent } from './_components/my-course/my-course.component';
     InstructorsSearchComponent,
     ListenersListComponent,
     MyCoursesComponent,
-    MyCourseComponent
+    MyCourseComponent,
+    LessonComponent,
+    MyLessonComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +73,7 @@ import { MyCourseComponent } from './_components/my-course/my-course.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
   providers: [
@@ -71,6 +81,8 @@ import { MyCourseComponent } from './_components/my-course/my-course.component';
     UserService,
     AuthGuard,
     CourseService,
+    HomeworkService,
+    CommentService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

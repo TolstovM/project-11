@@ -4,6 +4,13 @@ spring:
     username: root
     password: root
 
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+
   jpa:
     show-sql: true
     hibernate:
@@ -12,6 +19,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
 
   data:
     rest:
@@ -23,3 +31,6 @@ app:
     tokenExpirationMsec: 864000000
 server:
   port: 8081
+
+material:
+  upload-dir: /materials/uploads

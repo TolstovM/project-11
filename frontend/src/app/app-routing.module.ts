@@ -12,10 +12,13 @@ import {CourseComponent} from "./_components/course/course.component";
 import {CourseAddFormComponent} from "./_components/course-add-form/course-add-form.component";
 import {LessonAddFormComponent} from "./_components/lesson-add-form/lesson-add-form.component";
 import { UsersComponent } from './_components/users/users.component';
+import {LessonComponent} from "./_components/lesson/lesson.component";
 import { AdminCoursesComponent } from './_components/admin-courses/admin-courses.component';
 import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
 import { MyCourseComponent } from './_components/my-course/my-course.component';
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
+import { LessonComponent } from './_components/lesson/lesson.component';
+import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 
 
 
@@ -60,11 +63,17 @@ const routes: Routes = [
     path: 'user/me/course/:id',
     component: MyCourseComponent,
     data: { roles: [Role.ROLE_USER] }
-  }
+  },
+  {
+    path: 'user/me/course/:id/lessons/:lessonId',
+    component: MyLessonComponent,
+    data: { roles: [Role.ROLE_USER] }
+  },
+  { path: 'lesson/:name', component: LessonComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
