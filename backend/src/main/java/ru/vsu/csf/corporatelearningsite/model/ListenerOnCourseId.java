@@ -1,7 +1,9 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;

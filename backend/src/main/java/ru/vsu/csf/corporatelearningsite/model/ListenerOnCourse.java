@@ -1,10 +1,10 @@
+
 package ru.vsu.csf.corporatelearningsite.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -28,7 +28,6 @@ public class ListenerOnCourse {
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("listenerId")
     private User listener;
-
 
     public ListenerOnCourseId getId() {
         return id;
@@ -64,7 +63,9 @@ public class ListenerOnCourse {
 
     public ListenerOnCourse(Long courseId, UUID listenerId){
         this.userMark = false;
-        this.id = new ListenerOnCourseId(courseId,listenerId);
+        this.id = listenerOnCourseId;
+        this.course = course;
+        this.listener = user;
     }
 
     public ListenerOnCourse() {

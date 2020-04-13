@@ -1,15 +1,17 @@
 package ru.vsu.csf.corporatelearningsite.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.rest.core.annotation.RestResource;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "courses")
 public class Course {
 
@@ -23,6 +25,10 @@ public class Course {
     @Column(nullable = false)
     private String description;
 
+    public Course(Long id){
+        this.id = id;
+    }
+  
     @JsonManagedReference
     @RestResource(exported = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

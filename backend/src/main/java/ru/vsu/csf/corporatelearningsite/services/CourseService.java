@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vsu.csf.corporatelearningsite.exceptions.BadRequestException;
 import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.*;
 import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
@@ -13,6 +14,7 @@ import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service(value = "courseService")
@@ -76,12 +78,12 @@ public class CourseService {
             if(course.isEmpty())
                 throw new ResourceNotFoundException("Course", "courseId", courseId);
             else{
-                ListenerOnCourse listenerOnCourse = new ListenerOnCourse(course.get().getId(), user.get().getId());
+                ListenerOnCourse listenerOnCourse = new ListenerOnCourse(new ListenerOnCourseId(course.get().getId(), user.get().getId()), new Course(course.get().getId()), new User(user.get().getId()));
                 listenerOnCourseRepository.save(listenerOnCourse);
             }
 
         }
-
-
     }
+
+
 }

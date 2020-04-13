@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from "rxjs";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router, private route: ActivatedRoute) {
+    private router: Router, private route: ActivatedRoute, private appComp:AppComponent) {
     this.querySubscription = route.queryParams.subscribe(
       (queryParam: any) => {
 
@@ -41,10 +42,19 @@ export class LoginComponent implements OnInit {
     if (value.email && value.password) {
       this.authService.login(value.email, value.password)
           .subscribe(
+
             () => {
-              this.router.navigateByUrl('/');
+              this.message = 'Вы вошли';
+              setTimeout(() => {
+
+                this.router.navigate(['/']);
+                this.appComp.refresh();
+              }, 2000);
+
             }
           );
+
+
     }
   }
 

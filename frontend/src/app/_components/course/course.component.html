@@ -1,28 +1,50 @@
 <body class="text-center">
   <div class="form-course">
+    <h1 class="display-5">Название курса</h1>
     <h1 class="h2 mb-3 font-weight-normal">{{ course.name }}</h1>
+    <h1 class="display-5">Краткое описание курса</h1>
     <h1 class="h4 mb-3 font-weight-normal">{{ course.description }}</h1>
     <div *ngFor="let lesson of lessons">
       <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }}
         <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info">Перейти</a></h1>
     </div>
-    <form class="form-add-course" [formGroup]="addListenerForm" (ngSubmit)="addListener()">
-      <h1 class="h2 mb-3 font-weight-normal">Добавление курса</h1>
-      <div class="form-group">
-      <div class="form-group">
-        <label for="email">Добавить слушателя на курс по email</label>
-        <input type="text" formControlName="email" id="email" class="form-control" required
-               [ngClass]="{ 'is-invalid': aControls.email.touched && aControls.email.errors }" />
-        <div *ngIf="aControls.email.touched && aControls.email.errors" class="invalid-feedback">
-          <div *ngIf="aControls.email.errors.required">Пожалуйста введите email!</div>
+
+
+
+
+
+
+    <div align="left">
+      <h5 class="display-5">Добавить слушателя на курс</h5>
+      <form [formGroup]="form">
+        <div class="form-field">
+          <label>Email:</label>
+          <input name="email" formControlName="email">
         </div>
-      </div>
-      </div>
-      <button class="btn btn-primary btn-block">Добавить</button><br />
-    </form>
-    <div class="row" style="padding-top: 250px">
-      <a routerLink="/courses" class="btn btn-primary col-md-2 mr-auto">Назад</a>
-      <a [routerLink]="['/add/lesson', course.name]" class="btn btn-primary col-md-2">Добавить урок</a>
+        <button (click)="onClick()">Искать</button>
+      </form>
+    </div>
+
+    <div align="left" *ngIf="users?.length===0">
+      Ничего не найдено
+    </div>
+
+
+    <div align="left" *ngIf="users && users?.length!==0 ">
+      <table>
+        <thead>
+        <th>Email</th>
+        <th>Имя</th>
+        <th></th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td><button (click)="addListener(user.email)">Добавить</button></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
   </div>
