@@ -20,7 +20,7 @@ export class CourseComponent implements OnInit {
 
   form: FormGroup;
 
-  users: Object = {} as User[];
+  users: User[];
   name: string;
   course: Course = {} as Course;
   lessons: Lesson[];
@@ -84,7 +84,7 @@ export class CourseComponent implements OnInit {
     const value = this.form.value;
     this.userService.findUsersByEmailStartingWith(value.email)
       .subscribe(data =>{
-        this.users = data;
+        this.users = data['_embedded']['users'];
       } )
   }
 }

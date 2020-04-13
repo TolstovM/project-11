@@ -25,12 +25,12 @@
       </form>
     </div>
 
-    <div align="left" *ngIf="users?._embdedd.users.length===0">
+    <div align="left" *ngIf="users?.length===0">
       Ничего не найдено
     </div>
 
 
-    <div align="left" *ngIf="users && users?._embdedd.users.length!==0 ">
+    <div align="left" *ngIf="users && users?.length!==0 ">
       <table>
         <thead>
         <th>Email</th>
@@ -38,7 +38,7 @@
         <th></th>
         </thead>
         <tbody>
-        <tr *ngFor="let user of users?._embedded.users">
+        <tr *ngFor="let user of users">
           <td>{{ user.email }}</td>
           <td>{{ user.name }}</td>
           <td><button (click)="addListener(user.email)">Добавить</button></td>
