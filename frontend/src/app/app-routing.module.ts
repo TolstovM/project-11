@@ -17,7 +17,6 @@ import { AdminCoursesComponent } from './_components/admin-courses/admin-courses
 import { AdminCourseDetailsComponent } from './_components/admin-course-details/admin-course-details.component';
 import { MyCourseComponent } from './_components/my-course/my-course.component';
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
-import { LessonComponent } from './_components/lesson/lesson.component';
 import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 
 
