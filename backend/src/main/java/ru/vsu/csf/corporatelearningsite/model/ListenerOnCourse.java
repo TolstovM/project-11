@@ -29,6 +29,13 @@ public class ListenerOnCourse {
     @MapsId("listenerId")
     private User listener;
 
+    public ListenerOnCourse(ListenerOnCourseId listenerOnCourseId, Course course, User listener) {
+        this.userMark = false;
+        this.id = listenerOnCourseId;
+        this.course = course;
+        this.listener = listener;
+    }
+
     public ListenerOnCourseId getId() {
         return id;
     }
@@ -61,11 +68,12 @@ public class ListenerOnCourse {
         this.listener = listener;
     }
 
-    public ListenerOnCourse(Long courseId, UUID listenerId){
+
+    public ListenerOnCourse(Long courseId, UUID listenerId, Course course, User listener){
         this.userMark = false;
-        this.id = listenerOnCourseId;
+        this.id = new ListenerOnCourseId(courseId, listenerId);
         this.course = course;
-        this.listener = user;
+        this.listener = listener;
     }
 
     public ListenerOnCourse() {

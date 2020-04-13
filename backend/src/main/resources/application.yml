@@ -33,4 +33,4 @@ server:
   port: 8081
 
 material:
-  upload-dir: /materials/uploads
+  upload-dir: /home/maksfox/tmp/project

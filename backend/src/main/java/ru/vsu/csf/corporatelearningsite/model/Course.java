@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @Table(name = "courses")
 public class Course {
 
