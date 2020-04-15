@@ -14,7 +14,7 @@ export class CourseService {
   public static COURSE_PROJECTION = "courseProjection";
   public static COURSE_WITH_LESSONS_PROJECTION = "courseWithLessonsProjection";
   public static COURSE_WITH_LISTENERS_PROJECTION = "courseWithListenersProjection";
-  
+
   constructor(private http: HttpClient) {
   }
 
@@ -56,7 +56,7 @@ export class CourseService {
     return this.http.get(_url_api + `/search/findAllByUserId?uuid=${userId}&projection=${projection}`);
   }
 
-  public findById(courseId, projection: string) {
+  public findById(courseId, projection: string):any {
     return this.http.get(_url_api + `/${courseId}?projection=${projection}`);
   }
 

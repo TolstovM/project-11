@@ -1,0 +1,25 @@
+<div align="center">
+  <h2 class="display-2">Список домашних работ к уроку</h2>
+</div>
+<div *ngIf="homeworks.length!==0">
+
+  <table>
+  <tr *ngFor="let homework of homeworks; index as i">
+
+      <td>
+        Домашняя работа пользователя {{homework.user.name}} ({{homework.user.email}})
+      </td>
+    <td>
+      <button class="btn-primary" [routerLink]="['/lesson/homework'] " [queryParams]="{'lessonId':homework.id.lessonId,'userId':homework.id.userId}" >
+         Перейти
+
+      </button>
+    </td>
+
+  </tr>
+  </table>
+</div>
+<div *ngIf="homeworks.length===0">
+
+  <h3 class="display-3">Здесь пока ничего нет</h3>
+</div>

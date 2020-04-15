@@ -22,7 +22,7 @@ public class Lesson {
     @Column(nullable = false)
     private String description;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;

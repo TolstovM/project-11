@@ -31,7 +31,7 @@ export class MyLessonComponent implements OnInit {
     });
     this.id = this.route.snapshot.paramMap.get('lessonId');
     let llesson = this.lessonService.findById(this.id, LessonService.LESSON_WITH_MATERIALS_PROJECTION);
-    let lhomework = this.homeworkService.findByByLessonId(this.id);
+    let lhomework = this.homeworkService.findByLessonId(this.id);
     forkJoin([llesson, lhomework])
     .subscribe(res => {
       this.lesson = res[0];

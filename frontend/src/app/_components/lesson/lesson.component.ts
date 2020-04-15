@@ -23,6 +23,7 @@ export class LessonComponent implements OnInit {
   materials: Material[];
   downloadUrl: string;
 
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -63,12 +64,18 @@ export class LessonComponent implements OnInit {
   }
 
   uploadFileToActivity() {
-    this.materialService.postFile(this.fileToUpload, this.name).subscribe(data => {
-      this.toastr.success("Thank you! You're successfully upload material.");
-      this.reloadComponent();
-    }, error => {
-      console.log(error);
-    });
+    if(!this.fileToUpload){
+      this.toastr.error("Файл не выбран");
+    }
+    else {
+      this.materialService.postFile(this.fileToUpload, this.name).subscribe(data => {
+        this.toastr.success("Вы успешно загрузили материал");
+        this.reloadComponent();
+      }, error => {
+        console.log(error);
+      });
+    }
+
   }
 
   onSubmit() {
@@ -83,7 +90,7 @@ export class LessonComponent implements OnInit {
 
   delete(id) {
     this.materialService.delete(id).subscribe(data => {
-      this.toastr.success("You're successfully delete material.");
+      this.toastr.success("Вы успешно удалили материал");
       this.reloadComponent();
     }, error => {
       console.log(error);

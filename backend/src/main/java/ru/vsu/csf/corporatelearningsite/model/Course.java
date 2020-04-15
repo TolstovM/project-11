@@ -27,8 +27,13 @@ public class Course {
     public Course(Long id){
         this.id = id;
     }
+
+    public Course(String name, String description){
+        this.name = name;
+        this.description = description;
+    }
   
-    @JsonManagedReference
+    @JsonIgnore
     @RestResource(exported = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(

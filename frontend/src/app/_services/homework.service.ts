@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from "rxjs";
 
 let _url = 'http://localhost:8081/api/homework';
 
@@ -9,10 +10,22 @@ let _url = 'http://localhost:8081/api/homework';
 export class HomeworkService {
 
   public static HOMEWORK_PROJECTION = "homeworkProjection";
-  
+
   constructor(private http: HttpClient) { }
 
-  public findByByLessonId(lessonId) {
+  public findByLessonId(lessonId) {
     return this.http.get(_url + `/find/${lessonId}`);
+  }
+
+  public getHomeworkForLesson(lessonId: number):Observable<any> {
+    return this.http.get<any>(_url + `/findAll/${lessonId}`);
+  }
+
+  getHomeworkById(lessonId: number, userId: number):Observable<any> {
+    const params = new HttpParams()
+      .set('lessonId',lessonId.toString())
+      .set('userId',userId.toString());
+
+    return this.http.get<any>(_url + `/findHomework`,{params})
   }
 }

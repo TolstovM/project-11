@@ -7,6 +7,7 @@ import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.Course;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.User;
+import ru.vsu.csf.corporatelearningsite.payload.AddCourseRequest;
 import ru.vsu.csf.corporatelearningsite.payload.AddListenerRequest;
 import ru.vsu.csf.corporatelearningsite.payload.ApiResponse;
 import ru.vsu.csf.corporatelearningsite.security.CurrentUser;
@@ -46,8 +47,8 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Course> addCourse(@RequestBody Course course) {
-        courseService.add(course);
+    public ResponseEntity<Course> addCourse(@RequestBody AddCourseRequest request) {
+        courseService.add(new Course(request.getName(), request.getDescription()));
         return ResponseEntity.ok().build();
     }
 

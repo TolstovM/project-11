@@ -5,7 +5,6 @@ import { MeComponent } from './_components/me/me.component';
 import { Role } from './_models/role';
 import { SignupComponent } from './_components/signup/signup.component';
 import {ChangeProfileComponent} from "./_components/change-profile/change-profile.component";
-import {AppComponent} from "./app.component";
 
 import {CourseListComponent} from "./_components/course-list/course-list.component";
 import {CourseComponent} from "./_components/course/course.component";
@@ -18,6 +17,9 @@ import { AdminCourseDetailsComponent } from './_components/admin-course-details/
 import { MyCourseComponent } from './_components/my-course/my-course.component';
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
 import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
+import {HomeworkListComponent} from "./_components/homework-list/homework-list.component";
+import {ConcreteHomeworkComponent} from "./_components/concrete-homework/concrete-homework.component";
+
 
 
 
@@ -68,7 +70,20 @@ const routes: Routes = [
     component: MyLessonComponent,
     data: { roles: [Role.ROLE_USER] }
   },
-  { path: 'lesson/:name', component: LessonComponent }
+  { path: 'lesson/homeworks',
+    component: HomeworkListComponent,
+    data: { roles: [Role.ROLE_INSTRUCTOR] }
+  },
+  { path: 'lesson/homework',
+    component: ConcreteHomeworkComponent,
+    data: { roles: [Role.ROLE_INSTRUCTOR] }
+  },
+  { path: 'lesson/:name',
+    component: LessonComponent,
+    data: { roles: [Role.ROLE_INSTRUCTOR] }
+  }
+
+
 ];
 
 @NgModule({
