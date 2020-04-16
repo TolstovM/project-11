@@ -15,7 +15,7 @@ export class HomeworkListComponent implements OnInit {
   homeworks=[];
 
   private querySub: Subscription;
-  lessonId: number
+  lessonId: number;
   constructor(private homeworkService: HomeworkService, private route: ActivatedRoute) {
     this.querySub = this.route.queryParams.subscribe(params => {
       this.lessonId = params['lessonId'];

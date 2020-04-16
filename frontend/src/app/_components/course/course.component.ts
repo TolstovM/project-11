@@ -26,7 +26,7 @@ export class CourseComponent implements OnInit {
   course: Course = {} as Course;
   lessons: Lesson[];
   private sub: Subscription;
-  private qsub: Subscription
+  private qsub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,

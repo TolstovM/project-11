@@ -1,16 +1,30 @@
 <h3>{{lesson?.name}}</h3>
 <div>{{lesson?.description}}</div>
 
-<p>Matireals</p>
+<br />
+<h6>Материалы</h6>
+<div *ngFor="let material of materials">
+  <br />
+  <a href="{{downloadUrl}}/{{ material.name }}" class="btn btn-info">{{ material.name }}</a>
+</div>
+<br/>
 
-<h6>Домашняя работа</h6>
-<p>file</p>
+<h6>Домашние работы</h6>
+<a href="{{downloadUrl}}/{{ homework.file }}" class="btn btn-info">{{ homework.file }}</a>
 <div *ngIf="homework.passed">Сдано</div>
 <div *ngElse>Не сдано</div>
 <div *ngFor="let comment of homework.comments">
     {{comment.owner.name}} ({{comment.owner.email}}) оставил(-а) комментарий <br>
     <p>{{comment.text}}</p>
 </div>
+
+<br/>
+<label for="file">Выберите файл</label>
+<input type="file" style="padding-top: 25px" id="file"
+       (change)="handleFileInput($event.target.files)">
+<button class="btn btn-primary btn-block" (click)="onSubmit()"
+        style="width: 100px">Добавить</button>
+<br/>
 
 <form [formGroup]="form">
     <div class="form-group">
