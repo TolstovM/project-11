@@ -28,4 +28,8 @@ export class HomeworkService {
 
     return this.http.get<any>(_url + `/findHomework`,{params})
   }
+
+  saveHomeworkResult(result: any, lessonId:number, userId:any) {
+    return this.http.post(_url+`/checkHomework`,{result:result, lessonId:lessonId, userId:userId});
+  }
 }

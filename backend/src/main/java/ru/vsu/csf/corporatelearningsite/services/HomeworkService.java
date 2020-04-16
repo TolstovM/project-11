@@ -7,6 +7,7 @@ import ru.vsu.csf.corporatelearningsite.model.Homework;
 import ru.vsu.csf.corporatelearningsite.model.HomeworkId;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.User;
+import ru.vsu.csf.corporatelearningsite.payload.CheckHomeworkRequest;
 import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.HomeworkRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
@@ -60,6 +61,16 @@ public class HomeworkService {
         }
         else {
             return homeworkRepository.findHomeworkById(homeworkId);
+        }
+    }
+
+    public void checkHomework(CheckHomeworkRequest checkHomeworkRequest, UUID id) {
+        if(courseRepository.isInstructorOnCourse(checkHomeworkRequest.getLessonId(), id)){
+            throw new BadRequestException(NO_RIGHTS);
+        }
+        else {
+            homeworkRepository.checkHomework(checkHomeworkRequest.getUserId().toString(), checkHomeworkRequest.getLessonId(),
+                checkHomeworkRequest.getResult());
         }
     }
 }
