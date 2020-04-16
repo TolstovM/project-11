@@ -17,6 +17,8 @@ export class LessonAddFormComponent implements OnInit {
   addForm: FormGroup;
   private sub: Subscription;
   courseName: string;
+  id:number;
+  private qsub: Subscription
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,6 +37,10 @@ export class LessonAddFormComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.courseName = params['courseName'];
     });
+    this.qsub = this.route.queryParams.subscribe(params => {
+      this.id = params['id'];
+
+    });
   }
 
   get f() { return this.addForm.controls; }
@@ -48,8 +54,10 @@ export class LessonAddFormComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
-          this.toastr.success("Thank you! You're successfully add course.");
-          this.router.navigate(['course/', this.courseName])
+          this.toastr.success("Вы успешно добавили урок");
+          setTimeout(() => {
+            this.router.navigate(['/course',this.courseName], {queryParams: {id: this.id}});
+          }, 1000);
         });
   }
 }

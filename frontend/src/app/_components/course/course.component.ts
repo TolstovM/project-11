@@ -22,9 +22,11 @@ export class CourseComponent implements OnInit {
 
   users: User[];
   name: string;
+  id: number;
   course: Course = {} as Course;
   lessons: Lesson[];
   private sub: Subscription;
+  private qsub: Subscription
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,14 +34,18 @@ export class CourseComponent implements OnInit {
     private route: ActivatedRoute,
     private courseService: CourseService,
     private toastr: ToastrService,
-    private userService: UserService
+    private userService: UserService,
+
   ) { }
 
   ngOnInit(): void {
 
     this.sub = this.route.params.subscribe(params => {
       this.name = params['name'];
-      this.loadCourse(this.name);
+    });
+    this.qsub = this.route.queryParams.subscribe(params => {
+      this.id = params['id'];
+      this.loadCourse(this.id);
     });
     this.form = this.formBuilder.group({
       email: ['', Validators.required]
@@ -48,20 +54,12 @@ export class CourseComponent implements OnInit {
 
   get aControls() { return this.form.controls; }
 
-  loadCourse(name: string) {
-    this.courseService.getCourse(name)
+  loadCourse(id: number) {
+    this.courseService.findById(id,CourseService.COURSE_WITH_LESSONS_PROJECTION)
       .pipe(first())
       .subscribe( res => {
           this.course = res;
-        },
-        error => {
-          console.log(error);
-        });
-
-    this.courseService.getCourseLessons(name)
-      .pipe(first())
-      .subscribe( res => {
-          this.lessons = res;
+          this.lessons = this.course['lessons'];
         },
         error => {
           console.log(error);
@@ -74,10 +72,6 @@ export class CourseComponent implements OnInit {
           () => {
             this.toastr.success("Вы успешно добавили слушателя на курс");
           });
-
-
-    // }
-
   }
 
   onClick() {

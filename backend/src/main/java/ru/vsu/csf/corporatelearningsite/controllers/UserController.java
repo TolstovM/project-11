@@ -3,6 +3,7 @@ package ru.vsu.csf.corporatelearningsite.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.User;
@@ -30,6 +31,7 @@ public class UserController {
     public static final String CURRENT_USER_PATH = "/me";
     public static final String CURRENT_USER_CHANGE_PROFILE_PATH = "/me/change";
     public static final String URL = "/api/user";
+    public static final String GET_USERNAME_BY_ID = "/getById";
     public static final String UPDATE_AUTHORITIES_PATH = "/update/authorities";
     public static final String UPDATE_AUTHORITIES_RESPONSE_MESSAGE = "User's authorities updated.";
     public static final String INVITE_CODE_PATH = "invite";
@@ -78,4 +80,6 @@ public class UserController {
         UUID code = this.userDetailsService.generateInviteCode();
         return ResponseEntity.ok(code);
     }
+
+
 }

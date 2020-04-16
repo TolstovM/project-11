@@ -17,7 +17,7 @@ public class Homework {
     @EmbeddedId
     private HomeworkId id;
 
-    @Column(nullable = false, columnDefinition = "boolean default false")
+    @Column(nullable = true, columnDefinition = "boolean default false")
     private Boolean isPassed;
 
     @Column(nullable = true)
@@ -29,7 +29,7 @@ public class Homework {
     @MapsId("homeworkId")
     private Lesson lesson;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("userId")
     private User user;

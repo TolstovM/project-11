@@ -4,15 +4,24 @@
     <h1 class="h2 mb-3 font-weight-normal">{{ course.name }}</h1>
     <h1 class="display-5">Краткое описание курса</h1>
     <h1 class="h4 mb-3 font-weight-normal">{{ course.description }}</h1>
+
+
+    <h3 class="dispay-3">Список уроков</h3>
+    <div *ngIf="!lessons || lessons?.length===0">
+      <h4 class="display-4">Здесь пока ничего нет</h4>
+    </div>
     <div *ngFor="let lesson of lessons">
-      <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }}
-        <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info">Перейти</a></h1>
+      <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }} </h1>
+        <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info mr-5">Редактировать</a>
+      <a [routerLink]="['/lesson/homeworks']" [queryParams]="{'lessonId':lesson.id}" class="btn btn-info">Просмотреть домашние работы</a>
     </div>
 
 
 
 
-
+    <div align="right">
+      <button [routerLink]="['/add/lesson', course.name]" [queryParams]="{'id':course.id}" class="btn-primary">Добавить урок</button>
+    </div>
 
     <div align="left">
       <h5 class="display-5">Добавить слушателя на курс</h5>

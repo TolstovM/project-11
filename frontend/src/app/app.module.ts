@@ -39,6 +39,9 @@ import { MyCourseComponent } from './_components/my-course/my-course.component';
 import { CommentService } from './_services/comment.service';
 import { from } from 'rxjs';
 import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
+import { HomeworkListComponent } from './_components/homework-list/homework-list.component';
+import {ConcreteHomeworkComponent} from "./_components/concrete-homework/concrete-homework.component";
+
 
 @NgModule({
   declarations: [
@@ -65,7 +68,9 @@ import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
     MyCoursesComponent,
     MyCourseComponent,
     LessonComponent,
-    MyLessonComponent
+    MyLessonComponent,
+    HomeworkListComponent,
+    ConcreteHomeworkComponent
   ],
   imports: [
     BrowserModule,

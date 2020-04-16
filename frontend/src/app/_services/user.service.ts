@@ -13,18 +13,19 @@ export class UserService {
   public static ME_URL = '/user/me';
   public static CHANGE_URL = '/user/me/change';
   public static USERS_URL = '/user';
+  public static GET_USER_URL = '/user/getById';
   public static UPDATE_ROLES_URL = '/user/update/authorities';
   public static INLINE = 'projection=inlineUserWithRoles';
   public static INVITE_PATH = '/user/invite';
   public static FIND_BY_EMAIL_STARTING_WITH = `/user/search/findAllByEmailStartingWith?email=`;
-  
+
   public static USER_PROJECTION = "userProjection";
   public static USER_WITH_ROLES_PROJECTION = "inlineUserWithRoles";
 
   constructor(private http: HttpClient) {
 
   }
-  
+
   getMe() {
     return this.http.get(_url + UserService.ME_URL);
   }
@@ -65,5 +66,9 @@ export class UserService {
 
   findInstructorsByCourseId(courseId) {
     return this.http.get(_url + `/user/search/findInstructorsByCourseId?courseId=${courseId}&projection=${UserService.USER_WITH_ROLES_PROJECTION}`);
+  }
+
+  getUserNameById(userId: string):Observable<any> {
+    return this.http.get<any>(_url+UserService.GET_USER_URL+`?userId=${userId}`);
   }
 }

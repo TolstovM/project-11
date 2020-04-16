@@ -14,11 +14,13 @@ public class UserPrincipal implements UserDetails {
 
     private UUID id;
     private String email;
+    private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(UUID id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(UUID id, String name,String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
+        this.username=name;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -29,7 +31,9 @@ public class UserPrincipal implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getName().toString()))
                 .collect(Collectors.toList());
         return new UserPrincipal(
+
                 user.getId(),
+                user.getName(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities
@@ -68,7 +72,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.username;
     }
 
     @Override
