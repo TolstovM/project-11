@@ -3,17 +3,12 @@ package ru.vsu.csf.corporatelearningsite.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.Course;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
-import ru.vsu.csf.corporatelearningsite.model.User;
 import ru.vsu.csf.corporatelearningsite.payload.AddCourseRequest;
 import ru.vsu.csf.corporatelearningsite.payload.AddListenerRequest;
 import ru.vsu.csf.corporatelearningsite.payload.ApiResponse;
-import ru.vsu.csf.corporatelearningsite.security.CurrentUser;
-import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 import ru.vsu.csf.corporatelearningsite.services.CourseService;
-import ru.vsu.csf.corporatelearningsite.services.CustomUserDetailsService;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +16,10 @@ import java.util.Optional;
 
 //todo: delete getCourses, getCourses(String), getCourseLessons, addCourse, deleteCourse
 @RestController
-@RequestMapping("/course")
+@RequestMapping(CourseController.URL)
 public class CourseController {
 
+    public static final String URL = "/api/сourse";
     private final CourseService courseService;
 
     @Autowired

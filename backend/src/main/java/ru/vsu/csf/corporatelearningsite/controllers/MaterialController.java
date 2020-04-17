@@ -17,9 +17,10 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping("/materials")
+@RequestMapping(MaterialController.URL)
 public class MaterialController {
 
+    public static final String URL = "/api/material";
     private final MaterialService materialService;
 
     public MaterialController(MaterialService materialService) {

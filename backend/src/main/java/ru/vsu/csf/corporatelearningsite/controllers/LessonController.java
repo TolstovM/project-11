@@ -11,9 +11,10 @@ import java.util.Optional;
 
 //TODO delete controller
 @RestController
-@RequestMapping("/lesson")
+@RequestMapping(LessonController.URL)
 public class LessonController {
 
+    public static final String URL = "/api/lesson";
     private final LessonService lessonService;
 
     @Autowired
@@ -21,18 +22,18 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public Optional<Lesson> getLesson(@PathVariable("name") String name){
         return lessonService.get(name);
     }
 
-    @PostMapping("/{courseName}")
+    @PostMapping("/courseName/{courseName}")
     public ResponseEntity<Lesson> addLesson(@PathVariable("courseName") String courseName, @RequestBody Lesson lesson) {
         lessonService.add(lesson, courseName);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("materials/{name}")
+    @GetMapping("/materials/{name}")
     public List<Material> getLessonMaterials(@PathVariable("name") String name){
         return lessonService.getMaterials(name);
     }
