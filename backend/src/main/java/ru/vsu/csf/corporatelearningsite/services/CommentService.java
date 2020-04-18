@@ -24,8 +24,8 @@ public class CommentService {
     }
 
     public void saveComment(UUID userId, SaveCommentRequest saveCommentRequest) {
-        if (userId == null || !userId.equals(saveCommentRequest.getHomeworkOwnerId())
-                || !this.courseRepository.isInstructorOnCourse(saveCommentRequest.getLessonId(), userId)) {
+        if (userId == null || (!userId.equals(saveCommentRequest.getHomeworkOwnerId())
+                && !this.courseRepository.isInstructorOnCourse(saveCommentRequest.getLessonId(), userId))) {
             throw new BadRequestException("You cannot send that comment");
         }
         Comment comment = new Comment(userId, saveCommentRequest.getLessonId(), saveCommentRequest.getHomeworkOwnerId(), saveCommentRequest.getText());

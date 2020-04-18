@@ -14,6 +14,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.vsu.csf.corporatelearningsite.model.Homework;
 import ru.vsu.csf.corporatelearningsite.model.HomeworkId;
 import ru.vsu.csf.corporatelearningsite.payload.UploadFileResponse;
+import ru.vsu.csf.corporatelearningsite.payload.ApiResponse;
+import ru.vsu.csf.corporatelearningsite.payload.CheckHomeworkRequest;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 import ru.vsu.csf.corporatelearningsite.services.HomeworkService;
 
@@ -46,15 +48,15 @@ public class HomeworkController {
 
     @GetMapping("/findAll/{lessonId}")
     public ResponseEntity<?> findAllHomeworks(@PathVariable("lessonId") Long lessonId,
-                                          @AuthenticationPrincipal Authentication authentication) {
+                                              @AuthenticationPrincipal Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         List<Homework> result = this.homeworkService.getHomeworksByLessonId(lessonId, userPrincipal.getId());
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/findHomework")
-    public ResponseEntity<?> findHomework(@RequestParam ("lessonId") Long lessonId, @RequestParam("userId") UUID userId,
-                                              @AuthenticationPrincipal Authentication authentication) {
+    public ResponseEntity<?> findHomework(@RequestParam("lessonId") Long lessonId, @RequestParam("userId") UUID userId,
+                                          @AuthenticationPrincipal Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Homework result = this.homeworkService.getHomeworkById(new HomeworkId(userId, lessonId), userPrincipal.getId());
         return ResponseEntity.ok(result);
@@ -94,5 +96,13 @@ public class HomeworkController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; homeworkname=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+  
+    @PostMapping("/checkHomework")
+    public ResponseEntity<?> checkHomework(@RequestBody CheckHomeworkRequest checkHomeworkRequest,
+                                           @AuthenticationPrincipal Authentication authentication) {
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        this.homeworkService.checkHomework(checkHomeworkRequest, userPrincipal.getId());
+        return ResponseEntity.ok(new ApiResponse(true, "Homework successfully changed"));
     }
 }

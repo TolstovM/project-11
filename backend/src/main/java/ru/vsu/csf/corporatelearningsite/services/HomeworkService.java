@@ -14,6 +14,14 @@ import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.*;
 import ru.vsu.csf.corporatelearningsite.repositories.*;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
+import ru.vsu.csf.corporatelearningsite.model.Homework;
+import ru.vsu.csf.corporatelearningsite.model.HomeworkId;
+import ru.vsu.csf.corporatelearningsite.model.Lesson;
+import ru.vsu.csf.corporatelearningsite.model.User;
+import ru.vsu.csf.corporatelearningsite.payload.CheckHomeworkRequest;
+import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
+import ru.vsu.csf.corporatelearningsite.repositories.HomeworkRepository;
+import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -67,12 +75,12 @@ public class HomeworkService {
             throw new BadRequestException(USER_DOES_NOT_LISTENER_ON_THAT_COURSE);
         }
         Homework homework = new Homework(userId, lessonId, new User(userId), new Lesson(lessonId));
-        Optional<Homework> homeworkOptional = this.homeworkRepository.findById(homework.getId());
-        if (homeworkOptional.isPresent()) {
-            return homeworkOptional;
-        } else {
-            return Optional.of(this.homeworkRepository.save(homework));
-        }
+        return this.homeworkRepository.findById(homework.getId());
+        //if (homeworkOptional.isPresent()) {
+        //    return homeworkOptional;
+        //} else {
+        //    return Optional.of(this.homeworkRepository.save(homework));
+        //}
     }
 
     public List<Homework> getHomeworksByLessonId(Long lessonId, UUID id) {
@@ -139,6 +147,16 @@ public class HomeworkService {
         } catch (MalformedURLException ex) {
             log.error("Homework not found {}", homeworkName);
             throw new ResourceNotFoundException(RESOURCE_NAME, FIELD_NAME_ID, homeworkName);
+        }
+    }
+  
+    public void checkHomework(CheckHomeworkRequest checkHomeworkRequest, UUID id) {
+        if(courseRepository.isInstructorOnCourse(checkHomeworkRequest.getLessonId(), id)){
+            throw new BadRequestException(NO_RIGHTS);
+        }
+        else {
+            homeworkRepository.checkHomework(checkHomeworkRequest.getUserId().toString(), checkHomeworkRequest.getLessonId(),
+                checkHomeworkRequest.getResult());
         }
     }
 }
