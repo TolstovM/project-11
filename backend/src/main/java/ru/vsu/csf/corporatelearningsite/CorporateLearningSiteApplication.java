@@ -4,11 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import ru.vsu.csf.corporatelearningsite.config.AppProperties;
+import ru.vsu.csf.corporatelearningsite.config.HomeworkStorageProperties;
 import ru.vsu.csf.corporatelearningsite.config.MaterialStorageProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
-        MaterialStorageProperties.class, AppProperties.class
+        MaterialStorageProperties.class, AppProperties.class, HomeworkStorageProperties.class
 })
 public class CorporateLearningSiteApplication {
 

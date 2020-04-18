@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {Lesson} from "../_models/lesson";
 import {HttpClient} from "@angular/common/http";
 
-let _url: string = "http://localhost:8081/materials";
+let _url: string = "http://localhost:8081/api/material";
 
 @Injectable({
   providedIn: 'root'

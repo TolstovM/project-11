@@ -96,6 +96,7 @@ public class Homework {
         this.id = new HomeworkId(userId, lessonId);
         this.user = user;
         this.lesson = lesson;
+        this.isPassed = false;
     }
 
     @Override

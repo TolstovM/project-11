@@ -10,14 +10,14 @@ import {LessonService} from "../../_services/lesson.service";
 })
 export class CourseListComponent implements OnInit {
 
-  courses: Course[];
+  coursesWrapped: any;
 
 
   constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.courseService.findAll().subscribe(data => {
-      this.courses = data;
+      this.coursesWrapped = data;
     });
 
   }

@@ -1,22 +1,31 @@
 package ru.vsu.csf.corporatelearningsite.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.vsu.csf.corporatelearningsite.model.Homework;
 import ru.vsu.csf.corporatelearningsite.model.HomeworkId;
+import ru.vsu.csf.corporatelearningsite.payload.UploadFileResponse;
 import ru.vsu.csf.corporatelearningsite.payload.ApiResponse;
 import ru.vsu.csf.corporatelearningsite.payload.CheckHomeworkRequest;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
 import ru.vsu.csf.corporatelearningsite.services.HomeworkService;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping(HomeworkController.API_HOMEWORK)
 public class HomeworkController {
@@ -53,6 +62,42 @@ public class HomeworkController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/uploadHomework/{lessonName}")
+    public UploadFileResponse uploadMaterial(@PathVariable("lessonName") String lessonName,
+                                             @RequestParam("homework") MultipartFile homework,
+                                             @AuthenticationPrincipal Authentication authentication) {
+        String homeworkName = homeworkService.storeHomework(homework, lessonName, (UserPrincipal) authentication.getPrincipal());
+        String homeworkDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadHomework/")
+                .path(homeworkName)
+                .toUriString();
+        return new UploadFileResponse(homeworkName, homeworkDownloadUri,
+                homework.getContentType(), homework.getSize());
+    }
+
+    @GetMapping("/downloadHomework/{homeworkName:.+}")
+    public ResponseEntity<Resource> downloadHomework(@PathVariable String homeworkName, HttpServletRequest request) {
+        Resource resource = homeworkService.loadHomeworkAsResource(homeworkName);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            log.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; homeworkname=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+  
     @PostMapping("/checkHomework")
     public ResponseEntity<?> checkHomework(@RequestBody CheckHomeworkRequest checkHomeworkRequest,
                                            @AuthenticationPrincipal Authentication authentication) {

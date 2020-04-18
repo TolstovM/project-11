@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.vsu.csf.corporatelearningsite.model.Material;
-import ru.vsu.csf.corporatelearningsite.payload.UploadMaterialResponse;
+import ru.vsu.csf.corporatelearningsite.payload.UploadFileResponse;
 import ru.vsu.csf.corporatelearningsite.services.MaterialService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +17,10 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping("/materials")
+@RequestMapping(MaterialController.URL)
 public class MaterialController {
 
+    public static final String URL = "/api/material";
     private final MaterialService materialService;
 
     public MaterialController(MaterialService materialService) {
@@ -27,14 +28,14 @@ public class MaterialController {
     }
 
     @PostMapping("/uploadMaterial/{lessonName}")
-    public UploadMaterialResponse uploadMaterial(@PathVariable("lessonName") String lessonName, @RequestParam("material") MultipartFile material) {
+    public UploadFileResponse uploadMaterial(@PathVariable("lessonName") String lessonName, @RequestParam("material") MultipartFile material) {
         String materialName = materialService.storeMaterial(material, lessonName).getName();
         String materialDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadMaterial/")
                 .path(materialName)
                 .toUriString();
         log.info("the material was uploaded");
-        return new UploadMaterialResponse(materialName, materialDownloadUri,
+        return new UploadFileResponse(materialName, materialDownloadUri,
                 material.getContentType(), material.getSize());
     }
 

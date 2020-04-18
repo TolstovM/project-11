@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Course} from "../_models/course";
 
-let _url: string = "http://localhost:8081/course";
-let _url_api: string = "http://localhost:8081/api/course";
+let _url: string = "http://localhost:8081/api/course";
 
 @Injectable({
   providedIn: 'root'
@@ -39,25 +38,25 @@ export class CourseService {
   }
 
   public getAll(projection: string) {
-    return this.http.get(_url_api + `?projection=${projection}`);
+    return this.http.get(_url + `?projection=${projection}`);
   }
 
   public patchInstructor(courseId, userId) {
     const headers = new HttpHeaders({'Content-Type': 'text/uri-list'});
-    return this.http.patch(_url_api + `/${courseId}/instructors`,
-    _url_api + `/user/${userId}`, { headers });
+    return this.http.patch(_url + `/${courseId}/instructors`,
+    _url + `/user/${userId}`, { headers });
   }
 
   public deleteInstructor(courseId, userId) {
-    return this.http.delete(_url_api + `/${courseId}/instructors/${userId}`);
+    return this.http.delete(_url + `/${courseId}/instructors/${userId}`);
   }
 
   public findAllForUser(userId, projection) {
-    return this.http.get(_url_api + `/search/findAllByUserId?uuid=${userId}&projection=${projection}`);
+    return this.http.get(_url + `/search/findAllByUserId?uuid=${userId}&projection=${projection}`);
   }
 
   public findById(courseId, projection: string):any {
-    return this.http.get(_url_api + `/${courseId}?projection=${projection}`);
+    return this.http.get(_url + `/${courseId}?projection=${projection}`);
   }
 
 }
