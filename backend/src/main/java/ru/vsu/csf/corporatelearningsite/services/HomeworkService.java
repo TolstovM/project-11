@@ -75,16 +75,16 @@ public class HomeworkService {
             throw new BadRequestException(USER_DOES_NOT_LISTENER_ON_THAT_COURSE);
         }
         Homework homework = new Homework(userId, lessonId, new User(userId), new Lesson(lessonId));
-        return this.homeworkRepository.findById(homework.getId());
-        //if (homeworkOptional.isPresent()) {
-        //    return homeworkOptional;
-        //} else {
-        //    return Optional.of(this.homeworkRepository.save(homework));
-        //}
+        Optional<Homework> homeworkOptional = this.homeworkRepository.findById(homework.getId());
+        if (homeworkOptional.isPresent()) {
+            return homeworkOptional;
+        } else {
+            return Optional.of(this.homeworkRepository.save(homework));
+        }
     }
 
     public List<Homework> getHomeworksByLessonId(Long lessonId, UUID id) {
-        if(courseRepository.isInstructorOnCourse(lessonId, id)){
+        if(!courseRepository.isInstructorOnCourse(lessonId, id)){
             throw new BadRequestException(NO_RIGHTS);
         }
         else {
@@ -94,7 +94,7 @@ public class HomeworkService {
     }
 
     public Homework getHomeworkById(HomeworkId homeworkId, UUID id) {
-        if(courseRepository.isInstructorOnCourse(homeworkId.getLessonId(), id)){
+        if(!courseRepository.isInstructorOnCourse(homeworkId.getLessonId(), id)){
             throw new BadRequestException(NO_RIGHTS);
         }
         else {

@@ -10,16 +10,16 @@
 </div>
 
 <h2 class="h2 mb-3 font-weight-normal" >Комментарий пользователя</h2>
-<div *ngIf="homework.comment">
-  {{homework.comment}}
-</div>
-<div *ngIf="!homework.comment">
+  <div *ngIf="homework.comments">
+      <div *ngFor="let comment of homework.comments">
+      {{comment.owner.name}} ({{comment.owner.email}}) оставил(-а) комментарий <br>
+      <p>{{comment.text}}</p>
+      </div>
+  </div>
+<div *ngIf="!homework.comments">
   Комментраий пользователя отсутствует
 </div>
-
-
-
-  <form [formGroup]="form">
+  <form [formGroup]="form" onsubmit="sendParams()">
     <div class="form-group">
       <h3><label class="label label-primary" for="text">Ваш комментарий:</label></h3>
       <textarea cols="100" placeholder="Ваш комментарий" name="text" class="form-control" formControlName="text" id="text"></textarea>

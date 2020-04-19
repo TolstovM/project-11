@@ -23,6 +23,7 @@ export class MyLessonComponent implements OnInit {
   form;
   materials: Material[];
   downloadUrl: string;
+  downloadUrlMaterial: string;
   fileToUpload: File = null;
 
   constructor(
@@ -42,15 +43,17 @@ export class MyLessonComponent implements OnInit {
     });
     this.id = this.route.snapshot.paramMap.get('lessonId');
     let llesson = this.lessonService.findById(this.id, LessonService.LESSON_WITH_MATERIALS_PROJECTION);
-    let lhomework = this.homeworkService.getHomeworkById(this.id, this.authService.currentUserValue.uuid);
+    let lhomework = this.homeworkService.findByLessonId(this.id);
     forkJoin([llesson, lhomework])
     .subscribe(res => {
+      console.log(res[1]);
       this.lesson = res[0] as Lesson;
       this.homework = res[1];
       this.lessonService.getLessonMaterials(this.lesson).subscribe(data => {
         this.materials = data;
       });
     });
+    this.downloadUrlMaterial = LessonService.DOWNLOAD_URL_MATERIAL
     this.downloadUrl = LessonService.DOWNLOAD_URL_HOMEWORK;
   }
 

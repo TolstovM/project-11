@@ -1,6 +1,7 @@
 package ru.vsu.csf.corporatelearningsite.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 //TODO delete controller
-@RestController
+@RepositoryRestController
 @RequestMapping(LessonController.URL)
 public class LessonController {
 
