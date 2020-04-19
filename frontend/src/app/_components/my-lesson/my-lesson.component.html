@@ -5,7 +5,7 @@
 <h6>Материалы</h6>
 <div *ngFor="let material of materials">
   <br />
-  <a href="{{downloadUrl}}/{{ material.name }}" class="btn btn-info">{{ material.name }}</a>
+  <a href="{{downloadUrlMaterial}}/{{ material.name }}" class="btn btn-info" onclick="ym(61893537,'reachGoal','DOWNLOAD_MATERIAL')">{{ material.name }}</a>
 </div>
 <br/>
 
@@ -26,7 +26,7 @@
         style="width: 100px">Добавить</button>
 <br/>
 
-<form [formGroup]="form">
+<form [formGroup]="form" onsubmit="sendParams()">
     <div class="form-group">
         <label for="text">Ваш комментарий:</label>
         <textarea name="text" class="form-control" formControlName="text" id="text"></textarea>
