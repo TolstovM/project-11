@@ -24,18 +24,13 @@ public class LessonController {
     }
 
     @GetMapping("/name/{name}")
-    public Optional<Lesson> getLesson(@PathVariable("name") String name){
-        return lessonService.get(name);
+    public ResponseEntity<?> getLesson(@PathVariable("name") String name){
+        return ResponseEntity.ok(lessonService.get(name));
     }
 
     @PostMapping("/courseName/{courseName}")
     public ResponseEntity<Lesson> addLesson(@PathVariable("courseName") String courseName, @RequestBody Lesson lesson) {
         lessonService.add(lesson, courseName);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/materials/{name}")
-    public List<Material> getLessonMaterials(@PathVariable("name") String name){
-        return lessonService.getMaterials(name);
     }
 }

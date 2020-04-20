@@ -10,7 +10,12 @@
 <br/>
 
 <h6>Домашние работы</h6>
-<a href="{{downloadUrl}}/{{ homework.file }}" class="btn btn-info">{{ homework.file }}</a>
+<div *ngIf="homework.file">
+<a href="{{downloadUrlHomework}}/{{ homework.file }}" class="btn btn-info">{{ homework.file }}</a>
+</div>
+<div *ngIf="!homework.file">
+  Пользователь не прикрепил файл
+</div>
 <div *ngIf="homework.passed">Сдано</div>
 <div *ngElse>Не сдано</div>
 <div *ngFor="let comment of homework.comments">

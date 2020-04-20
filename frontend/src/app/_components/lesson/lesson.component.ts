@@ -49,7 +49,7 @@ export class LessonComponent implements OnInit {
         error => {
           console.log(error);
         });
-    this.lessonService.getLessonMaterialsByName(name)
+    this.materialService.getLessonMaterialsByName(name)
       .pipe(first())
       .subscribe( res => {
           this.materials = res;

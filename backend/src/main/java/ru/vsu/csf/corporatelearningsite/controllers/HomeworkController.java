@@ -63,7 +63,7 @@ public class HomeworkController {
     }
 
     @PostMapping("/uploadHomework/{lessonName}")
-    public UploadFileResponse uploadMaterial(@PathVariable("lessonName") String lessonName,
+    public UploadFileResponse uploadHomework(@PathVariable("lessonName") String lessonName,
                                              @RequestParam("homework") MultipartFile homework,
                                              @AuthenticationPrincipal Authentication authentication) {
         String homeworkName = homeworkService.storeHomework(homework, lessonName, (UserPrincipal) authentication.getPrincipal());
