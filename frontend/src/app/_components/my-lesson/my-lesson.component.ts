@@ -26,6 +26,7 @@ export class MyLessonComponent implements OnInit {
   downloadUrlHomework: string;
   downloadUrlMaterial: string;
   fileToUpload: File = null;
+  course:any;
 
   constructor(
     private router: Router,
@@ -44,6 +45,7 @@ export class MyLessonComponent implements OnInit {
       text: ['', Validators.required]
     });
     this.id = this.route.snapshot.paramMap.get('lessonId');
+    this.course = this.route.snapshot.paramMap.get("id");
     let llesson = this.lessonService.findById(this.id, LessonService.LESSON_WITH_MATERIALS_PROJECTION);
     let lhomework = this.homeworkService.findByLessonId(this.id);
     forkJoin([llesson, lhomework])

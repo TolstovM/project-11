@@ -151,7 +151,7 @@ public class HomeworkService {
     }
   
     public void checkHomework(CheckHomeworkRequest checkHomeworkRequest, UUID id) {
-        if(courseRepository.isInstructorOnCourse(checkHomeworkRequest.getLessonId(), id)){
+        if(!courseRepository.isInstructorOnCourse(checkHomeworkRequest.getLessonId(), id)){
             throw new BadRequestException(NO_RIGHTS);
         }
         else {

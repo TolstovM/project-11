@@ -50,7 +50,7 @@ export class ConcreteHomeworkComponent implements OnInit {
         console.log(this.homework);
       }
     );
-    this.downloadUrl = LessonService.DOWNLOAD_URL_MATERIAL;
+    this.downloadUrl = LessonService.DOWNLOAD_URL_HOMEWORK;
   }
 
 
