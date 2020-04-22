@@ -74,4 +74,9 @@ public class MaterialController {
         log.info("the material {} was deleted", id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/materials/{name}")
+    public ResponseEntity<?> getLessonMaterials(@PathVariable("name") String name){
+        return ResponseEntity.ok(materialService.getMaterialsByLessonName(name));
+    }
 }

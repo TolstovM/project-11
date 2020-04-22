@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Lesson} from "../_models/lesson";
 
 let _url: string = "http://localhost:8081/api/material";
 
@@ -18,5 +19,13 @@ export class MaterialService {
 
   delete(id){
     return this.http.delete(_url + `/delete/${id}`);
+  }
+
+  public getLessonMaterials(lesson: Lesson): any {
+    return this.http.get(_url + `/materials/${lesson.name}`);
+  }
+
+  public getLessonMaterialsByName(name: string): any {
+    return this.http.get(_url + `/materials/${name}`);
   }
 }

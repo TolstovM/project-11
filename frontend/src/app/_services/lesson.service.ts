@@ -11,7 +11,7 @@ export class LessonService {
 
   public static LESSON_PROJECTION = "inlineUserWithRoles";
   public static LESSON_WITH_MATERIALS_PROJECTION = "lessonWithMaterialProjection";
-  public static DOWNLOAD_URL_MATERIAL = 'http://localhost:8081/api/materials/downloadMaterial';
+  public static DOWNLOAD_URL_MATERIAL = 'http://localhost:8081/api/material/downloadMaterial';
   public static DOWNLOAD_URL_HOMEWORK = 'http://localhost:8081/api/homework/downloadHomework';
 
   constructor(private http: HttpClient) {
@@ -23,14 +23,6 @@ export class LessonService {
 
   public add(name, description, courseName) {
     return this.http.post<Lesson>(_url + `/courseName/${courseName}`, {"name": name, "description": description});
-  }
-
-  public getLessonMaterialsByName(name: string): any {
-    return this.http.get(_url + `/materials/${name}`);
-  }
-
-  public getLessonMaterials(lesson: Lesson): any {
-    return this.http.get(_url + `/materials/${lesson.name}`);
   }
 
   public findById(id, projection: string): any {

@@ -40,12 +40,4 @@ public class LessonService {
         log.info("IN get - lesson with name: {} successfully get", name);
         return lessonRepository.findByName(name);
     }
-
-    public List<Material> getMaterials(String name) {
-        if(lessonRepository.findByName(name).isPresent()) {
-            return lessonRepository.findByName(name).get().getMaterials();
-        }
-        else
-            return new ArrayList<>();
-    }
 }

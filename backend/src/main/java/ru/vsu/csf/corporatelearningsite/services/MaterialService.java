@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -115,5 +116,13 @@ public class MaterialService {
             log.error("Could not delete the material");
             throw new MaterialStorageException("Could not delete the material", ex);
         }
+    }
+
+    public List<Material> getMaterialsByLessonName(String name) {
+        if(lessonRepository.findByName(name).isPresent()) {
+            return lessonRepository.findByName(name).get().getMaterials();
+        }
+        else
+            return new ArrayList<>();
     }
 }

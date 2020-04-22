@@ -9,6 +9,7 @@ import {Material} from "../../_models/material";
 import {Lesson} from "../../_models/lesson";
 import {ToastrService} from "ngx-toastr";
 import {AuthService} from "../../_services/auth.service";
+import {MaterialService} from "../../_services/material.service";
 
 @Component({
   selector: 'app-my-lesson',
@@ -22,15 +23,17 @@ export class MyLessonComponent implements OnInit {
   homework;
   form;
   materials: Material[];
-  downloadUrl: string;
+  downloadUrlHomework: string;
   downloadUrlMaterial: string;
   fileToUpload: File = null;
+  course:any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private lessonService: LessonService,
     private homeworkService: HomeworkService,
+    private materialService: MaterialService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private commentService: CommentService,
@@ -42,6 +45,7 @@ export class MyLessonComponent implements OnInit {
       text: ['', Validators.required]
     });
     this.id = this.route.snapshot.paramMap.get('lessonId');
+    this.course = this.route.snapshot.paramMap.get("id");
     let llesson = this.lessonService.findById(this.id, LessonService.LESSON_WITH_MATERIALS_PROJECTION);
     let lhomework = this.homeworkService.findByLessonId(this.id);
     forkJoin([llesson, lhomework])
@@ -49,12 +53,12 @@ export class MyLessonComponent implements OnInit {
       console.log(res[1]);
       this.lesson = res[0] as Lesson;
       this.homework = res[1];
-      this.lessonService.getLessonMaterials(this.lesson).subscribe(data => {
+      this.materialService.getLessonMaterials(this.lesson).subscribe(data => {
         this.materials = data;
       });
     });
-    this.downloadUrlMaterial = LessonService.DOWNLOAD_URL_MATERIAL
-    this.downloadUrl = LessonService.DOWNLOAD_URL_HOMEWORK;
+    this.downloadUrlMaterial = LessonService.DOWNLOAD_URL_MATERIAL;
+    this.downloadUrlHomework = LessonService.DOWNLOAD_URL_HOMEWORK;
   }
 
   send() {
