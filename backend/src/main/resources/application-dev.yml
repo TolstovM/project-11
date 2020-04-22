@@ -27,11 +27,15 @@ spring:
 
 app:
   auth:
-    tokenSecret: 49ptUoqWGLkv6D-JdgjFFs1wr8U5Sq-4bWQTpsL67HL0IElc_bdBL9ZlayDpXnYYd3ry2k_HUN4kDhWNPFMMJFqrY_VpdHyUENa4FV4jefD37mi4BuhPAXHC2CAm0CcF77D0BWhsPIr9liwM0zERp53oHT1-i3Ct8j15Y_Rb9QksWQZUqhYgWfrjNUau49E_E58aaEFcKuKdMAKl1Dgo6o1G0KAKLPx6Z717QHs7uZEdLVbw4Ijbv7gptVA2fFN6nQMZEiU3DBIJcqsR9GA-OmqpTCilhNUFE33D8cXw5c3eEHHIXSa8IQYCdvFs9g9FxOSjD37SE_Wqe4t7bnMmCg
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
     tokenExpirationMsec: 864000000
+server:
+  port: 8081
 
 material:
-  upload-dir: /home/tomcat/materials
+  upload-dir: /files/materials
+#  /home/maksfox/tmp/project
 
 homework:
-  upload-dir: /home/tomcat/homeworks
+  upload-dir: /files/materials
+#  /home/maksfox/tmp/project
