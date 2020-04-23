@@ -1,0 +1,25 @@
+<div>
+    <h3>Добавление инструкторов</h3>
+    <form [formGroup]="form">
+        <div class="form-field">
+            <label>Email:</label>
+            <input name="email" formControlName="email">
+        </div>
+        <button (click)="onClick()">Искать</button>
+    </form>
+
+    <table>
+        <thead>
+            <th>Email</th>
+            <th>Имя</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let instructor of instructors._embedded.users" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">
+                <td>{{ instructor.email }}</td>
+                <td>{{ instructor.name }}</td>
+                <td><button (click)="addInstructor(instructor.id, instructor.email)">Добавить</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

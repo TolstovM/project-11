@@ -1,0 +1,19 @@
+<div>
+    <h3>Список моих курсов</h3>
+    <table>
+        <thead>
+            <th>Название</th>
+            <th>Описание</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of coursesWrapped._embedded.courses">
+              <td><b>{{ course.name }}</b></td>
+                <td>{{ course.description }}</td>
+                <td><a routerLink="/user/me/course/{{course.id}}" class="btn btn-primary">Перейти</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button routerLink="/user/me" class="btn-primary">Назад</button>
+</div>

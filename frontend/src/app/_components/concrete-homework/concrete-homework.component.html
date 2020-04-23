@@ -1,0 +1,77 @@
+<h1 class="display-1">Домашняя работа</h1>
+
+
+<h2 class="h2 mb-3 font-weight-normal" >Прикрепленный файл</h2>
+<div *ngIf="homework.file">
+  <a routerLink="{{downloadUrl}}/{{ homework.file}}" class="btn btn-info">Загрузить</a>
+</div>
+<div *ngIf="!homework.file">
+  Пользователь не прикрепил файл
+</div>
+
+<h2 class="h2 mb-3 font-weight-normal" >Комментарий пользователя</h2>
+  <div *ngIf="homework.comments">
+      <div *ngFor="let comment of homework.comments">
+      {{comment.owner.name}} ({{comment.owner.email}}) оставил(-а) комментарий <br>
+      <p>{{comment.text}}</p>
+      </div>
+  </div>
+<div *ngIf="!homework.comments">
+  Комментраий пользователя отсутствует
+</div>
+  <form [formGroup]="form" onsubmit="sendParams()">
+    <div class="form-group">
+      <h3><label class="label label-primary" for="text">Ваш комментарий:</label></h3>
+      <textarea cols="100" placeholder="Ваш комментарий" name="text" class="form-control" formControlName="text" id="text"></textarea>
+    </div>
+    <div class="form-buttons">
+      <button class="btn btn-primary" (click)="sendComment()">Оставить комментарий</button>
+    </div>
+  </form>
+
+<h2>Отметка о зачете</h2>
+<form [formGroup]="resultForm">
+  <div *ngIf="homework.passed">
+    <div class="form-check">
+      <input class="form-check-input" formControlName="result"  type="radio" name="result" id="passed" value="true" checked >
+      <label class="form-check-label" for="passed">
+        Зачтено
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" formControlName="result"  type="radio" name="result" id="notPassed" value="false" >
+      <label class="form-check-label" for="notPassed">
+        Не зачтено
+      </label>
+    </div>
+  </div>
+  <div *ngIf="!homework.passed">
+    <div class="form-check">
+      <input class="form-check-input" formControlName="result"  type="radio" name="result" id="1" value="true" >
+      <label class="form-check-label" for="1">
+        Зачтено
+      </label>
+    </div>
+    <p>
+    <div class="form-check">
+      <input class="form-check-input" formControlName="result"  type="radio" name="result" id="2" value="false" checked>
+      <label class="form-check-label" for="2">
+        Не зачтено
+      </label>
+    </div>
+  </div>
+  <br>
+  <div class="form-buttons">
+    <button class="btn btn-primary" (click)="send()">Сохранить</button>
+  </div>
+</form>
+
+
+
+
+
+
+
+
+
+

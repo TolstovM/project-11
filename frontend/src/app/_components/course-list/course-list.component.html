@@ -1,0 +1,19 @@
+
+ <h3 class="display-3">Список подопечных курсов</h3>
+  <div class="form-list-course">
+    <div *ngFor="let course of coursesWrapped._embedded.courses">
+      <h1 class="h4 mb-3 font-weight-normal">{{ course.name }}
+      <a [routerLink]="['/course',course.name] " [queryParams]="{'id':course.id}" class="btn btn-info">Перейти</a></h1>
+    </div>
+    <div style="padding-top: 40px">
+<!--      <div class="col-sm-12">-->
+      <a routerLink="/add/course" class="btn btn-lg btn-primary">Добавить курс</a>
+
+      <br>
+      <br>
+      <a routerLink="/user/me" class="btn btn-lg btn-primary">Назад</a>
+<!--      </div>-->
+
+    </div>
+  </div>
+
