@@ -72,6 +72,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
+                .antMatchers("/api/auth/**")
+                .permitAll()
+                .antMatchers("/api/user/me")
+                .hasRole("USER")
+                .antMatchers("/api/user/**")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+                .antMatchers("/api/material/downloadMaterial/**")
+                .permitAll()
+                .antMatchers("/api/homework/downloadHomework/**")
+                .permitAll()
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
@@ -83,17 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/auth/**")
-                .permitAll()
-                .antMatchers("/api/user/me")
-                .hasRole("USER")
-                .antMatchers("/api/user/**")
-                .hasAnyRole("ADMIN", "INSTRUCTOR")
-                .antMatchers("/api/material/downloadMaterial/**")
-                .permitAll()
-                .antMatchers("/api/homework/downloadHomework/**")
-                .permitAll()
-                .antMatchers("/api/**")
+                .anyRequest()
                 .authenticated();
 
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

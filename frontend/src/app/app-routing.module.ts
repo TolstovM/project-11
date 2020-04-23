@@ -21,7 +21,7 @@ import {HomeworkListComponent} from "./_components/homework-list/homework-list.c
 import {ConcreteHomeworkComponent} from "./_components/concrete-homework/concrete-homework.component";
 
 
-
+let _href = 'frontend/';
 
 const routes: Routes = [
 
@@ -86,8 +86,9 @@ const routes: Routes = [
 
 ];
 
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -7,7 +7,9 @@ import { User } from '../_models/user';
 import * as jwt_decode from 'jwt-decode';
 import { Role } from '../_models/role';
 
-let _url: string = "http://localhost:8081/api";
+let _base_url = window["baseUrl"]; 
+
+let _url: string = `${_base_url}/api`;
 
 @Injectable({
   providedIn: 'root'

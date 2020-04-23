@@ -3,7 +3,7 @@
 
 <h2 class="h2 mb-3 font-weight-normal" >Прикрепленный файл</h2>
 <div *ngIf="homework.file">
-  <a href="{{downloadUrl}}/{{ homework.file}}" class="btn btn-info">Загрузить</a>
+  <a routerLink="{{downloadUrl}}/{{ homework.file}}" class="btn btn-info">Загрузить</a>
 </div>
 <div *ngIf="!homework.file">
   Пользователь не прикрепил файл

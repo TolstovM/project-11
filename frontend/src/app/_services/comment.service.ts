@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { from } from 'rxjs';
-let _url = "http://localhost:8081/api/comment";
+let _base_url = window["baseUrl"]; 
+let _url = `${_base_url}/api/comment`;
 
 @Injectable({
   providedIn: 'root'

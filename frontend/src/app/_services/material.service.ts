@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Lesson} from "../_models/lesson";
 
-let _url: string = "http://localhost:8081/api/material";
+let _base_url = window["baseUrl"]; 
+let _url: string = `${_base_url}/api/material`;
 
 @Injectable({
   providedIn: 'root'
