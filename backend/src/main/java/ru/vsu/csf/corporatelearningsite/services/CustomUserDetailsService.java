@@ -71,6 +71,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NAME, FIELD_NAME_ID, email));
     }
 
+    public User findByName(String name) {
+        return userRepository.findByName(name)
+            .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NAME, FIELD_NAME_ID, name));
+    }
+
     @Transactional
     public void updateAuthorities(UpdateAuthoritiesRequest request) {
         User user = userRepository.findById(request.getUserId())

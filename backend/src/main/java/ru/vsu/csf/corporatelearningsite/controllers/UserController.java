@@ -61,7 +61,7 @@ public class UserController {
         Map<String, String> res = new HashMap<>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User user = userDetailsService.findByEmail(name);
+        User user = userDetailsService.findByName(name);
         if (userService.updateUser(request, user.getId()))
             res.put("message", "Успешное изменение данных");
         else
