@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Course} from "../_models/course";
 
-let _url: string = "http://localhost:8081/api/course";
+let _base_url = window["baseUrl"]; 
+let _url: string = `${_base_url}/api/course`;
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/project11?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: Dthy-2002
+    password: root
 
   servlet:
     multipart:
@@ -29,9 +29,13 @@ app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
     tokenExpirationMsec: 864000000
+server:
+  port: 8081
 
 material:
-  upload-dir: /home/tomcat/materials
+  upload-dir: /files/materials
+#  /home/maksfox/tmp/project
 
 homework:
-  upload-dir: /home/tomcat/homeworks
+  upload-dir: /files/materials
+#  /home/maksfox/tmp/project

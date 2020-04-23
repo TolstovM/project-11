@@ -70,7 +70,7 @@ public class AuthService {
             throw new BadRequestException(EMAIL_ADDRESS_ALREADY_IN_USE_EXCEPTION_MESSAGE);
         }
         Optional<User> userOptional = userRepository.findById(UUID.fromString(signUpRequest.getInviteCode()));
-        if (userOptional.isEmpty() || userOptional.get().getEmail() != null) {
+        if (!userOptional.isPresent() || userOptional.get().getEmail() != null) {
             throw new BadRequestException(CODE_DOES_NOT_EXIST_EXCEPTION_MESSAGE);
         }
         return userOptional.get();

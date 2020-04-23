@@ -71,11 +71,11 @@ public class CourseService {
 
     public void addListener(String email, String courseId) {
         Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty())
+        if(!user.isPresent())
             throw new ResourceNotFoundException("User", "email", email);
         else {
             Optional<Course> course = courseRepository.findById(Long.parseLong(courseId));
-            if(course.isEmpty())
+            if(!course.isPresent())
                 throw new ResourceNotFoundException("Course", "courseId", courseId);
             else{
                 ListenerOnCourse listenerOnCourse = new ListenerOnCourse(new ListenerOnCourseId(course.get().getId(), user.get().getId()), new Course(course.get().getId()), new User(user.get().getId()));

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Lesson} from "../_models/lesson";
 
-let _url: string = "http://localhost:8081/api/lesson";
+let _base_url = window["baseUrl"]; 
+let _url: string = `${_base_url}/api/lesson`;
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class LessonService {
 
   public static LESSON_PROJECTION = "inlineUserWithRoles";
   public static LESSON_WITH_MATERIALS_PROJECTION = "lessonWithMaterialProjection";
-  public static DOWNLOAD_URL_MATERIAL = 'http://localhost:8081/api/material/downloadMaterial';
-  public static DOWNLOAD_URL_HOMEWORK = 'http://localhost:8081/api/homework/downloadHomework';
+  public static DOWNLOAD_URL_MATERIAL = `${_base_url}/api/material/downloadMaterial`;
+  public static DOWNLOAD_URL_HOMEWORK = `${_base_url}/api/homework/downloadHomework`;
 
   constructor(private http: HttpClient) {
   }
