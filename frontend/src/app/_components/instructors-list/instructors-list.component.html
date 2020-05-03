@@ -10,7 +10,7 @@
             <tr *ngFor="let instructor of instructors" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">
                 <td>{{ instructor.email }}</td>
                 <td>{{ instructor.name }}</td>
-                <td><button (click)="deleteInstructor(instructor.id, instructor.email)">Удалить</button></td>
+                <td><button (click)="deleteInstructor(instructor.id, instructor.email)" onclick="ym(61893537,'reachGoal','DELETE_INSTRUCTOR')">Удалить</button></td>
             </tr>
         </tbody>
     </table>
