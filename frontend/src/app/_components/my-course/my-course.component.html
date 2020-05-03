@@ -17,7 +17,7 @@
             <tr *ngFor="let lesson of course.lessons">
               <td><B>{{ lesson.name }}</B></td>
                 <td>{{ lesson.description }}</td>
-                <td><a href="/user/me/course/{{id}}/lessons/{{lesson.id}}" class="btn">Перейти</a></td>
+                <td><a routerLink="/user/me/course/{{id}}/lessons/{{lesson.id}}" class="btn">Перейти</a></td>
             </tr>
         </tbody>
     </table>
