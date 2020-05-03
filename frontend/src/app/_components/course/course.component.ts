@@ -27,6 +27,7 @@ export class CourseComponent implements OnInit {
   lessons: Lesson[];
   private sub: Subscription;
   private qsub: Subscription;
+  currentUser;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +36,7 @@ export class CourseComponent implements OnInit {
     private courseService: CourseService,
     private toastr: ToastrService,
     private userService: UserService,
-
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +51,8 @@ export class CourseComponent implements OnInit {
     this.form = this.formBuilder.group({
       email: ['', Validators.required]
     })
+
+    this.currentUser = this.authService.currentUserValue;
   }
 
   get aControls() { return this.form.controls; }

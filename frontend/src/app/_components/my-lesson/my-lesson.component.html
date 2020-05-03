@@ -1,28 +1,38 @@
-<h3>{{lesson?.name}}</h3>
-<div>{{lesson?.description}}</div>
+<div align="center">
+  <h3>{{lesson?.name}}</h3>
+  <div>{{lesson?.description}}</div>
+</div>
+
 
 <br />
-<h6>Материалы</h6>
+<h4>Материалы к уроку</h4>
 <div *ngFor="let material of materials">
   <br />
   <a routerLink="{{downloadUrlMaterial}}/{{ material.name }}" class="btn btn-info" onclick="ym(61893537,'reachGoal','DOWNLOAD_MATERIAL')">{{ material.name }}</a>
 </div>
 <br/>
 
-<h6>Домашние работы</h6>
+<h4>Домашняя работа</h4>
 <div *ngIf="homework.file">
 <a routerLink="{{downloadUrlHomework}}/{{ homework.file }}" class="btn btn-info">{{ homework.file }}</a>
 </div>
 <div *ngIf="!homework.file">
-  Пользователь не прикрепил файл
+  Файл не прикреплен
 </div>
-<div *ngIf="homework.passed">Сдано</div>
-<div *ngElse>Не сдано</div>
-<div *ngFor="let comment of homework.comments">
+<div *ngIf="homework.passed">Домашняя работа зачтена</div>
+<div *ngIf="!homework.passed">Домашняя работа не зачтена</div>
+<h4>Комментарии</h4>
+<div *ngIf="homework.comments.length!==0">
+  <div *ngFor="let comment of homework.comments">
     {{comment.owner.name}} ({{comment.owner.email}}) оставил(-а) комментарий <br>
     <p>{{comment.text}}</p>
+  </div>
+</div>
+<div *ngIf="homework.comments.length===0">
+  К домашней работе пока не оставлено ни одного комментария
 </div>
 
+<h4>Прикрепить файл</h4>
 <br/>
 <label for="file">Выберите файл</label>
 <input type="file" style="padding-top: 25px" id="file"

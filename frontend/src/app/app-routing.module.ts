@@ -19,11 +19,14 @@ import { MyCoursesComponent } from './_components/my-courses/my-courses.componen
 import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 import {HomeworkListComponent} from "./_components/homework-list/homework-list.component";
 import {ConcreteHomeworkComponent} from "./_components/concrete-homework/concrete-homework.component";
+import {HomeComponent} from "./_components/home/home.component";
 
 
 let _href = 'frontend/';
 
 const routes: Routes = [
+
+  {path: '', component: HomeComponent},
 
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/login', component: LoginComponent },
@@ -52,6 +55,11 @@ const routes: Routes = [
     component: ChangeProfileComponent
   },
   { path: 'courses', component: CourseListComponent },
+  {
+    path: 'user/me/course/:id',
+    component: MyCourseComponent,
+    data: { roles: [Role.ROLE_USER] }
+  },
   { path: 'course/:name', component: CourseComponent },
   { path: 'add/course', component: CourseAddFormComponent },
   { path: 'add/lesson/:courseName', component: LessonAddFormComponent },
@@ -60,11 +68,7 @@ const routes: Routes = [
       component: MyCoursesComponent,
       data: { roles: [Role.ROLE_USER] }
   },
-  {
-    path: 'user/me/course/:id',
-    component: MyCourseComponent,
-    data: { roles: [Role.ROLE_USER] }
-  },
+
   {
     path: 'user/me/course/:id/lessons/:lessonId',
     component: MyLessonComponent,
