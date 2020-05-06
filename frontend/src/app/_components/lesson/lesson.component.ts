@@ -8,6 +8,7 @@ import {LessonService} from "../../_services/lesson.service";
 import {MaterialService} from "../../_services/material.service";
 import {Material} from "../../_models/material";
 import {ToastrService} from "ngx-toastr";
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-lesson',
@@ -16,7 +17,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class LessonComponent implements OnInit {
 
-  name: string;
+  id: number;
   lesson: Lesson = {} as Lesson;
   private sub: Subscription;
   fileToUpload: File = null;
@@ -34,14 +35,14 @@ export class LessonComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
-      this.name = params['name'];
-      this.loadLesson(this.name);
+      this.id = params['id'];
+      this.loadLesson(this.id);
     });
     this.downloadUrl = LessonService.DOWNLOAD_URL_MATERIAL;
   }
 
-  loadLesson(name: string) {
-    this.lessonService.getLesson(name)
+  loadLesson(id: number) {
+    this.lessonService.getLesson(id)
       .pipe(first())
       .subscribe( res => {
           this.lesson = res;
@@ -49,7 +50,7 @@ export class LessonComponent implements OnInit {
         error => {
           console.log(error);
         });
-    this.materialService.getLessonMaterialsByName(name)
+    this.materialService.getLessonMaterialsById(id)
       .pipe(first())
       .subscribe( res => {
           this.materials = res;
@@ -68,7 +69,7 @@ export class LessonComponent implements OnInit {
       this.toastr.error("Файл не выбран");
     }
     else {
-      this.materialService.postFile(this.fileToUpload, this.name).subscribe(data => {
+      this.materialService.postFile(this.fileToUpload, this.id).subscribe(data => {
         this.toastr.success("Вы успешно загрузили материал");
         this.reloadComponent();
       }, error => {
@@ -85,13 +86,24 @@ export class LessonComponent implements OnInit {
   reloadComponent() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/lesson', this.name]);
+    this.router.navigate(['/lesson', this.id]);
   }
 
   delete(id) {
     this.materialService.delete(id).subscribe(data => {
       this.toastr.success("Вы успешно удалили материал");
       this.reloadComponent();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  download(name) {
+    this.materialService.download(name).subscribe(response => {
+      this.toastr.success("Вы успешно скачали материал");
+      let blob:any = new Blob([response.slice()], { type: response.type });
+      const url = window.URL.createObjectURL(blob);
+      fileSaver.saveAs(blob, name);
     }, error => {
       console.log(error);
     });

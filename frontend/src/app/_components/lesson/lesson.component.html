@@ -7,7 +7,7 @@
     <h1 class="h2 mb-3 font-weight-normal" >Материалы</h1>
     <div *ngFor="let material of materials">
       <br />
-      <a href="{{downloadUrl}}/{{ material.name }}" class="btn btn-info">{{ material.name }}</a>
+      <a (click)="download(material.name)" class="btn btn-info">{{ material.name }}</a>
       <button class="btn btn-danger" style="margin: auto; width: 100px" (click)="delete(material.id)">Удалить</button>
     </div>
 

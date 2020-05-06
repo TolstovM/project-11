@@ -51,7 +51,7 @@ public class MaterialService {
         this.lessonRepository = lessonRepository;
     }
 
-    public Material storeMaterial(MultipartFile material, String lessonName) {
+    public Material storeMaterial(MultipartFile material, Long lessonId) {
         String materialName = StringUtils.cleanPath(material.getOriginalFilename());
 
         try {
@@ -63,8 +63,8 @@ public class MaterialService {
             Material dbMaterial = new Material(materialName, material.getContentType(),
                     this.materialStorageLocation.toString());
 
-            if(lessonRepository.findByName(lessonName).isPresent())
-                dbMaterial.setLesson(lessonRepository.findByName(lessonName).get());
+            if(lessonRepository.findById(lessonId).isPresent())
+                dbMaterial.setLesson(lessonRepository.findById(lessonId).get());
             else
                 throw new MaterialStorageException("Lesson name not found");
 
@@ -118,9 +118,9 @@ public class MaterialService {
         }
     }
 
-    public List<Material> getMaterialsByLessonName(String name) {
-        if(lessonRepository.findByName(name).isPresent()) {
-            return lessonRepository.findByName(name).get().getMaterials();
+    public List<Material> getMaterialsByLessonId(Long id) {
+        if(lessonRepository.findById(id).isPresent()) {
+            return lessonRepository.findById(id).get().getMaterials();
         }
         else
             return new ArrayList<>();

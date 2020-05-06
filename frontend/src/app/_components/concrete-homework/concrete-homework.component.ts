@@ -6,6 +6,7 @@ import {LessonService} from "../../_services/lesson.service";
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder, Validators} from "@angular/forms";
 import {CommentService} from "../../_services/comment.service";
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-concrete-homework',
@@ -83,5 +84,16 @@ export class ConcreteHomeworkComponent implements OnInit {
         this.form.text.value = ''
       })
       ;
+  }
+
+  downloadHomework(name) {
+    this.homeworkService.download(name).subscribe(response => {
+      this.toastr.success("Вы успешно скачали домашнюю работу");
+      let blob:any = new Blob([response.slice()], { type: response.type });
+      const url = window.URL.createObjectURL(blob);
+      fileSaver.saveAs(blob, name);
+    }, error => {
+      console.log(error);
+    });
   }
 }

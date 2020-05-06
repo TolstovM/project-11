@@ -89,10 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/api/lesson/courseName/**")
                 .hasRole("INSTRUCTOR")
-                .antMatchers("/api/material/downloadMaterial/**")
-                .permitAll()
-                .antMatchers("/api/homework/downloadHomework/**")
-                .permitAll()
 
                 .antMatchers("/",
                         "/error",

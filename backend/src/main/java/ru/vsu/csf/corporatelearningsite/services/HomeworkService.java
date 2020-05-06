@@ -102,7 +102,7 @@ public class HomeworkService {
         }
     }
 
-    public String storeHomework(MultipartFile homework, String lessonName, UserPrincipal userPrincipal) {
+    public String storeHomework(MultipartFile homework, Long lessonId, UserPrincipal userPrincipal) {
         String homeworkName = StringUtils.cleanPath(homework.getOriginalFilename());
         User user;
         if( userRepository.findByEmail(userPrincipal.getEmail()).isPresent())
@@ -116,9 +116,9 @@ public class HomeworkService {
             }
 
             Homework dbHomework;
-            if(lessonRepository.findByName(lessonName).isPresent())
-                dbHomework = new Homework(user.getId(), lessonRepository.findByName(lessonName).get().getId(),
-                        user, lessonRepository.findByName(lessonName).get());
+            if(lessonRepository.findById(lessonId).isPresent())
+                dbHomework = new Homework(user.getId(), lessonRepository.findById(lessonId).get().getId(),
+                        user, lessonRepository.findById(lessonId).get());
             else
                 throw new HomeworkStorageException("Lesson name not found");
 

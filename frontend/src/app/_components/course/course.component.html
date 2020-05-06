@@ -12,7 +12,7 @@
     </div>
     <div *ngFor="let lesson of lessons">
       <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }} </h1>
-        <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info mr-5">Редактировать</a>
+        <a [routerLink]="['/lesson', lesson.id]" class="btn btn-info mr-5">Редактировать</a>
       <a [routerLink]="['/lesson/homeworks']" [queryParams]="{'lessonId':lesson.id}" class="btn btn-info">Просмотреть домашние работы</a>
     </div>
 
@@ -20,7 +20,7 @@
 
 
     <div align="right">
-      <button [routerLink]="['/add/lesson', course?.name]" [queryParams]="{'id':course?.id}" class="btn-primary">Добавить урок</button>
+      <button [routerLink]="['/add/lesson', course?.id]" [queryParams]="{'id':course?.id}" class="btn-primary">Добавить урок</button>
     </div>
 
     <div align="left">
