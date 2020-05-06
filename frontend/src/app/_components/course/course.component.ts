@@ -21,7 +21,6 @@ export class CourseComponent implements OnInit {
   form: FormGroup;
 
   users: User[];
-  name: string;
   id: number;
   course: Course = {} as Course;
   lessons: Lesson[];
@@ -39,10 +38,6 @@ export class CourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.sub = this.route.params.subscribe(params => {
-      this.name = params['name'];
-    });
     this.qsub = this.route.queryParams.subscribe(params => {
       this.id = params['id'];
       this.loadCourse(this.id);
@@ -55,7 +50,7 @@ export class CourseComponent implements OnInit {
   get aControls() { return this.form.controls; }
 
   loadCourse(id: number) {
-    this.courseService.findById(id,CourseService.COURSE_WITH_LESSONS_PROJECTION)
+    this.courseService.findById(id, CourseService.COURSE_WITH_LESSONS_PROJECTION)
       .pipe(first())
       .subscribe( res => {
           this.course = res;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 let _url = 'http://localhost:8081/api/homework';
 
@@ -30,13 +31,21 @@ export class HomeworkService {
   }
 
 
-  postFile(fileToUpload: File, lessonName) {
+  postFile(fileToUpload: File, lessonId) {
     const formData: FormData = new FormData();
     formData.append("homework", fileToUpload);
-    return this.http.post(_url + `/uploadHomework/${lessonName}`, formData);
+    return this.http.post(_url + `/uploadHomework/${lessonId}`, formData);
   }
-  
+
   saveHomeworkResult(result: any, lessonId:number, userId:any) {
     return this.http.post(_url+`/checkHomework`,{result:result, lessonId:lessonId, userId:userId});
+  }
+
+  public download(name): Observable<any> {
+    return this.http.get(_url + `/downloadHomework/${name}`, { responseType: 'blob' }).pipe(
+      map((res: Blob) => {
+        return new Blob([res.slice()]);
+      })
+    );
   }
 }

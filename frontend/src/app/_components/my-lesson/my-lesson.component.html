@@ -5,13 +5,13 @@
 <h6>Материалы</h6>
 <div *ngFor="let material of materials">
   <br />
-  <a href="{{downloadUrlMaterial}}/{{ material.name }}" class="btn btn-info" onclick="ym(61893537,'reachGoal','DOWNLOAD_MATERIAL')">{{ material.name }}</a>
+  <a (click)="downloadMaterial(material.name)" class="btn btn-info" onclick="ym(61893537,'reachGoal','DOWNLOAD_MATERIAL')">{{ material.name }}</a>
 </div>
 <br/>
 
 <h6>Домашние работы</h6>
 <div *ngIf="homework.file">
-<a href="{{downloadUrlHomework}}/{{ homework.file }}" class="btn btn-info">{{ homework.file }}</a>
+  <a (click)="downloadHomework(homework.file)" class="btn btn-info">{{ homework.file }}</a>
 </div>
 <div *ngIf="!homework.file">
   Пользователь не прикрепил файл

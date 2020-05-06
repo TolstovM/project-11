@@ -17,12 +17,12 @@ export class LessonService {
   constructor(private http: HttpClient) {
   }
 
-  public getLesson(name): any {
-    return this.http.get(_url + `/name/${name}`);
+  public getLesson(id: number): any {
+    return this.http.get(_url + `/name/${id}`);
   }
 
-  public add(name, description, courseName) {
-    return this.http.post<Lesson>(_url + `/courseName/${courseName}`, {"name": name, "description": description});
+  public add(name, description, courseId: number) {
+    return this.http.post<Lesson>(_url + `/courseName/${courseId}`, {"name": name, "description": description});
   }
 
   public findById(id, projection: string): any {

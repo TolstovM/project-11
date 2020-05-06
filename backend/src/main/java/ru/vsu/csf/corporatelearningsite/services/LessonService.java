@@ -28,16 +28,16 @@ public class LessonService {
         this.courseRepository = courseRepository;
     }
 
-    public void add(Lesson lesson, String courseName) {
-        courseRepository.findByName(courseName);
-        if(courseRepository.findByName(courseName).isPresent())
-            lesson.setCourse(courseRepository.findByName(courseName).get());
+    public void add(Lesson lesson, Long courseId) {
+        courseRepository.findById(courseId);
+        if(courseRepository.findById(courseId).isPresent())
+            lesson.setCourse(courseRepository.findById(courseId).get());
         lessonRepository.save(lesson);
         log.info("IN add - lesson with id: {} successfully add", lesson.getId());
     }
 
-    public Optional<Lesson> get(String name) {
-        log.info("IN get - lesson with name: {} successfully get", name);
-        return lessonRepository.findByName(name);
+    public Optional<Lesson> get(Long id) {
+        log.info("IN get - lesson with id: {} successfully get", id);
+        return lessonRepository.findById(id);
     }
 }
