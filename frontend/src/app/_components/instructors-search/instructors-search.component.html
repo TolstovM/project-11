@@ -18,7 +18,7 @@
             <tr *ngFor="let instructor of instructors._embedded.users" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">
                 <td>{{ instructor.email }}</td>
                 <td>{{ instructor.name }}</td>
-                <td><button (click)="addInstructor(instructor.id, instructor.email)">Добавить</button></td>
+                <td><button (click)="addInstructor(instructor.id, instructor.email)" onclick="ym(61893537,'reachGoal','ADD_INSTRUCTOR')">Добавить</button></td>
             </tr>
         </tbody>
     </table>
