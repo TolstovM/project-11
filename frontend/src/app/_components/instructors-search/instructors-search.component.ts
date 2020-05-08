@@ -36,7 +36,12 @@ export class InstructorsSearchComponent implements OnInit {
   onClick() {
     const value = this.form.value;
     this.userService.findUsersByEmailStartingWith(value.email, UserService.USER_WITH_ROLES_PROJECTION)
-      .subscribe(data => this.instructors = data);
+      .subscribe(data =>{
+            this.instructors = data['_embedded'].users;
+            console.log(this.instructors)
+          console.log(this.instructors._embedded.users)
+      }
+          );
   }
 
   addInstructor(userId, email) {
@@ -46,7 +51,4 @@ export class InstructorsSearchComponent implements OnInit {
       });
   }
 
-  isInstructor(user) {
-    return user.roles && user.roles.map(role => role.name).indexOf(Role.ROLE_INSTRUCTOR) !== -1;
-  }
 }

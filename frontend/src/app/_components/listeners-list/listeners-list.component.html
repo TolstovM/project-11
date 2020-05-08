@@ -1,12 +1,12 @@
 <div>
     <h3>Список слушателей курса</h3>
-    <table>
+    <table class="table table-bordered">
         <thead>
-            <th>Email</th>
-            <th>Имя</th>
+            <th scope="col">Email</th>
+            <th scope="col">Имя</th>
         </thead>
         <tbody>
-            <tr *ngFor="let listener of listeners">
+            <tr scope="row" *ngFor="let listener of listeners">
                 <td>{{ listener.listener.email }}</td>
                 <td>{{ listener.listener.name }}</td>
             </tr>

@@ -1,3 +1,7 @@
+<div align="center">
+  <h1>Список всех учебных курсов на сайте</h1>
+</div>
+
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col" *ngIf="!coursesWrapped" style="text-align: center;">
         Loading
@@ -6,3 +10,5 @@
         <admin-course [course]="course"></admin-course>
     </div>
 </div>
+
+<a class="btn btn-primary" routerLink="/user/me">Назад</a>

@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
 
   message: string;
+  errorMessage: string;
   querySubscription: Subscription;
 
   constructor(private fb: FormBuilder,
@@ -42,15 +43,18 @@ export class LoginComponent implements OnInit {
     if (value.email && value.password) {
       this.authService.login(value.email, value.password)
           .subscribe(
-
             () => {
               this.message = 'Вы вошли';
+              this.errorMessage = '';
               setTimeout(() => {
 
                 this.router.navigate(['/']);
                 this.appComp.refresh();
               }, 2000);
 
+            },
+            error=>{
+              this.errorMessage = 'Ошибка входа';
             }
           );
 
