@@ -28,4 +28,9 @@ export class UserComponent implements OnInit {
     .subscribe(res => console.log(res));
   }
 
+  delete() {
+    this.userService.deleteUserById(this.user.id)
+      .subscribe(res => window.location.reload());
+  }
+
 }
