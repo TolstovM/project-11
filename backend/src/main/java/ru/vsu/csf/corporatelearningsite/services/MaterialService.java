@@ -52,7 +52,11 @@ public class MaterialService {
     }
 
     public Material storeMaterial(MultipartFile material, Long lessonId) {
-        String materialName = StringUtils.cleanPath(material.getOriginalFilename());
+        String materialName = "Урок_" + lessonId.toString() + "_" + StringUtils.cleanPath(material.getOriginalFilename());
+        if(materialRepository.findByName(materialName).isPresent()) {
+            delete(materialRepository.findByName(materialName).get().getId());
+        }
+        // for a unique name
 
         try {
             if (materialName.contains("..")) {
@@ -111,10 +115,17 @@ public class MaterialService {
         try {
             Material dbMaterial = getMaterial(id);
             Files.delete(Paths.get(dbMaterial.getUrl() + "\\" + dbMaterial.getName()));
-            materialRepository.deleteById(id);
         } catch (IOException ex) {
             log.error("Could not delete the material");
-            throw new MaterialStorageException("Could not delete the material", ex);
+        }
+        finally {
+            materialRepository.deleteById(id);
+        }
+    }
+
+    public void deleteByLessonId(Long id){
+        for(Material material: getMaterialsByLessonId(id)){
+            delete(material.getId());
         }
     }
 

@@ -12,8 +12,9 @@
     </div>
     <div *ngFor="let lesson of lessons">
       <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }} </h1>
-        <a [routerLink]="['/lesson', lesson.id]" class="btn btn-info mr-5">Редактировать</a>
+      <a [routerLink]="['/lesson', lesson.id]" class="btn btn-info mr-5">Редактировать</a>
       <a [routerLink]="['/lesson/homeworks']" [queryParams]="{'lessonId':lesson.id}" class="btn btn-info">Просмотреть домашние работы</a>
+      <button class="btn btn-danger ml-5" (click)="delete(lesson.id)">Удалить урок</button>
     </div>
 
 

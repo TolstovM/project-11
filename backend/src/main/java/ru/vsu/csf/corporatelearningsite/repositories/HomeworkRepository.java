@@ -9,6 +9,7 @@ import ru.vsu.csf.corporatelearningsite.model.Homework;
 import ru.vsu.csf.corporatelearningsite.model.HomeworkId;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ public interface HomeworkRepository extends JpaRepository<Homework, HomeworkId> 
 
     Optional<Homework> findById(HomeworkId id);
 
+    List<Homework> findAllByLessonId(Long id);
 
     @Modifying(clearAutomatically = true)
     @Transactional

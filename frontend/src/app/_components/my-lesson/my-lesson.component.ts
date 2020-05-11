@@ -24,8 +24,6 @@ export class MyLessonComponent implements OnInit {
   homework;
   form;
   materials: Material[];
-  downloadUrlHomework: string;
-  downloadUrlMaterial: string;
   fileToUpload: File = null;
   course:any;
 
@@ -58,8 +56,6 @@ export class MyLessonComponent implements OnInit {
         this.materials = data;
       });
     });
-    this.downloadUrlMaterial = LessonService.DOWNLOAD_URL_MATERIAL;
-    this.downloadUrlHomework = LessonService.DOWNLOAD_URL_HOMEWORK;
   }
 
   send() {
