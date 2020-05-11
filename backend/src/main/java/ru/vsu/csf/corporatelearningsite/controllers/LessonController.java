@@ -34,7 +34,7 @@ public class LessonController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteLesson(@PathVariable("id") Long id){
         lessonService.delete(id);
         return ResponseEntity.ok().build();

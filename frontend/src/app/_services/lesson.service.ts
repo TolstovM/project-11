@@ -28,6 +28,6 @@ export class LessonService {
   }
 
   public deleteLesson(id: number) {
-    return this.http.delete(_url + `/${id}`);
+    return this.http.delete(_url + `/delete/${id}`);
   }
 }
