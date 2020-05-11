@@ -4,7 +4,8 @@ import {Lesson} from "../_models/lesson";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 
-let _url: string = "http://localhost:8081/api/material";
+let _base_url = window["baseUrl"]; 
+let _url: string = `${_base_url}/api/material`;
 
 @Injectable({
   providedIn: 'root'

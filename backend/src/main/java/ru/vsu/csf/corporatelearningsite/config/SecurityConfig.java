@@ -72,6 +72,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
+                .antMatchers("/api/auth/**")
+                .permitAll()
+
+                .antMatchers("/api/user/me", "/api/user/me/change")
+                .hasRole("USER")
+                .antMatchers("/api/user/**")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+                .antMatchers("/api/user/update/authorities", "/api/user/invite", "/api/user/search/findInstructorsByCourseId")
+                .hasRole("ADMIN")
+
+                .antMatchers("/api/course/addListener")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+                .antMatchers("/api/course/*/instructors", "/api/course/*/instructors/*")
+                .hasRole("ADMIN")
+
+                .antMatchers("/api/lesson/courseName/**")
+                .hasRole("INSTRUCTOR")
+          
+                .antMatchers("/api/lesson/delete/*")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
@@ -83,14 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/auth/**")
-                .permitAll()
-                .antMatchers("/api/user/me")
-                .hasRole("USER")
-                .antMatchers("/api/user/**")
-                .hasAnyRole("ADMIN", "INSTRUCTOR")
-                .antMatchers("/api/lesson/delete/*")
-                .hasAnyRole("ADMIN", "INSTRUCTOR")
+               
                 .anyRequest()
                 .authenticated();
 

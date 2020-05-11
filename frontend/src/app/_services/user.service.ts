@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs";
 
-
-let _url: string = "http://localhost:8081/api";
+let _base_url = window["baseUrl"]; 
+let _url: string = `${_base_url}/api`;
 
 @Injectable({
   providedIn: 'root'
@@ -70,5 +70,9 @@ export class UserService {
 
   getUserNameById(userId: string):Observable<any> {
     return this.http.get<any>(_url+UserService.GET_USER_URL+`?userId=${userId}`);
+  }
+
+  deleteUserById(userId: string) {
+    return this.http.delete(_url + `/user/${userId}`);
   }
 }

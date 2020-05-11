@@ -3,7 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
-let _url = 'http://localhost:8081/api/homework';
+let _base_url = window["baseUrl"]; 
+let _url = `${_base_url}/api/homework`;
 
 @Injectable({
   providedIn: 'root'

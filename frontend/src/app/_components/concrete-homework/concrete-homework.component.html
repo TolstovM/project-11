@@ -30,7 +30,7 @@
   </form>
 
 <h2>Отметка о зачете</h2>
-<form [formGroup]="resultForm">
+<form [formGroup]="resultForm" onsubmit="ym(61893537,'reachGoal','SET_MARK')">
   <div *ngIf="homework.passed">
     <div class="form-check">
       <input class="form-check-input" formControlName="result"  type="radio" name="result" id="passed" value="true" checked >

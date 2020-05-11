@@ -25,19 +25,21 @@ spring:
     rest:
       basePath: /api
 
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000
 server:
+  port: 8081
   ssl:
     key-store: classpath:mkyong.p12
     key-store-password: 123456
     key-store-type: PKCS12
 
-app:
-  auth:
-    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
-    tokenExpirationMsec: 864000000
-
 material:
-  upload-dir: /home/tomcat/materials
+  upload-dir: /files/materials
+#  /home/maksfox/tmp/project
 
 homework:
-  upload-dir: /home/tomcat/homeworks
+  upload-dir: /files/materials
+#  /home/maksfox/tmp/project

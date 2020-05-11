@@ -61,7 +61,7 @@ export class MyLessonComponent implements OnInit {
   send() {
     var value = this.form.value;
     this.commentService.send(this.id, this.homework.id.userId, value.text)
-      .subscribe(() => this.form.text.value = '');
+      .subscribe(() => window.location.reload());
   }
 
   reloadComponent() {

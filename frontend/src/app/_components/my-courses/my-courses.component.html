@@ -10,7 +10,7 @@
             <tr *ngFor="let course of coursesWrapped._embedded.courses">
               <td><b>{{ course.name }}</b></td>
                 <td>{{ course.description }}</td>
-                <td><a href="/user/me/course/{{course.id}}" class="btn btn-primary">Перейти</a></td>
+                <td><a routerLink="/user/me/course/{{course.id}}" class="btn btn-primary">Перейти</a></td>
             </tr>
         </tbody>
     </table>
