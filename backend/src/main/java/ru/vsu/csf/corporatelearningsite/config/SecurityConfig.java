@@ -89,6 +89,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/api/lesson/courseName/**")
                 .hasRole("INSTRUCTOR")
+          
+                .antMatchers("/api/lesson/delete/*")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
 
                 .antMatchers("/",
                         "/error",
@@ -101,6 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
+               
                 .anyRequest()
                 .authenticated();
 

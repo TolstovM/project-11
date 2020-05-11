@@ -22,7 +22,6 @@ export class LessonComponent implements OnInit {
   private sub: Subscription;
   fileToUpload: File = null;
   materials: Material[];
-  downloadUrl: string;
 
 
   constructor(
@@ -38,7 +37,6 @@ export class LessonComponent implements OnInit {
       this.id = params['id'];
       this.loadLesson(this.id);
     });
-    this.downloadUrl = LessonService.DOWNLOAD_URL_MATERIAL;
   }
 
   loadLesson(id: number) {

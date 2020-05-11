@@ -105,4 +105,11 @@ public class HomeworkController {
         this.homeworkService.checkHomework(checkHomeworkRequest, userPrincipal.getId());
         return ResponseEntity.ok(new ApiResponse(true, "Homework successfully changed"));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Homework> deleteHomework(@PathVariable("id") Long id) {
+        homeworkService.deleteByLessonId(id);
+        log.info("the material {} was deleted", id);
+        return ResponseEntity.ok().build();
+    }
 }

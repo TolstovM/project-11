@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../_services/user.service";
 import {User} from "../../_models/user";
+import {LessonService} from "../../_services/lesson.service";
 
 @Component({
   selector: 'app-course',
@@ -34,7 +35,7 @@ export class CourseComponent implements OnInit {
     private courseService: CourseService,
     private toastr: ToastrService,
     private userService: UserService,
-
+    private lessonService: LessonService
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +45,7 @@ export class CourseComponent implements OnInit {
     });
     this.form = this.formBuilder.group({
       email: ['', Validators.required]
-    })
+    });
   }
 
   get aControls() { return this.form.controls; }
@@ -75,5 +76,20 @@ export class CourseComponent implements OnInit {
       .subscribe(data =>{
         this.users = data['_embedded']['users'];
       } )
+  }
+
+  delete(id: number) {
+    this.lessonService.deleteLesson(id).subscribe(data => {
+      this.toastr.success("Вы успешно удалили урок");
+      this.reloadComponent();
+    }, error => {
+        console.log(error);
+    });
+  }
+
+  reloadComponent() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/course', this.id], { queryParams: {id: this.id}});
   }
 }

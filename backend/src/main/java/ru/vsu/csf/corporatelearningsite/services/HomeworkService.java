@@ -29,10 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -47,17 +44,20 @@ public class HomeworkService {
     private static final String FIELD_NAME_ID = "id";
     private final LessonRepository lessonRepository;
     private final Path homeworkStorageLocation;
+    private CommentRepository commentRepository;
 
     @Autowired
     public HomeworkService(HomeworkRepository homeworkRepository,
                            CourseRepository courseRepository,
                            UserRepository userRepository,
                            LessonRepository lessonRepository,
-                           HomeworkStorageProperties homeworkStorageProperties) {
+                           HomeworkStorageProperties homeworkStorageProperties,
+                           CommentRepository commentRepository) {
         this.homeworkRepository = homeworkRepository;
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
         this.lessonRepository = lessonRepository;
+        this.commentRepository = commentRepository;
 
         this.homeworkStorageLocation = Paths.get(homeworkStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
@@ -103,7 +103,9 @@ public class HomeworkService {
     }
 
     public String storeHomework(MultipartFile homework, Long lessonId, UserPrincipal userPrincipal) {
-        String homeworkName = StringUtils.cleanPath(homework.getOriginalFilename());
+        String homeworkName = "Урок_" + lessonId.toString() + "_" + StringUtils.cleanPath(homework.getOriginalFilename());
+        // for a unique name
+
         User user;
         if( userRepository.findByEmail(userPrincipal.getEmail()).isPresent())
             user = userRepository.findByEmail(userPrincipal.getEmail()).get();
@@ -157,6 +159,24 @@ public class HomeworkService {
         else {
             homeworkRepository.checkHomework(checkHomeworkRequest.getUserId().toString(), checkHomeworkRequest.getLessonId(),
                 checkHomeworkRequest.getResult());
+        }
+    }
+
+    public void deleteByLessonId(Long lessonId) {
+        List<Homework> homeworks = homeworkRepository.findAllByLessonId(lessonId);
+        try {
+            for (Homework homework: homeworks) {
+                if(homework.getFile() != null)
+                    Files.delete(Paths.get(this.homeworkStorageLocation.resolve(homework.getFile()) + "\\" + homework.getFile()));
+            }
+        } catch (IOException ex) {
+            log.error("Could not delete the material");
+        }
+        finally {
+            for (Homework homework: homeworks) {
+                commentRepository.deleteByHomework(homework);
+                homeworkRepository.deleteById(homework.getId());
+            }
         }
     }
 }

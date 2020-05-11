@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.Material;
+import ru.vsu.csf.corporatelearningsite.repositories.CommentRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.LessonRepository;
 
@@ -20,12 +21,18 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final CourseRepository courseRepository;
+    private final MaterialService materialService;
+    private final HomeworkService homeworkService;
 
     @Autowired
     public LessonService(LessonRepository lessonRepository,
-                         CourseRepository courseRepository) {
+                         CourseRepository courseRepository,
+                         MaterialService materialService,
+                         HomeworkService homeworkService) {
         this.lessonRepository = lessonRepository;
         this.courseRepository = courseRepository;
+        this.materialService = materialService;
+        this.homeworkService = homeworkService;
     }
 
     public void add(Lesson lesson, Long courseId) {
@@ -39,5 +46,11 @@ public class LessonService {
     public Optional<Lesson> get(Long id) {
         log.info("IN get - lesson with id: {} successfully get", id);
         return lessonRepository.findById(id);
+    }
+
+    public void delete(Long id){
+        homeworkService.deleteByLessonId(id);
+        materialService.deleteByLessonId(id);
+        lessonRepository.deleteById(id);
     }
 }
