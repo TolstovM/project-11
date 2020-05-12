@@ -10,7 +10,7 @@
    <tbody>
    <tr *ngFor="let course of coursesWrapped._embedded.courses">
      <td> <h1 class="h4 mb-3 font-weight-normal">{{ course.name }}</h1></td>
-     <td><h1 class="h4 mb-3 font-weight-normal">{{course.description}}</h1></td>
+     <td><h1 class="h4 mb-3 font-weight-normal"><div [innerHTML]="course.description"></div></h1></td>
        <td>
          <a [routerLink]="['/course',course.name] " [queryParams]="{'id':course.id}" class="btn btn-info">Перейти</a>
        </td>

@@ -4,7 +4,8 @@
             <div>
               <div align="center">
                 {{course.name}} <br />
-                {{course.description.substring(0, 100)}} <br />
+                <div [innerHTML]="course.description.substring(0, 100)"></div>
+             <br />
               </div>
                 <a class="btn btn-primary" routerLink={{href}}>Подробнее</a>
             </div>

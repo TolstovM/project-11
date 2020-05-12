@@ -9,25 +9,32 @@
   Пользователь не прикрепил файл
 </div>
 
-<h2 class="h2 mb-3 font-weight-normal" >Комментарий пользователя</h2>
-  <div *ngIf="homework.comments">
-      <div *ngFor="let comment of homework.comments">
-      {{comment.owner.name}} ({{comment.owner.email}}) оставил(-а) комментарий <br>
-      <p>{{comment.text}}</p>
-      </div>
-  </div>
-<div *ngIf="!homework.comments">
-  Комментраий пользователя отсутствует
-</div>
-  <form [formGroup]="form" onsubmit="sendParams()">
+
+  <form [formGroup]="form">
     <div class="form-group">
       <h3><label class="label label-primary" for="text">Ваш комментарий:</label></h3>
-      <textarea cols="100" placeholder="Ваш комментарий" name="text" class="form-control" formControlName="text" id="text"></textarea>
+      <textarea cols="100" placeholder="Ваш комментарий" name="text"  class="form-control" formControlName="text" id="text"></textarea>
     </div>
+<!--    <div class="form-group">-->
+<!--      <ckeditor [(ngModel)]="text.editorData" [editor]="Editor" data="Оставьте комментарий"></ckeditor>-->
+<!--    </div>-->
     <div class="form-buttons">
       <button class="btn btn-primary" (click)="sendComment()">Оставить комментарий</button>
     </div>
   </form>
+
+<h2 class="h2 mb-3 font-weight-normal" >Комментарии к работе</h2>
+<div *ngIf="homework.comments">
+  <div *ngFor="let comment of homework.comments">
+    {{comment.owner.name}} ({{comment.owner.email}}) оставил(-а) комментарий <br>
+    <p>{{comment.text}}</p>
+  </div>
+</div>
+<div *ngIf="!homework.comments">
+  Комментраий отсутствуют
+</div>
+
+<br>
 
 <h2>Отметка о зачете</h2>
 <form [formGroup]="resultForm">

@@ -3,7 +3,7 @@
     <h1 class="display-5">Название курса</h1>
     <h1 class="h2 mb-3 font-weight-normal">{{ course?.name }}</h1>
     <h1 class="display-5">Краткое описание курса</h1>
-    <h1 class="h4 mb-3 font-weight-normal">{{ course?.description }}</h1>
+    <h1 class="h4 mb-3"><div [innerHTML]="course.description"></div></h1>
 
 
     <h3 class="dispay-3">Список уроков</h3>

@@ -1,9 +1,9 @@
 <div>
 <div align="center">
   <h3>{{ course.name }}</h3>
-  <div>
-    {{ course.description }}
-  </div>
+
+    <div [innerHTML]="course.description"></div>
+
 </div>
 
     <h3>Список уроков курса</h3>
