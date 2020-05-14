@@ -24,6 +24,26 @@
   <div *ngIf="coursesWrapped._embedded.courses.length===0">
     <h3>Вы пока не числитесь ни на одном курсе</h3>
   </div>
-
+  <br>
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="" (click)="setPrevPage($event)" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <li class="nav-item" *ngFor="let p of pagesIterable; let i=index">
+        <a class="nav-link" href="" (click)="setPage(i,$event)">{{i+1}}</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="" (click)="setNextPage($event)"  aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <br>
     <a class="btn btn-primary float-left" routerLink="/user/me">Назад</a>
 </div>

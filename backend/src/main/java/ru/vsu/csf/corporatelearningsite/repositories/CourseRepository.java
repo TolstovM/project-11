@@ -1,5 +1,7 @@
 package ru.vsu.csf.corporatelearningsite.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +22,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @RestResource()
     @Query("select c from Course c inner join ListenerOnCourse lc on lc.id.courseId = c.id where lc.id.listenerId=:uuid")
-    List<Course> findAllByUserId(@Param("uuid") UUID uuid);
+    Page<Course> findAllByUserId(@Param("uuid") UUID uuid,  Pageable pageable);
 
     @Query("select case when count(c)>0 then true else false end from Course c " +
             "inner join Lesson l on c.id = l.course.id inner join ListenerOnCourse lc on c.id = lc.course.id " +
