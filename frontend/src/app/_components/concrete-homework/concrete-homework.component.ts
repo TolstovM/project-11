@@ -7,6 +7,8 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {CommentService} from "../../_services/comment.service";
 import * as fileSaver from 'file-saver';
 
+
+
 @Component({
   selector: 'app-concrete-homework',
   templateUrl: './concrete-homework.component.html',
@@ -22,6 +24,9 @@ export class ConcreteHomeworkComponent implements OnInit {
   result: any;
   form
   resultForm;
+  public text = {
+    editorData: ''
+  };
 
   constructor(private homeworkService: HomeworkService, private route: ActivatedRoute,
                 private toastr: ToastrService, private router:Router, private fb: FormBuilder, private commentService: CommentService) {
@@ -29,6 +34,7 @@ export class ConcreteHomeworkComponent implements OnInit {
       this.lessonId = params['lessonId'];
       this.userId = params['userId'];
     });
+
 
   }
 
@@ -81,6 +87,9 @@ export class ConcreteHomeworkComponent implements OnInit {
         this.form.text.value = ''
       })
       ;
+    setTimeout(() => {
+      this.ngOnInit();
+    }, 2000);
   }
 
   downloadHomework(name) {

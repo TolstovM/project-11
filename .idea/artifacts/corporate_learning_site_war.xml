@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="corporate-learning-site:war">
+    <output-path>$PROJECT_DIR$/backend/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>corporate-learning-site</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="corporate.war">
+      <element id="artifact" artifact-name="corporate-learning-site:war exploded" />
+    </root>
+  </artifact>
+</component>

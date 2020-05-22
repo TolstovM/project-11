@@ -2,23 +2,28 @@
 <form class="form-add-course" [formGroup]="addForm" (ngSubmit)="onSubmit()">
   <h1 class="h2 mb-3 font-weight-normal">Добавление курса</h1>
   <div class="form-group">
-    <label for="name">Имя</label>
+    <label for="name">Название курса</label>
     <input type="text" formControlName="name" class="form-control" required
            [ngClass]="{ 'is-invalid': f.name.touched && f.name.errors }" />
     <div *ngIf="f.name.touched && f.description.errors" class="invalid-feedback">
-      <div *ngIf="f.name.errors.required">>Пожалуйста введите имя!</div>
+      <div *ngIf="f.name.errors.required">Пожалуйста введите название!</div>
     </div>
   </div>
   <div class="form-group">
-    <label for="description">Описание</label>
-    <input type="text" formControlName="description" class="form-control" required
-           [ngClass]="{ 'is-invalid': f.description.touched && f.description.errors }" />
+    <label for="description">Краткое описание курса</label>
+        <div class="form-group">
+          <ckeditor formControlName="description" [(ngModel)]="text.editorData"  [editor]="Editor"
+                    [ngClass]="{ 'is-invalid': f.description.touched && f.description.errors } "  required></ckeditor>
+        </div>
+<!--    <input type="text"  class="form-control" required-->
+<!--           />-->
     <div *ngIf="f.description.touched && f.description.errors" class="invalid-feedback">
       <div *ngIf="f.description.errors.required">Пожалуйста введите описание!</div>
     </div>
   </div>
 
   <button class="btn btn-primary btn-block">Добавить</button><br />
-  <a routerLink="/courses" class="btn btn-primary">Назад</a>
+
 </form>
+<a routerLink="/courses" class="btn btn-primary">Назад</a>
 </body>

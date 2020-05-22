@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from "rxjs";
 
-let _base_url = window["baseUrl"]; 
+let _base_url = window["baseUrl"];
 let _url: string = `${_base_url}/api`;
 
 @Injectable({
@@ -44,8 +44,11 @@ export class UserService {
     })
   }
 
-  getAll(projection: string) {
-    return this.http.get(_url + UserService.USERS_URL + `?projection=${projection}`);
+  getAll(projection: string, page: number, size: number) {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get(_url + UserService.USERS_URL + `?projection=${projection}`, {params});
   }
 
   updateRoles(userId: string, isAdmin: boolean, isInstructor: boolean) {

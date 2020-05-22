@@ -1,25 +1,53 @@
 <div>
-    <h3>Добавление инструкторов</h3>
-    <form [formGroup]="form">
-        <div class="form-field">
-            <label>Email:</label>
-            <input name="email" formControlName="email">
-        </div>
-        <button (click)="onClick()">Искать</button>
-    </form>
 
+  <div align="left">
+    <h5 class="display-5">Добавить инструктора на курс по email</h5>
+    <form [formGroup]="form">
+      <div class="form-group w-25">
+        <div class="input-group mb-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+      <a class="btn btn-primary" (click)="onClick()">Искать</a>
+    </form>
+  </div>
+<!--    <table>-->
+<!--        <thead>-->
+<!--            <th>Email</th>-->
+<!--            <th>Имя</th>-->
+<!--            <th></th>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--            <tr *ngFor="let instructor of instructors._embedded.users" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">-->
+<!--                <td>{{ instructor.email }}</td>-->
+<!--                <td>{{ instructor.name }}</td>-->
+<!--                <td><button (click)="addInstructor(instructor.id, instructor.email)">Добавить</button></td>-->
+<!--            </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+  <div align="left" *ngIf="instructors?.length===0">
+    Пользователей с таким email не найдено
+  </div>
+
+
+  <div align="left" *ngIf="instructors?.length!==0 ">
     <table>
-        <thead>
-            <th>Email</th>
-            <th>Имя</th>
-            <th></th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let instructor of instructors._embedded.users" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">
-                <td>{{ instructor.email }}</td>
-                <td>{{ instructor.name }}</td>
-                <td><button (click)="addInstructor(instructor.id, instructor.email)" onclick="ym(61893537,'reachGoal','ADD_INSTRUCTOR')">Добавить</button></td>
-            </tr>
-        </tbody>
+
+      <thead>
+      <th>Email</th>
+      <th>Имя</th>
+      <th></th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let instructor of instructors">
+        <td>{{ instructor?.email }}</td>
+        <td>{{ instructor?.name }}</td>
+        <td><a class="btn btn-primary" (click)="addInstructor(instructor.id, instructor.email)">Добавить</a></td>
+      </tr>
+      </tbody>
     </table>
+  </div>
 </div>

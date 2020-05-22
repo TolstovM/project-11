@@ -1,3 +1,7 @@
+<div align="center">
+  <h1>Список всех учебных курсов на сайте</h1>
+</div>
+
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col" *ngIf="!coursesWrapped" style="text-align: center;">
         Loading
@@ -6,3 +10,25 @@
         <admin-course [course]="course"></admin-course>
     </div>
 </div>
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="" (click)="setPrevPage($event)" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="nav-item" *ngFor="let p of pagesIterable; let i=index">
+      <a class="nav-link" href="" (click)="setPage(i,$event)">{{i+1}}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="" (click)="setNextPage($event)"  aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<br>
+
+<a class="btn btn-primary" routerLink="/user/me">Назад</a>

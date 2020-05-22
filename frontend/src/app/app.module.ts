@@ -37,7 +37,7 @@ import { ListenersListComponent } from './_components/listeners-list/listeners-l
 import { MyCoursesComponent } from './_components/my-courses/my-courses.component';
 import { MyCourseComponent } from './_components/my-course/my-course.component';
 import { CommentService } from './_services/comment.service';
-import { from } from 'rxjs';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MyLessonComponent } from './_components/my-lesson/my-lesson.component';
 import { HomeworkListComponent } from './_components/homework-list/homework-list.component';
 import {ConcreteHomeworkComponent} from "./_components/concrete-homework/concrete-homework.component";
@@ -79,6 +79,7 @@ import {ConcreteHomeworkComponent} from "./_components/concrete-homework/concret
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    CKEditorModule,
     ToastrModule.forRoot()
   ],
   providers: [

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Course} from "../_models/course";
 
-let _base_url = window["baseUrl"]; 
+let _base_url = window["baseUrl"];
 let _url: string = `${_base_url}/api/course`;
 
 @Injectable({
@@ -18,8 +18,11 @@ export class CourseService {
   constructor(private http: HttpClient) {
   }
 
-  public findAll(): Observable<Course[]> {
-    return this.http.get<Course[]>(_url);
+  public findAll(page: number, size: number): Observable<Course[]> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<Course[]>(_url, {params});
   }
 
   public getCourse(name): any {
@@ -38,8 +41,11 @@ export class CourseService {
     return this.http.post(_url+'/addListener',{"email":email,"id":id});
   }
 
-  public getAll(projection: string) {
-    return this.http.get(_url + `?projection=${projection}`);
+  public getAll(projection: string, page: number, size: number) {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get(_url + `?projection=${projection}`, {params});
   }
 
   public patchInstructor(courseId, userId) {
@@ -52,8 +58,11 @@ export class CourseService {
     return this.http.delete(_url + `/${courseId}/instructors/${userId}`);
   }
 
-  public findAllForUser(userId, projection) {
-    return this.http.get(_url + `/search/findAllByUserId?uuid=${userId}&projection=${projection}`);
+  public findAllForUser(userId, projection, page: number, size: number) {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get(_url + `/search/findAllByUserId?uuid=${userId}&projection=${projection}`, {params});
   }
 
   public findById(courseId, projection: string):any {

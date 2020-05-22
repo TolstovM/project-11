@@ -1,24 +1,26 @@
 <div>
 <div align="center">
   <h3>{{ course.name }}</h3>
-  <div>
-    {{ course.description }}
-  </div>
+
+    <div [innerHTML]="course.description"></div>
+
 </div>
 
     <h3>Список уроков курса</h3>
     <table>
         <thead>
-            <th>Название урока</th>
-            <th>Описание урока</th>
-            <th></th>
+        <th><h4>Название урока</h4></th>
+        <th><h4>Описание урока</h4></th>
         </thead>
         <tbody>
             <tr *ngFor="let lesson of course.lessons">
-              <td><B>{{ lesson.name }}</B></td>
-                <td>{{ lesson.description }}</td>
-                <td><a routerLink="/user/me/course/{{id}}/lessons/{{lesson.id}}" class="btn">Перейти</a></td>
+
+              <td><h5>{{ lesson.name }}</h5></td>
+              <td><h5>{{ lesson.description }}</h5></td>
+                <td><a href="#/user/me/course/{{id}}/lessons/{{lesson.id}}" class="btn btn-primary">Перейти</a></td>
+
             </tr>
         </tbody>
     </table>
 </div>
+<a class="btn btn-primary float-left" routerLink="/user/me/course">Назад</a>
