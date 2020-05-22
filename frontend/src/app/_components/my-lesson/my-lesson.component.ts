@@ -10,6 +10,7 @@ import {Lesson} from "../../_models/lesson";
 import {ToastrService} from "ngx-toastr";
 import {AuthService} from "../../_services/auth.service";
 import {MaterialService} from "../../_services/material.service";
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-my-lesson',
@@ -23,8 +24,6 @@ export class MyLessonComponent implements OnInit {
   homework;
   form;
   materials: Material[];
-  downloadUrlHomework: string;
-  downloadUrlMaterial: string;
   fileToUpload: File = null;
   course:any;
 
@@ -57,14 +56,12 @@ export class MyLessonComponent implements OnInit {
         this.materials = data;
       });
     });
-    this.downloadUrlMaterial = LessonService.DOWNLOAD_URL_MATERIAL;
-    this.downloadUrlHomework = LessonService.DOWNLOAD_URL_HOMEWORK;
   }
 
   send() {
     var value = this.form.value;
     this.commentService.send(this.id, this.homework.id.userId, value.text)
-      .subscribe(() => this.form.text.value = '');
+      .subscribe(() => window.location.reload());
   }
 
   reloadComponent() {
@@ -82,7 +79,7 @@ export class MyLessonComponent implements OnInit {
       this.toastr.error("Файл не выбран");
     }
     else {
-      this.homeworkService.postFile(this.fileToUpload, this.lesson.name).subscribe(data => {
+      this.homeworkService.postFile(this.fileToUpload, this.lesson.id).subscribe(data => {
         this.toastr.success("Вы успешно загрузили домашнюю работу");
         this.reloadComponent();
       }, error => {
@@ -94,5 +91,27 @@ export class MyLessonComponent implements OnInit {
 
   onSubmit() {
     this.uploadFileToActivity();
+  }
+
+  downloadMaterial(name) {
+    this.materialService.download(name).subscribe(response => {
+      this.toastr.success("Вы успешно скачали материал");
+      let blob:any = new Blob([response.slice()], { type: response.type });
+      const url = window.URL.createObjectURL(blob);
+      fileSaver.saveAs(blob, name);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  downloadHomework(name) {
+    this.homeworkService.download(name).subscribe(response => {
+      this.toastr.success("Вы успешно скачали домашнюю работу");
+      let blob:any = new Blob([response.slice()], { type: response.type });
+      const url = window.URL.createObjectURL(blob);
+      fileSaver.saveAs(blob, name);
+    }, error => {
+      console.log(error);
+    });
   }
 }

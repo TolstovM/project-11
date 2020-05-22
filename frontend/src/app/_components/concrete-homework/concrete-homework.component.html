@@ -3,7 +3,7 @@
 
 <h2 class="h2 mb-3 font-weight-normal" >Прикрепленный файл</h2>
 <div *ngIf="homework.file">
-  <a routerLink="{{downloadUrl}}/{{ homework.file}}" class="btn btn-info">Загрузить</a>
+  <a (click)="downloadHomework(homework.file)" class="btn btn-info">Загрузить</a>
 </div>
 <div *ngIf="!homework.file">
   Пользователь не прикрепил файл
@@ -37,7 +37,7 @@
 <br>
 
 <h2>Отметка о зачете</h2>
-<form [formGroup]="resultForm">
+<form [formGroup]="resultForm" onsubmit="ym(61893537,'reachGoal','SET_MARK')">
   <div *ngIf="homework.passed">
     <div class="form-check">
       <input class="form-check-input" formControlName="result"  type="radio" name="result" id="passed" value="true" checked >

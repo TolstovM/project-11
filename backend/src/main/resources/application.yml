@@ -25,6 +25,12 @@ spring:
     rest:
       basePath: /api
 
+server:
+  ssl:
+    key-store: classpath:mkyong.p12
+    key-store-password: 123456
+    key-store-type: PKCS12
+
 app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC

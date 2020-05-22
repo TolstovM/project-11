@@ -43,10 +43,13 @@
 
 
 
+
     <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
     <div align="right">
+
       <a [routerLink]="['/add/lesson', course?.name]" [queryParams]="{'id':course?.id}" class="btn btn-primary">Добавить урок</a>
     </div>
+
     </div>
 
     <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">

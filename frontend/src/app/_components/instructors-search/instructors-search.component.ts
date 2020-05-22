@@ -48,6 +48,7 @@ export class InstructorsSearchComponent implements OnInit {
     this.courseService.patchInstructor(this.courseId, userId)
       .subscribe(() => {
         this.toastr.success(`Пользователь ${email} был добавлен как инструктор на текущий курс.`);
+        window.location.reload();
       });
   }
 

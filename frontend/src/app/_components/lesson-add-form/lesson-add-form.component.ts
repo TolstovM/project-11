@@ -16,7 +16,7 @@ export class LessonAddFormComponent implements OnInit {
 
   addForm: FormGroup;
   private sub: Subscription;
-  courseName: string;
+  courseId: number;
   id:number;
   private qsub: Subscription
 
@@ -35,7 +35,7 @@ export class LessonAddFormComponent implements OnInit {
       description: ['', Validators.required]
     });
     this.sub = this.route.params.subscribe(params => {
-      this.courseName = params['courseName'];
+      this.courseId = params['courseId'];
     });
     this.qsub = this.route.queryParams.subscribe(params => {
       this.id = params['id'];
@@ -50,13 +50,13 @@ export class LessonAddFormComponent implements OnInit {
       return;
     }
 
-    this.lessonService.add(this.f.name.value, this.f.description.value, this.courseName)
+    this.lessonService.add(this.f.name.value, this.f.description.value, this.courseId)
       .pipe(first())
       .subscribe(
         () => {
           this.toastr.success("Вы успешно добавили урок");
           setTimeout(() => {
-            this.router.navigate(['/course',this.courseName], {queryParams: {id: this.id}});
+            this.router.navigate(['/course', this.courseId], {queryParams: {id: this.id}});
           }, 1000);
         });
   }

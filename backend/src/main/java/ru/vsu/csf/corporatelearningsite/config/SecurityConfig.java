@@ -74,14 +74,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/auth/**")
                 .permitAll()
-                .antMatchers("/api/user/me")
+
+                .antMatchers("/api/user/me", "/api/user/me/change")
                 .hasRole("USER")
                 .antMatchers("/api/user/**")
                 .hasAnyRole("ADMIN", "INSTRUCTOR")
-                .antMatchers("/api/material/downloadMaterial/**")
-                .permitAll()
-                .antMatchers("/api/homework/downloadHomework/**")
-                .permitAll()
+                .antMatchers("/api/user/update/authorities", "/api/user/invite", "/api/user/search/findInstructorsByCourseId")
+                .hasRole("ADMIN")
+
+                .antMatchers("/api/course/addListener")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+                .antMatchers("/api/course/*/instructors", "/api/course/*/instructors/*")
+                .hasRole("ADMIN")
+
+                .antMatchers("/api/lesson/courseName/**")
+                .hasRole("INSTRUCTOR")
+          
+                .antMatchers("/api/lesson/delete/*")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
@@ -93,6 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
+               
                 .anyRequest()
                 .authenticated();
 

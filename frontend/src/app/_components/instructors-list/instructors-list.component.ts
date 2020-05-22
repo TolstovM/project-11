@@ -29,6 +29,7 @@ export class InstructorsListComponent implements OnInit {
     this.courseService.deleteInstructor(this.courseId, userId)
       .subscribe(() => {
         this.toastr.success(`Инструктор ${email} удален с курса`);
+        window.location.reload();
       })
   }
 

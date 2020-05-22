@@ -74,4 +74,8 @@ export class UserService {
   getUserNameById(userId: string):Observable<any> {
     return this.http.get<any>(_url+UserService.GET_USER_URL+`?userId=${userId}`);
   }
+
+  deleteUserById(userId: string) {
+    return this.http.delete(_url + `/user/${userId}`);
+  }
 }

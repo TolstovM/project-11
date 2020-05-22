@@ -27,9 +27,9 @@ public class MaterialController {
         this.materialService = materialService;
     }
 
-    @PostMapping("/uploadMaterial/{lessonName}")
-    public UploadFileResponse uploadMaterial(@PathVariable("lessonName") String lessonName, @RequestParam("material") MultipartFile material) {
-        String materialName = materialService.storeMaterial(material, lessonName).getName();
+    @PostMapping("/uploadMaterial/{lessonId}")
+    public UploadFileResponse uploadMaterial(@PathVariable("lessonId") Long lessonId, @RequestParam("material") MultipartFile material) {
+        String materialName = materialService.storeMaterial(material, lessonId).getName();
         String materialDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadMaterial/")
                 .path(materialName)
@@ -75,8 +75,8 @@ public class MaterialController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/materials/{name}")
-    public ResponseEntity<?> getLessonMaterials(@PathVariable("name") String name){
-        return ResponseEntity.ok(materialService.getMaterialsByLessonName(name));
+    @GetMapping("/materials/{id}")
+    public ResponseEntity<?> getLessonMaterials(@PathVariable("id") Long id){
+        return ResponseEntity.ok(materialService.getMaterialsByLessonId(id));
     }
 }

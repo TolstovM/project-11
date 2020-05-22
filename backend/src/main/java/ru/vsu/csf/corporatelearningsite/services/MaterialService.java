@@ -51,8 +51,12 @@ public class MaterialService {
         this.lessonRepository = lessonRepository;
     }
 
-    public Material storeMaterial(MultipartFile material, String lessonName) {
-        String materialName = StringUtils.cleanPath(material.getOriginalFilename());
+    public Material storeMaterial(MultipartFile material, Long lessonId) {
+        String materialName = "Урок_" + lessonId.toString() + "_" + StringUtils.cleanPath(material.getOriginalFilename());
+        if(materialRepository.findByName(materialName).isPresent()) {
+            delete(materialRepository.findByName(materialName).get().getId());
+        }
+        // for a unique name
 
         try {
             if (materialName.contains("..")) {
@@ -63,8 +67,8 @@ public class MaterialService {
             Material dbMaterial = new Material(materialName, material.getContentType(),
                     this.materialStorageLocation.toString());
 
-            if(lessonRepository.findByName(lessonName).isPresent())
-                dbMaterial.setLesson(lessonRepository.findByName(lessonName).get());
+            if(lessonRepository.findById(lessonId).isPresent())
+                dbMaterial.setLesson(lessonRepository.findById(lessonId).get());
             else
                 throw new MaterialStorageException("Lesson name not found");
 
@@ -111,16 +115,23 @@ public class MaterialService {
         try {
             Material dbMaterial = getMaterial(id);
             Files.delete(Paths.get(dbMaterial.getUrl() + "\\" + dbMaterial.getName()));
-            materialRepository.deleteById(id);
         } catch (IOException ex) {
             log.error("Could not delete the material");
-            throw new MaterialStorageException("Could not delete the material", ex);
+        }
+        finally {
+            materialRepository.deleteById(id);
         }
     }
 
-    public List<Material> getMaterialsByLessonName(String name) {
-        if(lessonRepository.findByName(name).isPresent()) {
-            return lessonRepository.findByName(name).get().getMaterials();
+    public void deleteByLessonId(Long id){
+        for(Material material: getMaterialsByLessonId(id)){
+            delete(material.getId());
+        }
+    }
+
+    public List<Material> getMaterialsByLessonId(Long id) {
+        if(lessonRepository.findById(id).isPresent()) {
+            return lessonRepository.findById(id).get().getMaterials();
         }
         else
             return new ArrayList<>();

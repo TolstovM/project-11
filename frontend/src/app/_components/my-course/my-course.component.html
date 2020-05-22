@@ -14,9 +14,11 @@
         </thead>
         <tbody>
             <tr *ngFor="let lesson of course.lessons">
+
               <td><h5>{{ lesson.name }}</h5></td>
               <td><h5>{{ lesson.description }}</h5></td>
                 <td><a href="#/user/me/course/{{id}}/lessons/{{lesson.id}}" class="btn btn-primary">Перейти</a></td>
+
             </tr>
         </tbody>
     </table>

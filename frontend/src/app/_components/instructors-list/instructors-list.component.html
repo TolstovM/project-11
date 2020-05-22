@@ -10,7 +10,9 @@
             <tr scope="row" *ngFor="let instructor of instructors" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">
                 <td>{{ instructor.email }}</td>
                 <td>{{ instructor.name }}</td>
+
                 <td><a class="btn btn-primary" (click)="deleteInstructor(instructor.id, instructor.email)">Удалить</a></td>
+
             </tr>
         </tbody>
     </table>
