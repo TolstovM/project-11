@@ -150,12 +150,12 @@ public class HomeworkService {
         }
     }
   
-    public void checkHomework(CheckHomeworkRequest checkHomeworkRequest, UUID id) {
+    public int checkHomework(CheckHomeworkRequest checkHomeworkRequest, UUID id) {
         if(!courseRepository.isInstructorOnCourse(checkHomeworkRequest.getLessonId(), id)){
             throw new BadRequestException(NO_RIGHTS);
         }
         else {
-            homeworkRepository.checkHomework(checkHomeworkRequest.getUserId().toString(), checkHomeworkRequest.getLessonId(),
+           return homeworkRepository.checkHomework(checkHomeworkRequest.getUserId().toString(), checkHomeworkRequest.getLessonId(),
                 checkHomeworkRequest.getResult());
         }
     }

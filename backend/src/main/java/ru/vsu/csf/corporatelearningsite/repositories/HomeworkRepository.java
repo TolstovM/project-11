@@ -33,5 +33,5 @@ public interface HomeworkRepository extends JpaRepository<Homework, HomeworkId> 
     @Query(
         value = "update homeworks h set h.is_passed=?3 where h.user_id=?1 and h.lesson_id=?2",
         nativeQuery = true)
-    void checkHomework(String userId, Long lessonId, Boolean result);
+    int checkHomework(String userId, Long lessonId, Boolean result);
 }

@@ -52,7 +52,6 @@ export class ConcreteHomeworkComponent implements OnInit {
     this.homeworkService.getHomeworkById(this.lessonId, this.userId).subscribe(
       data => {
         this.homework = data;
-        console.log(data);
         console.log(this.homework);
       }
     );

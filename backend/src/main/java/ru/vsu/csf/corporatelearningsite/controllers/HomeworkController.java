@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -102,7 +103,12 @@ public class HomeworkController {
     public ResponseEntity<?> checkHomework(@RequestBody CheckHomeworkRequest checkHomeworkRequest,
                                            @AuthenticationPrincipal Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        this.homeworkService.checkHomework(checkHomeworkRequest, userPrincipal.getId());
-        return ResponseEntity.ok(new ApiResponse(true, "Homework successfully changed"));
+
+        if(this.homeworkService.checkHomework(checkHomeworkRequest, userPrincipal.getId()) != 0)
+            return ResponseEntity.ok(new ApiResponse(true, "Homework successfully checked"));
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Internal error");
+
+
     }
 }

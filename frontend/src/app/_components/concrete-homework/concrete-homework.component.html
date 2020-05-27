@@ -1,6 +1,12 @@
 <h1 class="display-1">Домашняя работа</h1>
 
 
+<div *ngIf="homework.passed === false">
+  <h3>Статус: не зачетна</h3>
+</div>
+<div *ngIf="homework.passed !== false">
+  <h3>Статус: зачетна</h3>
+</div>
 <h2 class="h2 mb-3 font-weight-normal" >Прикрепленный файл</h2>
 <div *ngIf="homework.file">
   <a routerLink="{{downloadUrl}}/{{ homework.file}}" class="btn btn-info">Загрузить</a>
