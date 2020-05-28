@@ -14,6 +14,7 @@ import java.util.UUID;
 @Service
 public class CommentService {
 
+    public static final String SAVE_COMMENT_ACCESS_EXCEPTION_MASSAGE = "You cannot send that comment";
     private CommentRepository commentRepository;
     private CourseRepository courseRepository;
 
@@ -26,7 +27,7 @@ public class CommentService {
     public void saveComment(UUID userId, SaveCommentRequest saveCommentRequest) {
         if (userId == null || (!userId.equals(saveCommentRequest.getHomeworkOwnerId())
                 && !this.courseRepository.isInstructorOnCourse(saveCommentRequest.getLessonId(), userId))) {
-            throw new BadRequestException("You cannot send that comment");
+            throw new BadRequestException(SAVE_COMMENT_ACCESS_EXCEPTION_MASSAGE);
         }
         Comment comment = new Comment(userId, saveCommentRequest.getLessonId(), saveCommentRequest.getHomeworkOwnerId(), saveCommentRequest.getText());
         this.commentRepository.save(comment);

@@ -36,7 +36,7 @@ export class CourseComponent implements OnInit {
     private courseService: CourseService,
     private toastr: ToastrService,
     private userService: UserService,
-
+    private lessonService: LessonService,
     private authService: AuthService
 
   ) { }

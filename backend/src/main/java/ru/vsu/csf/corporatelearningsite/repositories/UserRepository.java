@@ -39,7 +39,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Boolean existsByEmail(String email);
   
     @RestResource()
-    List<User> findAllByEmailStartingWith(@Param("email") String courseId);
+    List<User> findAllByEmailStartingWith(@Param("email") String email);
 
     @RestResource()
     @Query("select u from User u inner join u.courses c where c.id=:courseId")
