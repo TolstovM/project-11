@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.test.context.ActiveProfiles;
 import ru.vsu.csf.corporatelearningsite.exceptions.BadRequestException;
 import ru.vsu.csf.corporatelearningsite.payload.SaveCommentRequest;
 import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
@@ -16,6 +17,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 class CommentControllerTest {
 
     private final static UUID OWNER_UUID = UUID.fromString("cb71df0c-5df9-4252-9840-e35330158645");

@@ -52,4 +52,7 @@ export class InstructorsSearchComponent implements OnInit {
       });
   }
 
+  isInstructor(user) {
+    return user.roles && user.roles.map(role => role.name).indexOf(Role.ROLE_INSTRUCTOR) !== -1;
+  }
 }

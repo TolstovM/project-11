@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 import ru.vsu.csf.corporatelearningsite.exceptions.BadRequestException;
 import ru.vsu.csf.corporatelearningsite.model.*;
 import ru.vsu.csf.corporatelearningsite.payload.SaveCommentRequest;
@@ -15,6 +16,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 class CommentServiceTest {
 
     private final static UUID OWNER_UUID = UUID.fromString("cb71df0c-5df9-4252-9840-e35330158645");

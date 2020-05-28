@@ -8,7 +8,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
           </div>
-          <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" formControlName="email">
         </div>
       </div>
       <a class="btn btn-primary" (click)="onClick()">Искать</a>
@@ -42,7 +42,7 @@
       <th></th>
       </thead>
       <tbody>
-      <tr *ngFor="let instructor of instructors">
+      <tr *ngFor="let instructor of instructors" [ngClass]="{'alert alert-danger': !isInstructor(instructor)}">
         <td>{{ instructor?.email }}</td>
         <td>{{ instructor?.name }}</td>
         <td><a class="btn btn-primary" (click)="addInstructor(instructor.id, instructor.email)">Добавить</a></td>

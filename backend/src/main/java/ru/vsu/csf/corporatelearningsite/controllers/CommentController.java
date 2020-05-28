@@ -17,9 +17,11 @@ import ru.vsu.csf.corporatelearningsite.services.CommentService;
 import javax.validation.Valid;
 
 @RepositoryRestController
-@RequestMapping("/api/comment")
+@RequestMapping(CommentController.URI)
 public class CommentController {
 
+    public static final String URI = "/api/comment";
+    public static final String SEND_PATH = "/send";
     private CommentService commentService;
 
     @Autowired
@@ -27,7 +29,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/send")
+    @PostMapping(SEND_PATH)
     public ResponseEntity<?> send(@Valid @RequestBody SaveCommentRequest saveCommentRequest,
                                   @AuthenticationPrincipal Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
