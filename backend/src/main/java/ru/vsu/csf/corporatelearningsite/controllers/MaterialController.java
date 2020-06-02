@@ -27,6 +27,7 @@ public class MaterialController {
         this.materialService = materialService;
     }
 
+    // add creator
     @PostMapping("/uploadMaterial/{lessonId}")
     public UploadFileResponse uploadMaterial(@PathVariable("lessonId") Long lessonId, @RequestParam("material") MultipartFile material) {
         String materialName = materialService.storeMaterial(material, lessonId).getName();
