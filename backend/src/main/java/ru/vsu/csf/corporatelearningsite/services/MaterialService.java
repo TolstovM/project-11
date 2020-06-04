@@ -32,6 +32,8 @@ public class MaterialService {
     private static final String DEFAULT_UPLOAD_DIR = "/home/maksfox/tmp/project";
     private static final String FIELD_NAME_ID = "id";
     public static final String BAD_PATH_EXCEPTION_MASSAGE = "Filename contains invalid path sequence";
+    public static final String FILE_SIZE_EXCEPTION_MASSAGE = "The file size exceeds the allowed value";
+    public static final Long MAX_FILE_SIZE = 1048776L;
     private final MaterialRepository materialRepository;
     private final LessonRepository lessonRepository;
     private final Path materialStorageLocation;
@@ -80,7 +82,8 @@ public class MaterialService {
             Path targetLocation = this.materialStorageLocation.resolve(materialName);
             Files.copy(material.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return materialRepository.save(dbMaterial);
+            materialRepository.save(dbMaterial);
+            return dbMaterial;
         } catch (IOException ex) {
             log.error("Could not store material {}", materialName);
             throw new MaterialStorageException("Could not store material " + materialName + ". Please try again!", ex);

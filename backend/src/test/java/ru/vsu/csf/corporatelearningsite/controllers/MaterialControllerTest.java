@@ -1,18 +1,18 @@
 package ru.vsu.csf.corporatelearningsite.controllers;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
-import ru.vsu.csf.corporatelearningsite.exceptions.BadRequestException;
-import ru.vsu.csf.corporatelearningsite.payload.SaveCommentRequest;
-import ru.vsu.csf.corporatelearningsite.security.user.UserPrincipal;
-import ru.vsu.csf.corporatelearningsite.services.CommentService;
+import org.springframework.web.multipart.MultipartFile;
+import ru.vsu.csf.corporatelearningsite.config.MaterialStorageProperties;
+import ru.vsu.csf.corporatelearningsite.exceptions.MaterialStorageException;
+import ru.vsu.csf.corporatelearningsite.payload.UploadFileResponse;
+import ru.vsu.csf.corporatelearningsite.repositories.LessonRepository;
+import ru.vsu.csf.corporatelearningsite.repositories.MaterialRepository;
+import ru.vsu.csf.corporatelearningsite.services.MaterialService;
 
-import java.util.Collection;
-import java.util.UUID;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,69 +20,36 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 class MaterialControllerTest {
 
-    private final static UUID OWNER_UUID = UUID.fromString("cb71df0c-5df9-4252-9840-e35330158645");
-    private final static UUID INSTRUCTOR_UUID = UUID.fromString("27f8bb93-1a40-4f71-97b5-34c6c32fd200");
-    private final static UUID STRANGER_UUID = UUID.fromString("70a1fc72-ff2d-45c0-a607-f880f2902f46");
-    private final static Long LESSON_ID = 4l;
+    private final static String FILE_NAME = "file.txt";
+    private final static String BAD_FILE_NAME = "file..txt";
+    private final static String FILE_CONTENT_TYPE = "text/plain";
+    private final static String FILE_CONTENT = "file content";
+    private final static Long LESSON_ID = 1L;
 
     @Test
-    void send() {
-        SaveCommentRequest saveCommentRequest = new SaveCommentRequest();
-        saveCommentRequest.setHomeworkOwnerId(OWNER_UUID);
-        saveCommentRequest.setLessonId(LESSON_ID);
+    void uploadMaterial() {
+        MultipartFile file = new MockMultipartFile(FILE_NAME,
+                FILE_NAME,
+                FILE_CONTENT_TYPE,
+                FILE_CONTENT.getBytes(StandardCharsets.UTF_8));
 
-        CommentService commentService = mock(CommentService.class);
-        BadRequestException exception = new BadRequestException(CommentService.SAVE_COMMENT_ACCESS_EXCEPTION_MASSAGE);
-        Mockito.doThrow(exception).when(commentService).saveComment(STRANGER_UUID, saveCommentRequest);
+        MultipartFile fileWithBadPath = new MockMultipartFile(FILE_NAME,
+                BAD_FILE_NAME,
+                FILE_CONTENT_TYPE,
+                FILE_CONTENT.getBytes(StandardCharsets.UTF_8));
 
-        CommentController commentController = new CommentController(commentService);
+        MaterialRepository materialRepository = mock(MaterialRepository.class);
+        LessonRepository lessonRepository = mock(LessonRepository.class);
+        MaterialStorageProperties materialStorageProperties = mock(MaterialStorageProperties.class);
 
-        Authentication authenticationOwner = getAuthenticationFor(OWNER_UUID);
-        ResponseEntity<?> sendByOwner = commentController.send(saveCommentRequest, authenticationOwner);
-        assertTrue(sendByOwner.getStatusCode().is2xxSuccessful());
+        MaterialService materialService = new MaterialService(materialRepository, materialStorageProperties, lessonRepository);
 
-        Authentication authenticationStranger = getAuthenticationFor(STRANGER_UUID);
-        BadRequestException badRequestException = assertThrows(BadRequestException.class, () -> commentController.send(saveCommentRequest, authenticationStranger));
-        assertEquals(badRequestException.getMessage(), CommentService.SAVE_COMMENT_ACCESS_EXCEPTION_MASSAGE);
-    }
+        MaterialController materialController = new MaterialController(materialService);
 
-    private Authentication getAuthenticationFor(UUID userId) {
-        return new Authentication() {
+        ResponseEntity<UploadFileResponse> uploadMaterial = materialController.uploadMaterial(LESSON_ID, file);
+        assertTrue(uploadMaterial.getStatusCode().is2xxSuccessful());
 
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
-            }
-
-            @Override
-            public Object getCredentials() {
-                return null;
-            }
-
-            @Override
-            public Object getDetails() {
-                return null;
-            }
-
-            @Override
-            public Object getPrincipal() {
-                return new UserPrincipal(userId, null, null, null, null);
-            }
-
-            @Override
-            public boolean isAuthenticated() {
-                return false;
-            }
-
-            @Override
-            public void setAuthenticated(boolean b) throws IllegalArgumentException {
-
-            }
-
-            @Override
-            public String getName() {
-                return null;
-            }
-        };
+        MaterialStorageException exception = assertThrows(MaterialStorageException.class, () -> materialService.storeMaterial(fileWithBadPath, LESSON_ID));
+        assertEquals(exception.getMessage(), MaterialService.BAD_PATH_EXCEPTION_MASSAGE);
     }
 }
