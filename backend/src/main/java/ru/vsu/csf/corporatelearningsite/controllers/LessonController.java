@@ -28,7 +28,7 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.get(id));
     }
 
-    @PostMapping("/courseName/{courseId}")
+    @PostMapping("/courseId/{courseId}")
     public ResponseEntity<Lesson> addLesson(@PathVariable("courseId") Long courseId, @RequestBody Lesson lesson) {
         lessonService.add(lesson, courseId);
         return ResponseEntity.ok().build();

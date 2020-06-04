@@ -29,7 +29,11 @@ import java.util.List;
 public class MaterialService {
 
     private static final String RESOURCE_NAME = "Material";
+    private static final String DEFAULT_UPLOAD_DIR = "/home/maksfox/tmp/project";
     private static final String FIELD_NAME_ID = "id";
+    public static final String BAD_PATH_EXCEPTION_MASSAGE = "Filename contains invalid path sequence";
+    public static final String FILE_SIZE_EXCEPTION_MASSAGE = "The file size exceeds the allowed value";
+    public static final Long MAX_FILE_SIZE = 1048776L;
     private final MaterialRepository materialRepository;
     private final LessonRepository lessonRepository;
     private final Path materialStorageLocation;
@@ -37,8 +41,14 @@ public class MaterialService {
     public MaterialService(MaterialRepository materialRepository,
                            MaterialStorageProperties materialStorageProperties,
                            LessonRepository lessonRepository) {
-        this.materialStorageLocation = Paths.get(materialStorageProperties.getUploadDir())
-                .toAbsolutePath().normalize();
+        if(materialStorageProperties.getUploadDir() != null) {
+            this.materialStorageLocation = Paths.get(materialStorageProperties.getUploadDir())
+                    .toAbsolutePath().normalize();
+        }
+        else {
+            this.materialStorageLocation = Paths.get(DEFAULT_UPLOAD_DIR)
+                    .toAbsolutePath().normalize();
+        }
         try {
             Files.createDirectories(this.materialStorageLocation);
         } catch (IOException ex) {
@@ -60,8 +70,7 @@ public class MaterialService {
 
         try {
             if (materialName.contains("..")) {
-                log.error("Filename contains invalid path sequence {}", materialName);
-                throw new MaterialStorageException("Sorry! Filename contains invalid path sequence " + materialName);
+                throw new MaterialStorageException(BAD_PATH_EXCEPTION_MASSAGE);
             }
 
             Material dbMaterial = new Material(materialName, material.getContentType(),
@@ -69,13 +78,12 @@ public class MaterialService {
 
             if(lessonRepository.findById(lessonId).isPresent())
                 dbMaterial.setLesson(lessonRepository.findById(lessonId).get());
-            else
-                throw new MaterialStorageException("Lesson name not found");
 
             Path targetLocation = this.materialStorageLocation.resolve(materialName);
             Files.copy(material.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return materialRepository.save(dbMaterial);
+            materialRepository.save(dbMaterial);
+            return dbMaterial;
         } catch (IOException ex) {
             log.error("Could not store material {}", materialName);
             throw new MaterialStorageException("Could not store material " + materialName + ". Please try again!", ex);

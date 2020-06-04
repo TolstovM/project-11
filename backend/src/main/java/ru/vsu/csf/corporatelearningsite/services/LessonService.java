@@ -37,9 +37,10 @@ public class LessonService {
 
     public void add(Lesson lesson, Long courseId) {
         courseRepository.findById(courseId);
-        if(courseRepository.findById(courseId).isPresent())
+        if(courseRepository.findById(courseId).isPresent()) {
             lesson.setCourse(courseRepository.findById(courseId).get());
-        lessonRepository.save(lesson);
+            lessonRepository.save(lesson);
+        }
         log.info("IN add - lesson with id: {} successfully add", lesson.getId());
     }
 

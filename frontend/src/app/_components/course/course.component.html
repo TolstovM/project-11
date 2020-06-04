@@ -24,8 +24,9 @@
           <td><h1 class="h4 mb-3 font-weight-normal">{{ lesson.description }} </h1></td>
           <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
 
-            <td><a [routerLink]="['/lesson', lesson.name]" class="btn btn-primary">Редактировать</a></td>
+            <td><a [routerLink]="['/lesson', lesson.id]" class="btn btn-primary">Редактировать</a></td>
             <td><a [routerLink]="['/lesson/homeworks']" [queryParams]="{'lessonId':lesson.id}" class="btn btn-info">Просмотреть домашние работы</a></td>
+            <td><button class="btn btn-danger" (click)="delete(lesson.id)">Удалить урок</button><td>
           </div>
           <div *ngIf="!currentUser['roles'].includes('ROLE_INSTRUCTOR')">
             <td><a [routerLink]="['/lesson', lesson.id]" class="btn btn-primary">Перейти</a></td>
@@ -37,17 +38,10 @@
 
 
 
-
-
-
-
-
-
-
     <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
     <div align="right">
 
-      <a [routerLink]="['/add/lesson', course?.name]" [queryParams]="{'id':course?.id}" class="btn btn-primary">Добавить урок</a>
+      <a [routerLink]="['/add/lesson', course?.id]" [queryParams]="{'id':course?.id}" class="btn btn-primary">Добавить урок</a>
     </div>
 
     </div>

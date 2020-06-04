@@ -22,6 +22,8 @@ export class LessonComponent implements OnInit {
   private sub: Subscription;
   fileToUpload: File = null;
   materials: Material[];
+  lessonId;
+  private querySub: Subscription;
 
 
   constructor(
@@ -36,6 +38,9 @@ export class LessonComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.loadLesson(this.id);
+    });
+    this.querySub = this.route.queryParams.subscribe(params => {
+      this.lessonId = params['lessonId'];
     });
   }
 
