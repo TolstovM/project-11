@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Lesson} from "../_models/lesson";
 
-let _base_url = window["baseUrl"]; 
+let _base_url = window["baseUrl"];
 let _url: string = `${_base_url}/api/lesson`;
 
 @Injectable({
@@ -21,7 +21,7 @@ export class LessonService {
   }
 
   public add(name, description, courseId: number) {
-    return this.http.post<Lesson>(_url + `/courseName/${courseId}`, {"name": name, "description": description});
+    return this.http.post<Lesson>(_url + `/courseId/${courseId}`, {"name": name, "description": description});
   }
 
   public findById(id, projection: string): any {
