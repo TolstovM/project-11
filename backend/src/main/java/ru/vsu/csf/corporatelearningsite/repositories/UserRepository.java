@@ -25,16 +25,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RepositoryRestResource(collectionResourceRel = UserRepository.COLLECTION_REL, path = UserRepository.PATH, excerptProjection = UserProjection.class)
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     String COLLECTION_REL = "users";
     String PATH = "user";
 
+    @RestResource
     @PermitAll
     Optional<User> findByEmail(String email);
-  
+
+    @RestResource
     @PermitAll
     Boolean existsByEmail(String email);
   
