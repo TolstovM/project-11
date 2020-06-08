@@ -83,7 +83,50 @@
         </tbody>
       </table>
     </div>
-  </div>
+
+    <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
+      <div align="left">
+        <h5 class="display-5">Найти слушателя курса по email</h5>
+        <form [formGroup]="form">
+          <div class="form-group w-25">
+            <div class="input-group mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" formControlName="email">
+            </div>
+          </div>
+          <a class="btn btn-primary" (click)="searchListeners()">Искать</a>
+        </form>
+      </div>
+    </div>
+
+
+    <div align="left" *ngIf="listeners?.length===0">
+      Пользователей с таким email не найдено
+    </div>
+
+
+    <div align="left" *ngIf="listeners && listeners?.length!==0 ">
+      <table>
+        <thead>
+        <th>Email</th>
+        <th>Имя</th>
+        <th></th>
+        <th></th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of listeners" [ngClass]="{'alert alert-success': isPassed(user)}">
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td><a class="btn btn-primary" (click)="mark(user.id)">Прошел</a></td>
+          <td><a class="btn btn-primary" (click)="unmark(user.id)">Не прошел</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div>
   </div>
 </body>
 

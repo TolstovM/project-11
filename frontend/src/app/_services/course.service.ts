@@ -30,7 +30,7 @@ export class CourseService {
   }
 
   public add(name, description) {
-    return this.http.post<Course>(_url, {"name": name, "description": description});
+    return this.http.post<Course>(_url + `/create`, {"name": name, "description": description });
   }
 
   public getCourseLessons(name): any {
@@ -54,6 +54,10 @@ export class CourseService {
     _url + `/user/${userId}`, { headers });
   }
 
+  setMark(courseId: number, userId: any, mark: boolean) {
+    return this.http.put(_url + `/${courseId}/mark/${userId}/${mark}`, null);
+  }
+
   public deleteInstructor(courseId, userId) {
     return this.http.delete(_url + `/${courseId}/instructors/${userId}`);
   }
@@ -69,4 +73,14 @@ export class CourseService {
     return this.http.get(_url + `/${courseId}?projection=${projection}`);
   }
 
+  public findAllByInstructorId(uuid: string, page: number, size: number) {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get(_url + `/search/findAllByInstructorId?uuid=${uuid}`, {params});
+  }
+
+  public isPassed(courseId: number) {
+    return this.http.get(_url + `/${courseId}/myMark`);
+  }
 }

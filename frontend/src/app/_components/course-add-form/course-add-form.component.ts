@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {first} from "rxjs/operators";
 import {CourseService} from "../../_services/course.service";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-course-add-form',
@@ -20,7 +21,8 @@ export class CourseAddFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private authService: AuthService
   ) { }
 
   public text = {

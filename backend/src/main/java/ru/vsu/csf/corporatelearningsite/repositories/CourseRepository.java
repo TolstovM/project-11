@@ -36,6 +36,12 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             "and l.id=:lessonId")
     Boolean isInstructorOnCourse(@Param("lessonId") Long lessonId, @Param("instructorId") UUID instructorId);
 
-    @Override
-    List<Course> findAll();
+    @RestResource(exported = false)
+    @Query("select case when count(c)>0 then true else false end from Course c " +
+            "inner join  c.instructors i where i.id=:instructorId and c.id=:courseId")
+    Boolean isInstructorOnCourseByCourseId(@Param("courseId") Long courseId, @Param("instructorId") UUID instructorId);
+
+    @RestResource
+    @Query("select c from Course c inner join c.instructors instructor where instructor.id=:uuid")
+    Page<Course> findAllByInstructorId(@Param("uuid") UUID uuid, Pageable pageable);
 }

@@ -5,7 +5,9 @@
     <div [innerHTML]="course.description"></div>
 
 </div>
-
+    <div align="left" *ngIf="isPassed">
+      <h3>Вы прошли этот курс</h3>
+    </div>
     <h3>Список уроков курса</h3>
     <table>
         <thead>

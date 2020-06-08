@@ -22,6 +22,7 @@ export class CourseComponent implements OnInit {
   form: FormGroup;
 
   users: User[];
+  listeners;
   id: number;
   course: Course = {} as Course;
   lessons: Lesson[];
@@ -77,12 +78,38 @@ export class CourseComponent implements OnInit {
           });
   }
 
+  mark(userId) {
+    this.courseService.setMark(this.id, userId, true)
+      .subscribe(
+        () => {
+          this.toastr.success("Отметка об прохождении курса поставлена");
+        });
+  }
+
+  unmark(userId) {
+    this.courseService.setMark(this.id, userId, false)
+      .subscribe(
+        () => {
+          this.toastr.success("Отметка об прохождении курса успешно удалена");
+        });
+  }
+
   onClick() {
     const value = this.form.value;
     this.userService.findUsersByEmailStartingWith(value.email, UserService.USER_WITH_ROLES_PROJECTION)
       .subscribe(data =>{
         this.users = data['_embedded']['users'];
       } )
+  }
+
+  searchListeners() {
+    const value = this.form.value;
+    this.userService.findListenersByEmailStartingWith(this.id, value.email)
+    .subscribe(data => {
+      this.listeners = data['_embedded']['users'];
+      console.log(this.listeners);
+      
+    })
   }
 
   delete(id: number) {
@@ -98,5 +125,10 @@ export class CourseComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/course', this.id], { queryParams: {id: this.id}});
+  }
+
+  isPassed(listener) {
+    var result = listener.onCourses.filter(x => x.userMark && x.id.courseId == this.id);
+    return result.length !== 0;
   }
 }

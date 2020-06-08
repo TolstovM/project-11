@@ -21,6 +21,7 @@ export class UserService {
 
   public static USER_PROJECTION = "userProjection";
   public static USER_WITH_ROLES_PROJECTION = "inlineUserWithRoles";
+  public static USER_WITH_MARKS_PROJECTION = "userWithMarksProjection";
 
   constructor(private http: HttpClient) {
 
@@ -65,6 +66,10 @@ export class UserService {
 
   findUsersByEmailStartingWith(email: string, projection: string) {
     return this.http.get(_url + `/user/search/findAllByEmailStartingWith?email=${email}&projection=${projection}`);
+  }
+
+  findListenersByEmailStartingWith(courseId: number, email: string) {
+    return this.http.get(_url + `/user/search/finListenersByCourseIdAndEmailStartingWith?courseId=${courseId}&email=${email}&projection=${UserService.USER_WITH_MARKS_PROJECTION}`);
   }
 
   findInstructorsByCourseId(courseId) {

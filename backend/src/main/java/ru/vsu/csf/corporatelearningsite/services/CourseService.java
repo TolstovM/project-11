@@ -2,11 +2,14 @@ package ru.vsu.csf.corporatelearningsite.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import ru.vsu.csf.corporatelearningsite.exceptions.BadRequestException;
 import ru.vsu.csf.corporatelearningsite.exceptions.ResourceNotFoundException;
 import ru.vsu.csf.corporatelearningsite.model.*;
+import ru.vsu.csf.corporatelearningsite.payload.CreateCourseRequest;
 import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.ListenerOnCourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.UserRepository;
@@ -21,6 +24,7 @@ import java.util.UUID;
 @Transactional
 public class CourseService {
 
+    public static final String SET_MARK_ACCESS_EXCEPTION_MESSAGE = "You have to be instructor on course with id: %s";
     private final CourseRepository courseRepository;
 
     private final UserRepository userRepository;
@@ -59,16 +63,6 @@ public class CourseService {
     }
 
 
-    //to-delete
-    public List<Lesson> getLessons(String name) {
-        if(courseRepository.findByName(name).isPresent()) {
-            return courseRepository.findByName(name).get().getLessons();
-        }
-        else
-            return new ArrayList<>();
-    }
-
-
     public void addListener(String email, String courseId) {
         Optional<User> user = userRepository.findByEmail(email);
         if(!user.isPresent())
@@ -86,4 +80,31 @@ public class CourseService {
     }
 
 
+    @Transactional
+    public void create(CreateCourseRequest request, UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        Course course = new Course(request.getName(), request.getDescription());
+        course = courseRepository.save(course);
+        course.insertInstructor(user);
+        courseRepository.save(course);
+    }
+
+    public void setMark(UUID instructorId, Long courseId, UUID userId, boolean isPassed) {
+        if (!courseRepository.isInstructorOnCourseByCourseId(courseId, instructorId)) {
+            throw new BadRequestException(String.format(SET_MARK_ACCESS_EXCEPTION_MESSAGE, courseId));
+        }
+        ListenerOnCourseId listenerOnCourseId = new ListenerOnCourseId(courseId, userId);
+        ListenerOnCourse listenerOnCourse = listenerOnCourseRepository.findById(listenerOnCourseId)
+                .orElseThrow(() -> new ResourceNotFoundException("ListenerOnCourse", "id", listenerOnCourseId));
+        listenerOnCourse.setUserMark(isPassed);
+        listenerOnCourseRepository.save(listenerOnCourse);
+    }
+
+    public boolean isUserPassed(Long courseId, UUID id) {
+        ListenerOnCourseId listenerOnCourseId = new ListenerOnCourseId(courseId, id);
+        ListenerOnCourse listenerOnCourse = listenerOnCourseRepository.findById(listenerOnCourseId)
+                .orElseThrow(() -> new ResourceNotFoundException("ListenerOnCourse", "id", listenerOnCourseId));
+        return listenerOnCourse.getUserMark();
+    }
 }

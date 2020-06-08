@@ -14,6 +14,7 @@ export class MyCourseComponent implements OnInit {
   course;
   lessonsWrapped;
   id;
+  isPassed;
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute,
@@ -22,8 +23,13 @@ export class MyCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.courseService.findById(this.id, CourseService.COURSE_WITH_LESSONS_PROJECTION)
-      .subscribe(data => this.course = data);
+    let course = this.courseService.findById(this.id, CourseService.COURSE_WITH_LESSONS_PROJECTION);
+    let isPassed = this.courseService.isPassed(this.id)
+    forkJoin([course, isPassed])
+    .subscribe(res => {
+      this.course = res[0];
+      this.isPassed = res[1];
+    })
   }
 
 }
