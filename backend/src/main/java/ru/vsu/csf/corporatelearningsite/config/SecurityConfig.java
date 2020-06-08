@@ -90,6 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/update/authorities", "/api/user/invite", "/api/user/search/findInstructorsByCourseId")
                 .hasRole("ADMIN")
 
+                .antMatchers("/api/course/*/mark")
+                .authenticated()
                 .antMatchers("/api/course/create", "/api/course/*/mark/**")
                 .hasRole("INSTRUCTOR")
                 .antMatchers("/api/course/addListener")
