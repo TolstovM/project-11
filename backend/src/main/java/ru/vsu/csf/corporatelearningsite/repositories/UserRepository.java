@@ -49,7 +49,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @RestResource
     @Query("select u from User u inner join u.onCourses onC inner join onC.course  c where c.id=:courseId and u.email like concat(:email, '%')")
-    List<User> finListenersByCourseIdAndEmailStartingWith(@Param("courseId") Long courseId, @Param("email") String email);
+    List<User> findListenersByCourseIdAndEmailStartingWith(@Param("courseId") Long courseId, @Param("email") String email);
 
     Optional<User> findByName(String name);
 
