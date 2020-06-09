@@ -1,6 +1,6 @@
 <div align="center">
   <h1>{{course?.name}}</h1>
-  <h3>{{course?.description}}</h3>
+  <h3 [innerHTML]="course?.description"></h3>
 </div>
 
 <listeners-list [listeners]="course.listeners"></listeners-list>
