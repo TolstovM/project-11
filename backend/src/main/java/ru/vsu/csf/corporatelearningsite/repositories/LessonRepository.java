@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RepositoryRestResource(path="lesson")
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
     Optional<Lesson> findByName(String name);

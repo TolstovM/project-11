@@ -6,12 +6,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.vsu.csf.corporatelearningsite.exceptions.BadRequestException;
 import ru.vsu.csf.corporatelearningsite.model.Material;
 import ru.vsu.csf.corporatelearningsite.payload.UploadFileResponse;
 import ru.vsu.csf.corporatelearningsite.services.MaterialService;
 
+import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -27,16 +31,27 @@ public class MaterialController {
         this.materialService = materialService;
     }
 
-    @PostMapping("/uploadMaterial/{lessonName}")
-    public UploadFileResponse uploadMaterial(@PathVariable("lessonName") String lessonName, @RequestParam("material") MultipartFile material) {
-        String materialName = materialService.storeMaterial(material, lessonName).getName();
-        String materialDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadMaterial/")
-                .path(materialName)
-                .toUriString();
+    @PostMapping("/uploadMaterial/{lessonId}")
+    public ResponseEntity<UploadFileResponse> uploadMaterial(@PathVariable("lessonId") Long lessonId, @RequestParam("material") MultipartFile material) {
+        String materialName = materialService.storeMaterial(material, lessonId).getName();
+        String materialDownloadUri = "";
+        if(RequestContextHolder.getRequestAttributes() instanceof ServletRequestAttributes) {
+            materialDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/downloadMaterial/")
+                    .path(materialName)
+                    .toUriString();
+        }
+        else {
+            log.debug("Not called in the context of an HTTP request");
+        }
+
+        if(material.getSize() >= MaterialService.MAX_FILE_SIZE){
+            throw new BadRequestException(MaterialService.BAD_PATH_EXCEPTION_MASSAGE);
+        }
+
         log.info("the material was uploaded");
-        return new UploadFileResponse(materialName, materialDownloadUri,
-                material.getContentType(), material.getSize());
+        return ResponseEntity.ok(new UploadFileResponse(materialName, materialDownloadUri,
+                material.getContentType(), material.getSize()));
     }
 
     @GetMapping("/downloadMaterial/{materialName:.+}")
@@ -75,8 +90,8 @@ public class MaterialController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/materials/{name}")
-    public ResponseEntity<?> getLessonMaterials(@PathVariable("name") String name){
-        return ResponseEntity.ok(materialService.getMaterialsByLessonName(name));
+    @GetMapping("/materials/{id}")
+    public ResponseEntity<?> getLessonMaterials(@PathVariable("id") Long id){
+        return ResponseEntity.ok(materialService.getMaterialsByLessonId(id));
     }
 }

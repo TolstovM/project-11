@@ -3,39 +3,67 @@
     <h1 class="display-5">Название курса</h1>
     <h1 class="h2 mb-3 font-weight-normal">{{ course?.name }}</h1>
     <h1 class="display-5">Краткое описание курса</h1>
-    <h1 class="h4 mb-3 font-weight-normal">{{ course?.description }}</h1>
+    <h1 class="h4 mb-3"><div [innerHTML]="course.description"></div></h1>
 
 
     <h3 class="dispay-3">Список уроков</h3>
     <div *ngIf="!lessons || lessons?.length===0">
       <h4 class="display-4">Здесь пока ничего нет</h4>
     </div>
-    <div *ngFor="let lesson of lessons">
-      <h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }} </h1>
-        <a [routerLink]="['/lesson', lesson.name]" class="btn btn-info mr-5">Редактировать</a>
-      <a [routerLink]="['/lesson/homeworks']" [queryParams]="{'lessonId':lesson.id}" class="btn btn-info">Просмотреть домашние работы</a>
-    </div>
+
+      <table class="table table-borderless">
+        <thead >
+        <tr>
+          <th><h1 class="h3 mb-3 font-weight-normal">Название урока</h1></th>
+          <th><h1 class="h3 mb-3 font-weight-normal">Краткое описание</h1></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let lesson of lessons">
+          <td><h1 class="h4 mb-3 font-weight-normal">{{ lesson.name }} </h1></td>
+          <td><h1 class="h4 mb-3 font-weight-normal">{{ lesson.description }} </h1></td>
+          <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
+
+            <td><a [routerLink]="['/lesson', lesson.id]" class="btn btn-primary">Редактировать</a></td>
+            <td><a [routerLink]="['/lesson/homeworks']" [queryParams]="{'lessonId':lesson.id}" class="btn btn-info">Просмотреть домашние работы</a></td>
+            <td><button class="btn btn-danger" (click)="delete(lesson.id)">Удалить урок</button><td>
+          </div>
+          <div *ngIf="!currentUser['roles'].includes('ROLE_INSTRUCTOR')">
+            <td><a [routerLink]="['/lesson', lesson.id]" class="btn btn-primary">Перейти</a></td>
+          </div>
+        </tr>
+        </tbody>
+      </table>
 
 
 
 
+    <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
     <div align="right">
-      <button [routerLink]="['/add/lesson', course?.name]" [queryParams]="{'id':course?.id}" class="btn-primary">Добавить урок</button>
+
+      <a [routerLink]="['/add/lesson', course?.id]" [queryParams]="{'id':course?.id}" class="btn btn-primary">Добавить урок</a>
     </div>
 
+    </div>
+
+    <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
     <div align="left">
-      <h5 class="display-5">Добавить слушателя на курс</h5>
+      <h5 class="display-5">Добавить слушателя на курс по email</h5>
       <form [formGroup]="form">
-        <div class="form-field">
-          <label>Email:</label>
-          <input name="email" formControlName="email">
+        <div class="form-group w-25">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" formControlName="email">
+          </div>
         </div>
-        <button (click)="onClick()">Искать</button>
+        <a class="btn btn-primary" (click)="onClick()">Искать</a>
       </form>
     </div>
 
     <div align="left" *ngIf="users?.length===0">
-      Ничего не найдено
+      Пользователей с таким email не найдено
     </div>
 
 
@@ -50,12 +78,56 @@
         <tr *ngFor="let user of users">
           <td>{{ user.email }}</td>
           <td>{{ user.name }}</td>
-          <td><button (click)="addListener(user.email)">Добавить</button></td>
+          <td><a class="btn btn-primary" (click)="addListener(user.email)">Добавить</a></td>
         </tr>
         </tbody>
       </table>
     </div>
 
+    <div *ngIf="currentUser['roles'].includes('ROLE_INSTRUCTOR')">
+      <div align="left">
+        <h5 class="display-5">Найти слушателя курса по email</h5>
+        <form [formGroup]="form">
+          <div class="form-group w-25">
+            <div class="input-group mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" formControlName="email">
+            </div>
+          </div>
+          <a class="btn btn-primary" (click)="searchListeners()">Искать</a>
+        </form>
+      </div>
+    </div>
+
+
+    <div align="left" *ngIf="listeners?.length===0">
+      Пользователей с таким email не найдено
+    </div>
+
+
+    <div align="left" *ngIf="listeners && listeners?.length!==0 ">
+      <table>
+        <thead>
+        <th>Email</th>
+        <th>Имя</th>
+        <th></th>
+        <th></th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of listeners" [ngClass]="{'alert alert-success': isPassed(user)}">
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td><a class="btn btn-primary" (click)="mark(user.id)">Прошел</a></td>
+          <td><a class="btn btn-primary" (click)="unmark(user.id)">Не прошел</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div>
   </div>
 </body>
 
+<a class="btn btn-primary" routerLink="/courses">Назад</a>

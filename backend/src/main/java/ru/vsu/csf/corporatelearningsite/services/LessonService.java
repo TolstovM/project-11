@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vsu.csf.corporatelearningsite.model.Lesson;
 import ru.vsu.csf.corporatelearningsite.model.Material;
+import ru.vsu.csf.corporatelearningsite.repositories.CommentRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.CourseRepository;
 import ru.vsu.csf.corporatelearningsite.repositories.LessonRepository;
 
@@ -20,24 +21,37 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final CourseRepository courseRepository;
+    private final MaterialService materialService;
+    private final HomeworkService homeworkService;
 
     @Autowired
     public LessonService(LessonRepository lessonRepository,
-                         CourseRepository courseRepository) {
+                         CourseRepository courseRepository,
+                         MaterialService materialService,
+                         HomeworkService homeworkService) {
         this.lessonRepository = lessonRepository;
         this.courseRepository = courseRepository;
+        this.materialService = materialService;
+        this.homeworkService = homeworkService;
     }
 
-    public void add(Lesson lesson, String courseName) {
-        courseRepository.findByName(courseName);
-        if(courseRepository.findByName(courseName).isPresent())
-            lesson.setCourse(courseRepository.findByName(courseName).get());
-        lessonRepository.save(lesson);
+    public void add(Lesson lesson, Long courseId) {
+        courseRepository.findById(courseId);
+        if(courseRepository.findById(courseId).isPresent()) {
+            lesson.setCourse(courseRepository.findById(courseId).get());
+            lessonRepository.save(lesson);
+        }
         log.info("IN add - lesson with id: {} successfully add", lesson.getId());
     }
 
-    public Optional<Lesson> get(String name) {
-        log.info("IN get - lesson with name: {} successfully get", name);
-        return lessonRepository.findByName(name);
+    public Optional<Lesson> get(Long id) {
+        log.info("IN get - lesson with id: {} successfully get", id);
+        return lessonRepository.findById(id);
+    }
+
+    public void delete(Long id){
+        homeworkService.deleteByLessonId(id);
+        materialService.deleteByLessonId(id);
+        lessonRepository.deleteById(id);
     }
 }

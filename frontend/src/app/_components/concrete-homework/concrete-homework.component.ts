@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {HomeworkService} from "../../_services/homework.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {LessonService} from "../../_services/lesson.service";
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder, Validators} from "@angular/forms";
 import {CommentService} from "../../_services/comment.service";
+import * as fileSaver from 'file-saver';
+
+
 
 @Component({
   selector: 'app-concrete-homework',
@@ -18,11 +20,13 @@ export class ConcreteHomeworkComponent implements OnInit {
   homework;
   lessonId;
   userId;
-  downloadUrl: string;
   private querySub: Subscription;
   result: any;
   form
   resultForm;
+  public text = {
+    editorData: ''
+  };
 
   constructor(private homeworkService: HomeworkService, private route: ActivatedRoute,
                 private toastr: ToastrService, private router:Router, private fb: FormBuilder, private commentService: CommentService) {
@@ -30,6 +34,7 @@ export class ConcreteHomeworkComponent implements OnInit {
       this.lessonId = params['lessonId'];
       this.userId = params['userId'];
     });
+
 
   }
 
@@ -50,7 +55,6 @@ export class ConcreteHomeworkComponent implements OnInit {
         console.log(this.homework);
       }
     );
-    this.downloadUrl = LessonService.DOWNLOAD_URL_HOMEWORK;
   }
 
 
@@ -83,5 +87,19 @@ export class ConcreteHomeworkComponent implements OnInit {
         this.form.text.value = ''
       })
       ;
+    setTimeout(() => {
+      this.ngOnInit();
+    }, 2000);
+  }
+
+  downloadHomework(name) {
+    this.homeworkService.download(name).subscribe(response => {
+      this.toastr.success("Вы успешно скачали домашнюю работу");
+      let blob:any = new Blob([response.slice()], { type: response.type });
+      const url = window.URL.createObjectURL(blob);
+      fileSaver.saveAs(blob, name);
+    }, error => {
+      console.log(error);
+    });
   }
 }

@@ -62,11 +62,11 @@ public class HomeworkController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/uploadHomework/{lessonName}")
-    public UploadFileResponse uploadHomework(@PathVariable("lessonName") String lessonName,
+    @PostMapping("/uploadHomework/{lessonId}")
+    public UploadFileResponse uploadHomework(@PathVariable("lessonId") Long lessonId,
                                              @RequestParam("homework") MultipartFile homework,
                                              @AuthenticationPrincipal Authentication authentication) {
-        String homeworkName = homeworkService.storeHomework(homework, lessonName, (UserPrincipal) authentication.getPrincipal());
+        String homeworkName = homeworkService.storeHomework(homework, lessonId, (UserPrincipal) authentication.getPrincipal());
         String homeworkDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadHomework/")
                 .path(homeworkName)
@@ -104,5 +104,12 @@ public class HomeworkController {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         this.homeworkService.checkHomework(checkHomeworkRequest, userPrincipal.getId());
         return ResponseEntity.ok(new ApiResponse(true, "Homework successfully changed"));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Homework> deleteHomework(@PathVariable("id") Long id) {
+        homeworkService.deleteByLessonId(id);
+        log.info("the material {} was deleted", id);
+        return ResponseEntity.ok().build();
     }
 }

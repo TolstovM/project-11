@@ -17,6 +17,7 @@ export class ChangeProfileComponent implements OnInit {
   email: string;
   password: string;
   form: FormGroup;
+  success;
   private querySubscription:Subscription;
 
   constructor(private fb: FormBuilder,
@@ -54,24 +55,36 @@ export class ChangeProfileComponent implements OnInit {
 
   confirm(){
     const value = this.form.value;
-    console.log(value.email);
-    console.log(value.name);
+    let message = '';
     if (value.email && value.name) {
       this.userService.changeProfile(value.email, value.name)
         .subscribe(
-          data => this.router.navigate([AuthService.LOGIN_URL],{queryParams:{"message":data['message']}})
+          data => message = data['message']
         )
+      this.success = 'Успешная смена данных профиля'
+      setTimeout(() => {
+
+        this.router.navigate(['/user/me'],{queryParams:{"message":message}})
+
+      }, 2000);
     }
 
   }
 
   confirmPass() {
     const value = this.form.value;
+    let message = '';
     if (value.password && value.confirmPassword && value.password === value.confirmPassword) {
       this.userService.changePassword(value.password)
         .subscribe(
-          data => this.router.navigate([AuthService.LOGIN_URL],{queryParams:{"message":data['message']}})
+          data => message = data['message']
         )
+      this.success = 'Успешная смена пароля';
+      setTimeout(() => {
+
+        this.router.navigate(['/user/me'],{queryParams:{"message":message}})
+
+      }, 2000);
     }
   }
 }

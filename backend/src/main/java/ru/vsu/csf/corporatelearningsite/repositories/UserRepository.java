@@ -25,33 +25,41 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RepositoryRestResource(collectionResourceRel = UserRepository.COLLECTION_REL, path = UserRepository.PATH, excerptProjection = UserProjection.class)
+@CrossOrigin
+@RepositoryRestResource(collectionResourceRel = UserRepository.COLLECTION_REL, path = UserRepository.PATH)
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     String COLLECTION_REL = "users";
     String PATH = "user";
 
+    @RestResource
     @PermitAll
     Optional<User> findByEmail(String email);
-  
+
+    @RestResource
     @PermitAll
     Boolean existsByEmail(String email);
-  
+
     @RestResource()
-    List<User> findAllByEmailStartingWith(@Param("email") String courseId);
+    List<User> findAllByEmailStartingWith(@Param("email") String email);
 
     @RestResource()
     @Query("select u from User u inner join u.courses c where c.id=:courseId")
     List<User> findInstructorsByCourseId(@Param("courseId") Long courseId);
 
+    @RestResource
+    @Query("select u from User u inner join u.onCourses onC inner join onC.course  c where c.id=:courseId and u.email like concat(:email, '%')")
+    List<User> finListenersByCourseIdAndEmailStartingWith(@Param("courseId") Long courseId, @Param("email") String email);
+
     Optional<User> findByName(String name);
 
+    @RestResource(exported = false)
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("update User u set u.name = ?1, u.email =?2 where u.id = ?3")
     void updateUser(String name, String email, UUID id);
 
+    @RestResource(exported = false)
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("update User u set u.password = ?1 where u.id = ?2")

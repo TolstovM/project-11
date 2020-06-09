@@ -32,3 +32,4 @@ build/
 
 
 src/main/resources/application-my.yml
+src/main/resources/public/

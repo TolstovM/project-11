@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from "rxjs";
 
-let _base_url = window["baseUrl"]; 
+let _base_url = window["baseUrl"];
 let _url: string = `${_base_url}/api`;
 
 @Injectable({
@@ -21,6 +21,7 @@ export class UserService {
 
   public static USER_PROJECTION = "userProjection";
   public static USER_WITH_ROLES_PROJECTION = "inlineUserWithRoles";
+  public static USER_WITH_MARKS_PROJECTION = "userWithMarksProjection";
 
   constructor(private http: HttpClient) {
 
@@ -44,8 +45,11 @@ export class UserService {
     })
   }
 
-  getAll(projection: string) {
-    return this.http.get(_url + UserService.USERS_URL + `?projection=${projection}`);
+  getAll(projection: string, page: number, size: number) {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get(_url + UserService.USERS_URL + `?projection=${projection}`, {params});
   }
 
   updateRoles(userId: string, isAdmin: boolean, isInstructor: boolean) {
@@ -64,11 +68,19 @@ export class UserService {
     return this.http.get(_url + `/user/search/findAllByEmailStartingWith?email=${email}&projection=${projection}`);
   }
 
+  findListenersByEmailStartingWith(courseId: number, email: string) {
+    return this.http.get(_url + `/user/search/finListenersByCourseIdAndEmailStartingWith?courseId=${courseId}&email=${email}&projection=${UserService.USER_WITH_MARKS_PROJECTION}`);
+  }
+
   findInstructorsByCourseId(courseId) {
     return this.http.get(_url + `/user/search/findInstructorsByCourseId?courseId=${courseId}&projection=${UserService.USER_WITH_ROLES_PROJECTION}`);
   }
 
   getUserNameById(userId: string):Observable<any> {
     return this.http.get<any>(_url+UserService.GET_USER_URL+`?userId=${userId}`);
+  }
+
+  deleteUserById(userId: string) {
+    return this.http.delete(_url + `/user/${userId}`);
   }
 }

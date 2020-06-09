@@ -36,13 +36,19 @@ export class InstructorsSearchComponent implements OnInit {
   onClick() {
     const value = this.form.value;
     this.userService.findUsersByEmailStartingWith(value.email, UserService.USER_WITH_ROLES_PROJECTION)
-      .subscribe(data => this.instructors = data);
+      .subscribe(data =>{
+            this.instructors = data['_embedded'].users;
+            console.log(this.instructors)
+          console.log(this.instructors._embedded.users)
+      }
+          );
   }
 
   addInstructor(userId, email) {
     this.courseService.patchInstructor(this.courseId, userId)
       .subscribe(() => {
         this.toastr.success(`Пользователь ${email} был добавлен как инструктор на текущий курс.`);
+        window.location.reload();
       });
   }
 

@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -72,16 +73,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
+                .antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**")
+                .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()
-                .antMatchers("/api/user/me")
+
+                .antMatchers("/api/user/me", "/api/user/me/change")
                 .hasRole("USER")
                 .antMatchers("/api/user/**")
                 .hasAnyRole("ADMIN", "INSTRUCTOR")
-                .antMatchers("/api/material/downloadMaterial/**")
-                .permitAll()
-                .antMatchers("/api/homework/downloadHomework/**")
-                .permitAll()
+                .antMatchers("/api/user/update/authorities", "/api/user/invite", "/api/user/search/findInstructorsByCourseId")
+                .hasRole("ADMIN")
+
+                .antMatchers("/api/course/*/mark")
+                .authenticated()
+                .antMatchers("/api/course/create", "/api/course/*/mark/**")
+                .hasRole("INSTRUCTOR")
+                .antMatchers("/api/course/addListener")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+                .antMatchers("/api/course/*/instructors", "/api/course/*/instructors/*")
+                .hasRole("ADMIN")
+
+                .antMatchers("/api/lesson/courseName/**")
+                .hasRole("INSTRUCTOR")
+          
+                .antMatchers("/api/lesson/delete/*")
+                .hasAnyRole("ADMIN", "INSTRUCTOR")
+
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
@@ -93,9 +116,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
+               
                 .anyRequest()
                 .authenticated();
 
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
     }
 }

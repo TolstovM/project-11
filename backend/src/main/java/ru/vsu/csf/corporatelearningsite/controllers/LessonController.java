@@ -23,14 +23,20 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<?> getLesson(@PathVariable("name") String name){
-        return ResponseEntity.ok(lessonService.get(name));
+    @GetMapping("/name/{id}")
+    public ResponseEntity<?> getLesson(@PathVariable("id") Long id){
+        return ResponseEntity.ok(lessonService.get(id));
     }
 
-    @PostMapping("/courseName/{courseName}")
-    public ResponseEntity<Lesson> addLesson(@PathVariable("courseName") String courseName, @RequestBody Lesson lesson) {
-        lessonService.add(lesson, courseName);
+    @PostMapping("/courseId/{courseId}")
+    public ResponseEntity<Lesson> addLesson(@PathVariable("courseId") Long courseId, @RequestBody Lesson lesson) {
+        lessonService.add(lesson, courseId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteLesson(@PathVariable("id") Long id){
+        lessonService.delete(id);
         return ResponseEntity.ok().build();
     }
 }
