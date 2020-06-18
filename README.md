@@ -35,7 +35,7 @@
         https://www.youtube.com/watch?v=l2cXGAebkBQ
         <br>
         <br>
-Ссылка на видео с демонстрацией работы проекта:
+Ссылка на видео с презентацией:
         <br>
         https://www.youtube.com/watch?v=SG1FzGR9W9Q
         <br>
